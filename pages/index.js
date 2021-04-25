@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Navbar from "../components/Navbar";
+import ReactTypingEffect from "react-typing-effect";
 import styles from "../styles/Home.module.css";
 
 export default function Home() {
@@ -12,9 +13,25 @@ export default function Home() {
       <Navbar />
       <main className={styles.main}>
         <div className="flex flex-col my-9">
-          <h1 className="text-5xl font-bold sm:text-7xl md:text-9xl">Hire a</h1>
+          <h1 className="text-5xl font-bold sm:text-7xl md:text-9xl">Hire </h1>
           <h1 className="text-5xl font-bold sm:text-7xl md:text-9xl bg-gradient-to-r from-pink-500 via-blue-500 to-indigo-900 bg-clip-text text-transparent ">
-            Developer
+            {
+              <ReactTypingEffect
+                text={[
+                  "Creators",
+                  "Developers",
+                  "Writers",
+                  "Designers",
+                  "Editors",
+                  "Illustrators",
+                  "Artists",
+                  "Analysts",
+                ]}
+                // speed={100}
+                eraseDelay={300}
+                typingDelay={200}
+              />
+            }
           </h1>
         </div>
         <div className="flex flex-col items-center">
