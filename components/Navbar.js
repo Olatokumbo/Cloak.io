@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Link from "next/link";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   return (
@@ -33,7 +34,9 @@ const Navbar = () => {
             <h1 className="mx-4 hover: cursor-pointer">Contact</h1>
           </li>
           <li className="sm:my-0 my-1">
-            <h1 className="mx-4 hover: cursor-pointer">Login</h1>
+            <Link href="/signin">
+              <h1 className="mx-4 hover: cursor-pointer">Login</h1>
+            </Link>
           </li>
           <li className="sm:my-0 my-1">
             <button className="mx-4 bg-black text-white py-1.5 px-2.5 rounded-md hover:bg-gray-900 focus:outline-none">
