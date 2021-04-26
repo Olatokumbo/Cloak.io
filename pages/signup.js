@@ -7,7 +7,7 @@ const Signup = () => {
   const email = useRef();
   const password = useRef();
   return (
-    <div className="w-full flex min-h-screen">
+    <div className="w-full flex flex-row-reverse min-h-screen">
       <div className="flex-1 relative">
         <Image
           src="/wallpaper.jpg"
@@ -18,13 +18,13 @@ const Signup = () => {
       <div className="flex flex-col flex-2 py-12 px-8 items-center ">
         <div className="flex justify-between w-full items-center">
           <Link href="/">
-            <h1 className="text-xl font-light hover:cursor-pointer">
+            <h1 className="text-xl font-light cursor-pointer">
               cloak.io
             </h1>
           </Link>
           <h5 className="text-sm">
             Have an Account?{" "}
-            <Link href="/signin" className="hover:cursor-pointer">
+            <Link href="/signin" className="cursor-pointer">
               <span className="text-base text-blue-700 font-semibold">
                 Signin
               </span>

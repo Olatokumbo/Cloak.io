@@ -15,14 +15,14 @@ const Signin = () => {
       </div>
       <div className="flex flex-col flex-2 py-12 px-8 items-center ">
         <div className="flex justify-between w-full items-center">
-          <Link href="/" className="hover:cursor-pointer">
+          <Link href="/" className="cursor-pointer">
             <h1 className="text-xl font-light">
               cloak.io
             </h1>
           </Link>
           <h5 className="text-sm">
             Don't have an Account{" "}
-            <Link href="/signup" className="hover:cursor-pointer">
+            <Link href="/signup" className="cursor-pointer">
               <span className="text-base text-blue-700 font-semibold">
                 Signup
               </span>

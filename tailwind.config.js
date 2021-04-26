@@ -2,6 +2,9 @@ module.exports = {
   purge: ["./pages/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
   darkMode: false, // or 'media' or 'class'
   theme: {
+    zIndex: {
+      "-1": -1,
+    },
     flex: {
       1: "1 1 0%",
       auto: "1 1 auto",
