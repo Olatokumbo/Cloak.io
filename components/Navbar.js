@@ -39,9 +39,11 @@ const Navbar = () => {
             </Link>
           </li>
           <li className="sm:my-0 my-1">
-            <button className="mx-4 bg-black text-white py-1.5 px-2.5 rounded-md hover:bg-gray-900 focus:outline-none">
-              Signup
-            </button>
+            <Link href="/signup">
+              <button className="mx-4 bg-black text-white py-1.5 px-2.5 rounded-md hover:bg-gray-900 focus:outline-none">
+                Signup
+              </button>
+            </Link>
           </li>
         </ul>
       </div>

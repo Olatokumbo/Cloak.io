@@ -76,7 +76,7 @@ const Signup = () => {
               placeholder="Email"
             />
           </div>
-          <div class="w-full mb-2">
+          <div className="w-full mb-2">
             <label htmlFor="password" className="text-gray-700 text-sm">
               Password
             </label>
