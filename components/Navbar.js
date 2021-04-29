@@ -3,7 +3,7 @@ import Link from "next/link";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <nav className="flex flex-col justify-between items-center p-5 top-0 left-0 right-0 sm:flex-row w-screen bg-white">
+    <nav className="flex flex-col justify-between items-center p-5 top-0 left-0 right-0 sm:flex-row w-screen bg-white border-b-2 border-gray-100 border-solid">
       <div className="flex w-full justify-between items-center">
         <h1 className="text-2xl font-light hover: cursor-pointer">cloak.io</h1>
         <svg
