@@ -6,20 +6,17 @@ const Slideshow = ({ images }) => {
     <Carousel
       autoPlay={true}
       //   className={style.carouselItem}
+      className="max-h-96"
       navButtonsAlwaysVisible={true}
       nav
-      indicators={true}
+      indicators={false}
       // animation="slide"
 
       timeout={500}
     >
       {/* {images.map((data, index) => ( */}
-      <img
-        key={8}
-        /*className={style.photo}*/ src="/wallpaper.jpg"
-        alt="headerImages"
-      />
-      <img key={9} src="/code.jpg" alt="headerImages" />
+      <img key={8} className="h-full w-full" src="/wallpaper.jpg" alt="headerImages" />
+      <img key={9} className="h-full w-full" src="/code.jpg" alt="headerImages" />
       {/* ))} */}
     </Carousel>
   );

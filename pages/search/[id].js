@@ -6,7 +6,7 @@ const Profile = () => {
         <h1 className="text-2xl font-semibold my-5">
           Full Stack Web Developer
         </h1>
-        <div className="flex items-center">
+        <div className="flex items-center  mb-7">
           <img
             src="/davidO.jpg"
             alt="me"
@@ -17,7 +17,7 @@ const Profile = () => {
             <h6 className="text-xs text-gray-600">Level 2</h6>
           </div>
         </div>
-        <h1 className="text-2xl font-semibold my-5">My Works</h1>
+        <h1 className="text-lg font-semibold mt-5 mb-3">My Works</h1>
         <ProfileCarousel />
       </div>
       <div className="flex-1 bg-gray-200"></div>
