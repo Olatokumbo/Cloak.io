@@ -30,11 +30,11 @@ const Jobs = () => {
                     />
                   </svg>
                   <select className="border border-gray-300 rounded-md text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none">
-                    <option defaultValue disabled>Choose Location &nbsp; &nbsp;</option>
+                    <option defaultValue>Choose Location &nbsp; &nbsp;</option>
                     <option>Lagos</option>
                     <option>Kaduna</option>
                     <option>Abuja</option>
-                    <option>Gbagsda</option>
+                    <option>Gbagada</option>
                   </select>
                 </div>
                 {/* Job type Dropdown menu */}
@@ -51,7 +51,7 @@ const Jobs = () => {
                     />
                   </svg>
                   <select className="border border-gray-300 rounded-md text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none">
-                    <option defaultValue disabled>Choose Job Type &nbsp; &nbsp;</option>
+                    <option defaultValue>Choose Job Type &nbsp; &nbsp;</option>
                     <option>Freelance</option>
                     <option>Full Time</option>
                     <option>Part Time</option>
@@ -100,7 +100,7 @@ const Jobs = () => {
                     />
                   </svg>
                   <select className="border border-gray-300 rounded-md text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none">
-                    <option disabled defaultValue>Sort by</option>
+                    <option defaultValue>Sort by</option>
                     <option>Red</option>
                     <option>Blue</option>
                     <option>Yellow</option>
@@ -114,6 +114,7 @@ const Jobs = () => {
               </div>
               <div>
                 <div className="grid gap-3 grid-cols-1 lg:grid-cols-2">
+                  <JobCard />
                   <JobCard />
                   <JobCard />
                   <JobCard />

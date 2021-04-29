@@ -3,7 +3,7 @@ const ProfileCard = () => {
   return (
     <div className="flex flex-col rounded-md border-2 border-solid border-white shadow-xl hover:shadow-2xl cursor-pointer">
       <div className="h-28 relative -z-1">
-        <Image src="/wallpaper.jpg" className="object-cover" layout="fill" />
+        <Image src="/code.jpg" className="object-cover" layout="fill" />
       </div>
       <div className="flex flex-col py-3 px-7">
         <h1 className="text-md font-medium text-gray-800">
@@ -47,7 +47,7 @@ const ProfileCard = () => {
                 />
               </svg>
 
-              <h5 className="text-sm self-end text-gray-500">Lagos, Ogun</h5>
+              <h5 className="text-sm self-end text-gray-500">Ogun, Lagos</h5>
             </div>
           </div>
         </div>
