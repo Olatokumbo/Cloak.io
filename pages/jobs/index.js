@@ -100,7 +100,7 @@ const Jobs = () => {
                     />
                   </svg>
                   <select className="border border-gray-300 rounded-md text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none">
-                    <option defaultValue>Sort by</option>
+                    <option defaultValue>Date Posted</option>
                     <option>Red</option>
                     <option>Blue</option>
                     <option>Yellow</option>
