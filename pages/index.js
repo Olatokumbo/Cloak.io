@@ -1,17 +1,18 @@
 import Head from "next/head";
 import Navbar from "../components/Navbar";
 import ReactTypingEffect from "react-typing-effect";
-import styles from "../styles/Home.module.css";
+import Explore from "../sections/Explore";
+// import styles from "../styles/Home.module.css";
 
 export default function Home() {
   return (
-    <div className={styles.container}>
+    <div className="min-h-screen py-0 px-2 flex flex-col justify-center items-center">
       <Head>
         <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navbar />
-      <main className={styles.main}>
+      <main className="flex flex-1 flex-col justify-center items-center">
         <div className="flex flex-col my-9">
           <h1 className="text-5xl font-bold sm:text-7xl md:text-9xl">Hire </h1>
           <h1 className="text-5xl font-bold sm:text-7xl md:text-9xl bg-gradient-to-r from-pink-500 via-blue-500 to-indigo-900 bg-clip-text text-transparent ">
@@ -27,8 +28,9 @@ export default function Home() {
                   "Artists",
                   "Analysts",
                 ]}
-                // speed={100}
+                speed={100}
                 eraseDelay={300}
+                eraseSpeed={100}
                 typingDelay={200}
               />
             }
@@ -54,6 +56,7 @@ export default function Home() {
           </h6>
         </div>
       </main>
+      <Explore />
     </div>
   );
 }
