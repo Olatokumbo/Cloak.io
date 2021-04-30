@@ -14,6 +14,15 @@ module.exports = {
       2: "2 2 0%",
       3: "3 3 0%",
     },
+    // height: {
+    //   fit: "fit-content",
+    //   full: "100%",
+    //   screen: "100vh",
+    //   sm: "8px",
+    //   md: "16px",
+    //   lg: "24px",
+    //   xl: "48px",
+    // },
     extend: {},
   },
   variants: {
