@@ -1,13 +1,13 @@
 import Image from "next/image";
 const ProfileCard = () => {
   return (
-    <div className="flex flex-col border-2 border-solid border-white shadow-xl hover:shadow-2xl cursor-pointer">
+    <div className="flex flex-col border-2 border-solid border-white shadow-xl hover:shadow-2xl cursor-pointer rounded">
       <div className="h-40 relative -z-1">
         <Image src="/code.jpg" className="object-cover" layout="fill" />
       </div>
       <div className="flex flex-col p-2">
         <h1 className="text-md font-medium text-gray-800">
-          Full Stack Web Developer
+          Minimalist Web Designs
         </h1>
         <h1 className="text-xs text-gray-600">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do

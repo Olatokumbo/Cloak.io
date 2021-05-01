@@ -5,7 +5,7 @@ const SignupBanner = () => {
       <div className="absolute p-10 flex h-full w-full">
         <div className="flex-1 flex flex-col justify-center items-start">
           <h1 className="text-white text-5xl font-semibold">
-            Lorem ipsum dolor sit amet
+            Take your business to a new level
           </h1>
           <button className="my-5 mr-5 bg-black focus:outline-none text-white px-3 py-2 md:px-4 rounded-md hover:bg-gray-900">
             Sign Up Now

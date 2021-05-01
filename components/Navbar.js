@@ -1,9 +1,15 @@
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 const Navbar = () => {
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
+  const search = (e) => {
+    e.preventDefault();
+    router.push("/search");
+  };
   return (
-    <nav className="flex flex-col justify-between items-center p-5 top-0 left-0 right-0 sm:flex-row w-screen bg-white border-b-2 border-gray-100 border-solid">
+    <nav className="flex flex-col justify-between items-center py-2 px-5 sm:py-5  top-0 left-0 right-0 sm:flex-row w-screen bg-white border-b-2 border-gray-100 border-solid">
       <div className="flex w-full justify-between items-center">
         <div className="flex items-start flex-col sm:flex-row sm:items-center w-full">
           <div className="flex items-center justify-between w-full sm:w-auto md:w-auto">
@@ -29,7 +35,7 @@ const Navbar = () => {
               />
             </svg>
           </div>
-          <form className="flex w-full sm:w-60 my-3 sm:my-0">
+          <form className="flex w-full sm:w-60 my-3 sm:my-0" onSubmit={search}>
             <input
               className="rounded-l-lg  px-3 py-2 w-full border-t mr-0 border-b border-l text-gray-800  text-sm border-gray-200 bg-white focus:outline-none focus:border-gray-400"
               placeholder="Search Services"
