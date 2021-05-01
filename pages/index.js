@@ -4,6 +4,7 @@ import ReactTypingEffect from "react-typing-effect";
 import Image from "next/image";
 import Explore from "../sections/Explore";
 import SignupBanner from "../sections/SignupBanner";
+import Guides from "../sections/Guides";
 
 export default function Home() {
   return (
@@ -61,6 +62,7 @@ export default function Home() {
           </div>
         </div>
         <Explore />
+        <Guides />
         <SignupBanner />
       </main>
     </div>

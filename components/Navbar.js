@@ -7,9 +7,11 @@ const Navbar = () => {
       <div className="flex w-full justify-between items-center">
         <div className="flex items-start flex-col sm:flex-row sm:items-center w-full">
           <div className="flex items-center justify-between w-full sm:w-auto md:w-auto">
-            <h1 className="text-2xl font-light hover: cursor-pointer mr-5">
-              cloak.io
-            </h1>
+            <Link href="/">
+              <h1 className="text-2xl font-light hover: cursor-pointer mr-5">
+                cloak.io
+              </h1>
+            </Link>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-6 w-6 lg:hidden md:hidden sm:hidden cursor-pointer block"
