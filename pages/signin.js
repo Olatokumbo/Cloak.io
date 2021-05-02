@@ -6,14 +6,14 @@ const Signin = () => {
     const password = useRef(); 
   return (
     <div className="w-full flex min-h-screen">
-      <div className="flex-1 relative">
+      <div className="flex-1 relative hidden sm:block">
         <Image
           src="/wallpaper.jpg"
           className="object-cover w-full h-full"
           layout="fill"
         />
       </div>
-      <div className="flex flex-col flex-2 py-12 px-8 items-center ">
+      <div className="flex flex-col flex-2 py-12 px-4 items-center sm:px-8 ">
         <div className="flex justify-between w-full items-center">
           <Link href="/" className="cursor-pointer">
             <h1 className="text-xl font-light">
@@ -29,7 +29,7 @@ const Signin = () => {
             </Link>
           </h5>
         </div>
-        <div className="flex flex-col p-3 items-center my-8 w-96">
+        <div className="flex flex-col p-3 items-center my-8 w-full md:w-96">
           <h1 className="self-start text-4xl font-bold my-4 text-gray-600">
             Sign in
           </h1>

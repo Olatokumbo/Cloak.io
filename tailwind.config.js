@@ -1,5 +1,12 @@
 module.exports = {
-  purge: ["./pages/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
+  // purge: ["./pages/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
+  purge: {
+    content: [
+      "./pages/**/*.{js,jsx,ts,tsx}",
+      "./components/**/*.{js,jsx,ts,tsx}",
+      "./sections/**/*.{js,jsx,ts,tsx}",
+    ],
+  },
   darkMode: false, // or 'media' or 'class'
   theme: {
     zIndex: {
