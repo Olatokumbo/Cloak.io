@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { signinGoogle }from "../redux/actions/auth";
 const Signup = () => {
   const firstName = useRef();
   const lastName = useRef();
@@ -93,8 +94,8 @@ const Signup = () => {
             Create an Account
           </button>
           <h5 className="text-gray-500">or</h5>
-          <button className="flex items-center justify-center my-5 w-full text-gray-600  text-sm border-2 rounded-md py-3 focus:outline-none hover:bg-gray-100">
-            <img className="h-5 mx-3" src="/google.svg" /> Signup with Google
+          <button onClick={signinGoogle} className="flex items-center justify-center my-5 w-full text-gray-600  text-sm border-2 rounded-md py-3 focus:outline-none hover:bg-gray-100">
+            <img className="h-5 mx-3" src="/google.svg" /> Continue with Google
           </button>
         </div>
       </div>

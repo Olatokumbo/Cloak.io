@@ -1,6 +1,7 @@
 import * as actionTypes from "../actions/actionTypes";
 const initialState = {
   isAuth: false,
+  loading: false,
   username: null,
 };
 
@@ -9,7 +10,8 @@ const authReducer = (state = initialState, action) => {
     case actionTypes.SIGNIN_SUCCESS:
       return {
           isAuth: true,
-          username: "david0"
+          loading: false,
+          username: action.username
       };
 
     default:
