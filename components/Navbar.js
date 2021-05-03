@@ -1,7 +1,9 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-const Navbar = () => {
+import Image from "next/image";
+import { Avatar } from "@material-ui/core";
+const Navbar = ({ auth }) => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const search = (e) => {
@@ -81,23 +83,54 @@ const Navbar = () => {
           "items-center sm:flex md:flex" + (isOpen ? " flex" : " hidden")
         }
       >
-        <ul className="flex list-none lg:ml-auto items-center justify-center sm:flex-row">
-          <li className="sm:my-0 my-1">
-            <h1 className="mx-4 hover: cursor-pointer">Contact</h1>
-          </li>
-          <li className="sm:my-0 my-1">
-            <Link href="/signin">
-              <h1 className="mx-4 hover: cursor-pointer">Login</h1>
-            </Link>
-          </li>
-          <li className="sm:my-0 my-1">
-            <Link href="/signup">
-              <button className="mx-4 bg-black text-white py-1.5 px-2.5 rounded-md hover:bg-gray-900 focus:outline-none">
-                Signup
-              </button>
-            </Link>
-          </li>
-        </ul>
+        <div className="flex list-none lg:ml-auto items-center justify-center sm:flex-row">
+          {!auth.uid ? (
+            <ul className="flex items-center">
+              <li className="sm:my-0 my-1">
+                <Link href="/signin">
+                  <h1 className="mx-4 hover: cursor-pointer">Login</h1>
+                </Link>
+              </li>
+              <li className="sm:my-0 my-1">
+                <Link href="/signup">
+                  <button className="mx-4 bg-black text-white py-1.5 px-2.5 rounded-md hover:bg-gray-900 focus:outline-none">
+                    Signup
+                  </button>
+                </Link>
+              </li>
+            </ul>
+          ) : (
+            <ul className="flex items-center">
+              <li className="sm:my-0 my-1">
+                <Link href="/signin">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-7 w-7 mx-5 text-gray-500"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
+                  </svg>
+                </Link>
+              </li>
+              <li className="sm:my-0 my-1">
+                {/* <img
+                class="inline object-cover w-10 h-10 mr-2 rounded-full"
+                src={auth.photoURL}
+                alt="Profile image"
+              /> */}
+                {/* <div className="relative object-cover w-10 h-10 mx-4">
+                  <Image
+                    src={auth.photoURL}
+                    layout="fill"
+                    className="rounded-full"
+                  />
+                </div> */}
+                <Avatar src={auth.photoURL} />
+              </li>
+            </ul>
+          )}
+        </div>
       </div>
     </nav>
   );

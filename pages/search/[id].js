@@ -1,10 +1,9 @@
-import Navbar from "../../components/Navbar";
+import Layout from "../../components/Layout";
 import ProfileCarousel from "../../components/ProfileCarousel";
 import ProfileComment from "../../components/ProfileComment";
 const Profile = () => {
   return (
-    <div className="min-h-screen">
-      <Navbar />
+    <Layout>
       <div className="flex">
         <div className="flex-none lg:flex-1 bg-gray-200"></div>
         <div className="flex-3 bg-white py-5 px-10">
@@ -85,7 +84,7 @@ const Profile = () => {
         </div>
         <div className="flex-none lg:flex-1 bg-gray-200"></div>
       </div>
-    </div>
+    </Layout>
   );
 };
 

@@ -2,18 +2,25 @@ import * as actionTypes from "../actions/actionTypes";
 const initialState = {
   isAuth: false,
   loading: false,
-  username: null,
+  photoURL: null,
+  uid: null,
 };
 
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.SIGNIN_SUCCESS:
       return {
-          isAuth: true,
-          loading: false,
-          username: action.username
+        isAuth: true,
+        loading: false,
+        photoURL: action.photoURL,
+        uid: action.uid,
       };
-
+    case actionTypes.SIGNOUT:
+      return {
+        isAuth: false,
+        photoURL: null,
+        uid: null,
+      };
     default:
       return state;
   }

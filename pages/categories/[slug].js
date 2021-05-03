@@ -1,13 +1,12 @@
 import Image from "next/image";
-import Navbar from "../../components/Navbar";
 import CategoryList from "../../sections/CategoryList";
 import ProfileCard from "../../components/ProfileCard";
 import Link from "next/link";
+import Layout from "../../components/Layout";
 
 const Category = () => {
   return (
-    <div className="min-h-screen">
-      <Navbar />
+    <Layout>
       <CategoryList />
       <div className="w-full relative overflow-hidden mb-9">
         <div className="opacity-50 bg-gray-900 absolute left-0 right-0 top-0 bottom-0"></div>
@@ -35,7 +34,7 @@ const Category = () => {
           <Link href="/search/12"><a><ProfileCard /></a></Link>
           <Link href="/search/12"><a><ProfileCard /></a></Link>
         </div>
-    </div>
+        </Layout>
   );
 };
 

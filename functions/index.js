@@ -16,7 +16,7 @@ const addUser = (cred) => {
       displayName: cred.displayName,
       emailVerified: cred.emailVerified,
       phoneNumber: cred.phoneNumber,
-      photoUrl: cred.photoURL,
+      photoURL: cred.photoURL,
       joined: admin.firestore.FieldValue.serverTimestamp(),
     })
     .then(() => functions.logger.info("New User has been Added"))

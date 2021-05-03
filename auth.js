@@ -8,7 +8,11 @@ const Auth = (props) => {
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
-        dispatch({ type: actionTypes.SIGNIN_SUCCESS, username: "david0" });
+        dispatch({
+          type: actionTypes.SIGNIN_SUCCESS,
+          uid: user.uid,
+          photoURL: user.photoURL,
+        });
         console.log("Logged In");
       } else console.log("Logged Out");
     });
