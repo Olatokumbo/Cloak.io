@@ -5,8 +5,9 @@ import Link from "next/link";
 import Layout from "../../components/Layout";
 import fs from "fs";
 import path from "path";
+import { fetchPosters } from "../../redux/actions/posters";
 
-const Category = ({ category }) => {
+const Category = ({ category, posters }) => {
   return (
     <Layout>
       <CategoryList />
@@ -29,36 +30,13 @@ const Category = ({ category }) => {
         </div>
       </div>
       <div className="mb-5 w-full px-2 grid gap-x-2 gap-y-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-5">
-        <Link href="/search/12">
-          <a>
-            <ProfileCard />
-          </a>
-        </Link>
-        <Link href="/search/12">
-          <a>
-            <ProfileCard />
-          </a>
-        </Link>
-        <Link href="/search/12">
-          <a>
-            <ProfileCard />
-          </a>
-        </Link>
-        <Link href="/search/12">
-          <a>
-            <ProfileCard />
-          </a>
-        </Link>
-        <Link href="/search/12">
-          <a>
-            <ProfileCard />
-          </a>
-        </Link>
-        <Link href="/search/12">
-          <a>
-            <ProfileCard />
-          </a>
-        </Link>
+        {posters?.map((poster) => (
+          <Link key={poster.id}href={`/search/${poster.id}`}>
+            <a>
+              <ProfileCard data={poster} />
+            </a>
+          </Link>
+        ))}
       </div>
     </Layout>
   );
@@ -84,9 +62,12 @@ export const getStaticProps = async ({ params }) => {
   let fileData = fs.readFileSync(filePath);
   fileData = JSON.parse(fileData);
   const category = fileData.filter((data) => data.id === params.id)[0];
+  let posters = await fetchPosters(params.id);
+  posters = JSON.parse(posters);
   return {
     props: {
       category,
+      posters
     },
   };
 };

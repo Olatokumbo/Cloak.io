@@ -1,14 +1,12 @@
 import Image from "next/image";
-const ProfileCard = () => {
+const ProfileCard = ({ data }) => {
   return (
     <div className="flex flex-col border-2 border-solid border-white shadow-xl hover:shadow-2xl cursor-pointer rounded">
       <div className="h-40 relative -z-1">
-        <Image src="/code.jpg" className="object-cover" layout="fill" />
+        <Image src={data.works[0]} className="object-cover" layout="fill" />
       </div>
       <div className="flex flex-col p-2">
-        <h1 className="text-md font-medium text-gray-800">
-          Minimalist Web Designs
-        </h1>
+        <h1 className="text-md font-medium text-gray-800">{data.title}</h1>
         <h1 className="text-xs text-gray-600">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod temporary...
@@ -17,13 +15,13 @@ const ProfileCard = () => {
           <div className="flex w-full justify-between">
             <div className="flex items-center">
               <img
-                src="/davidO.jpg"
+                src={data.photoURL}
                 alt="me"
                 className="w-7 max-h-10 rounded-full mr-3"
               />
               <div className="flex flex-col">
-                <h4 className="text-sm">faithodesola</h4>
-                <h6 className="text-xs text-gray-600">Level 2</h6>
+                <h4 className="text-sm">{data.displayName}</h4>
+                {/* <h6 className="text-xs text-gray-600">Level 2</h6> */}
                 {/* <div className="flex items-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -51,7 +49,9 @@ const ProfileCard = () => {
                 />
               </svg>
 
-              <h5 className="text-xs self-end text-gray-500">Ogun, Lagos</h5>
+              <h5 className="text-xs self-end text-gray-500">
+                {data.location || "Unspecified"}
+              </h5>
             </div>
           </div>
         </div>
@@ -73,7 +73,9 @@ const ProfileCard = () => {
           </svg>
           <div className="flex items-center">
             <h5 className="text-gray-800 mr-1">Starting at</h5>
-            <h5 className="text-xl font-semibold text-gray-800">₦35,000</h5>
+            <h5 className="text-xl font-semibold text-gray-800">
+              ₦{data.price}
+            </h5>
           </div>
         </div>
       </div>
