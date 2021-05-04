@@ -1,0 +1,47 @@
+[
+  {
+    "id": "graphics-and-design",
+    "title": "Graphics & Design",
+    "photoURL": "/categories/wallpaper.jpg"
+  },
+  {
+    "id": "technology",
+    "title": "Technology",
+    "photoURL": "/categories/code.jpg"
+  },
+  {
+    "id": "audio-and-music",
+    "title": "Audio and Music",
+    "photoURL": "/categories/audio.jpg"
+  },
+  {
+    "id": "business",
+    "title": "Business",
+    "photoURL": "/categories/business.jpg"
+  },
+  {
+    "id": "marketing",
+    "title": "Marketing",
+    "photoURL": "/categories/marketing.jpg"
+  },
+  {
+    "id": "writing-and-editing",
+    "title": "Writing & Editing",
+    "photoURL": "/categories/writing.jpg"
+  },
+  {
+    "id": "education-and-training",
+    "title": "Education & Training",
+    "photoURL": "/categories/education.jpg"
+  },
+  {
+    "id": "media-and-communication",
+    "title": "Media & Communication",
+    "photoURL": "/categories/media.jpg"
+  },
+  {
+    "id": "health",
+    "title": "Health",
+    "photoURL": "/categories/health.jpg"
+  }
+]
