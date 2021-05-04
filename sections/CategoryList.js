@@ -3,7 +3,7 @@ const CategoryList = () => {
   return (
     <div className="py-2 flex overflow-auto w-full whitespace-nowrap border-b-2 border-gray-100 border-solid">
       <div className="m-auto flex">
-        <Link  className="font-normal hover:font-bold" href="/categories/graphics-and-design"><h5 className="text-gray-700 mx-4 cursor-pointer hover:text-gray-500">Graphics & Design</h5></Link>
+        <Link href="/categories/graphics-and-design"><h5 className="text-gray-700 mx-4 cursor-pointer hover:text-gray-500">Graphics & Design</h5></Link>
         <Link href="/categories/technology"><h5 className="text-gray-700 mx-4 cursor-pointer hover:text-gray-500">Technology</h5></Link>
         <Link href="/categories/audio-and-music"><h5 className="text-gray-700 mx-4 cursor-pointer hover:text-gray-500">Audio & Music</h5></Link>
         <Link href="/categories/business"><h5 className="text-gray-700 mx-4 cursor-pointer hover:text-gray-500">Business</h5></Link>

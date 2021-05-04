@@ -6,8 +6,9 @@ import { auth } from "./firebase/firebase";
 const Auth = (props) => {
   const dispatch = useDispatch();
   useEffect(() => {
-    auth.onAuthStateChanged((user) => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
+        console.log(user);
         dispatch({
           type: actionTypes.SIGNIN_SUCCESS,
           uid: user.uid,
@@ -16,6 +17,7 @@ const Auth = (props) => {
         console.log("Logged In");
       } else console.log("Logged Out");
     });
+    return () => unsubscribe();
   }, []);
   return <div>{props.children}</div>;
 };

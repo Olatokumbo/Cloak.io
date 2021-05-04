@@ -19,7 +19,7 @@ const authReducer = (state = initialState, action) => {
       return {
         isAuth: false,
         photoURL: null,
-        uid: null,
+        uid: null
       };
     default:
       return state;
