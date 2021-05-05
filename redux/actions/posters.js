@@ -18,14 +18,25 @@ export const getAllPostersId = () => {
 
 export const fetchPostersbyCategory = (category) => {
   let posters = [];
+  let promises = [];
   return firestore
     .collection("posters")
     .where("category", "==", category)
     .get()
     .then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
-        posters.push({ ...doc.data(), id: doc.id });
+        let posterData = doc.data();
+        posterData.id = doc.id;
+        if (posterData.authorRef) {
+          promises.push(
+            posterData.authorRef.get().then((res) => {
+              posterData.authorData = res.data();
+            })
+          );
+        }
+        posters.push(posterData);
       });
+      return Promise.all(promises);
     })
     .then(() => {
       return JSON.stringify(posters);
@@ -34,11 +45,23 @@ export const fetchPostersbyCategory = (category) => {
 };
 
 export const fetchPostersbyId = (documentId) => {
+  let promises = [];
+  let poster;
   return firestore
     .collection("posters")
     .doc(documentId)
     .get()
     .then((doc) => {
-      return JSON.stringify(doc.data());
+      poster = doc.data();
+      poster.id = doc.id;
+      promises.push(
+        poster.authorRef.get().then((res) => {
+          poster.authorData = res.data();
+        })
+      );
+      return Promise.all(promises);
+    })
+    .then(() => {
+      return JSON.stringify(poster);
     });
 };

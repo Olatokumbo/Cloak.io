@@ -4,7 +4,12 @@ const ProfileCard = ({ data }) => {
   return (
     <div className="flex flex-col border-2 border-solid border-white shadow-xl hover:shadow-2xl cursor-pointer rounded">
       <div className="h-40 relative -z-1">
-        <Image src={data.works[0]} className="object-cover" layout="fill" loading="eager"/>
+        <Image
+          src={data.works[0]}
+          className="object-cover"
+          layout="fill"
+          loading="eager"
+        />
       </div>
       <div className="flex flex-col p-2">
         <h1 className="text-md font-medium text-gray-800">{data.title}</h1>
@@ -14,13 +19,17 @@ const ProfileCard = ({ data }) => {
         <div className="flex my-1">
           <div className="flex w-full justify-between">
             <div className="flex items-center">
-              <img
-                src={data.photoURL}
-                alt="me"
-                className="w-7 max-h-10 rounded-full mr-3"
-              />
+              <div className="w-7 h-7 mr-3 relative">
+                <Image
+                  src={data.photoURL}
+                  alt="me"
+                  className="rounded-full"
+                  layout="fill"
+                />
+              </div>
+
               <div className="flex flex-col">
-                <h4 className="text-sm">{data.displayName}</h4>
+                <h4 className="text-sm">{data.authorData.displayName}</h4>
                 {/* <h6 className="text-xs text-gray-600">Level 2</h6> */}
                 {/* <div className="flex items-center">
                   <svg
@@ -50,7 +59,7 @@ const ProfileCard = ({ data }) => {
               </svg>
 
               <h5 className="text-xs self-end text-gray-500">
-                {data.location}
+                {data.location || "Unspecified"}
               </h5>
             </div>
           </div>

@@ -24,6 +24,7 @@ const addUser = (cred) => {
       displayName: cred.displayName,
       emailVerified: cred.emailVerified,
       phoneNumber: cred.phoneNumber,
+      location: null,
       photoURL: cred.photoURL,
       joined: admin.firestore.FieldValue.serverTimestamp(),
     })

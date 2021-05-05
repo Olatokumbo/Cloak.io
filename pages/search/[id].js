@@ -19,13 +19,13 @@ const Profile = ({ poster }) => {
           <div className="flex justify-between mb-7">
             <div className="flex items-center">
               <img
-                src={poster.photoURL}
+                src={poster.authorData.photoURL}
                 alt="me"
                 className="w-10 max-h-10 rounded-full mr-3"
               />
               <div className="flex flex-col">
                 <h4 className="text-base font-bold text-gray-800">
-                  {poster.displayName}
+                  {poster.authorData.displayName}
                 </h4>
                 <div className="flex">
                   <svg
@@ -42,7 +42,7 @@ const Profile = ({ poster }) => {
                   </svg>
 
                   <h5 className="text-xs self-end text-gray-500">
-                    {poster.location}
+                    {poster.authorData.location || "Unspecified"}
                   </h5>
                 </div>
               </div>
