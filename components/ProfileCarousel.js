@@ -6,7 +6,7 @@ const Slideshow = ({ images }) => {
     <Carousel
       autoPlay={true}
       //   className={style.carouselItem}
-      className="max-h-96 my-5"
+      className="max-h-screen my-5 relative"
       navButtonsAlwaysVisible={true}
       nav
       indicators={false}
@@ -14,10 +14,14 @@ const Slideshow = ({ images }) => {
 
       timeout={500}
     >
-      {/* {images.map((data, index) => ( */}
-      <img key={8} className="h-full w-full" src="/wallpaper.jpg" alt="headerImages" />
-      <img key={9} className="h-full w-full" src="/code.jpg" alt="headerImages" />
-      {/* ))} */}
+      {images.map((data, index) => (
+        <img
+          key={index}
+          className="h-full w-full"
+          src={data}
+          alt="headerImages"
+        />
+      ))}
     </Carousel>
   );
 };

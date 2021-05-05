@@ -1,17 +1,18 @@
 import Layout from "../../components/Layout";
 import ProfileCarousel from "../../components/ProfileCarousel";
 import ProfileComment from "../../components/ProfileComment";
-const Profile = () => {
+import { getAllPostersId, fetchPostersbyId } from "../../redux/actions/posters";
+const Profile = ({ poster }) => {
   return (
     <Layout>
       <div className="flex">
         <div className="flex-none lg:flex-1 bg-gray-200"></div>
         <div className="flex-3 bg-white py-5 px-10">
           <div className="flex justify-between items-center">
-          <h1 className="text-2xl font-semibold my-5">
-            Full Stack Web Developer
-          </h1>
-          <h5 className="text-2xl font-semibold text-gray-800">₦35,000+</h5>
+            <h1 className="text-2xl font-semibold my-5">{poster.title}</h1>
+            <h5 className="text-2xl font-semibold text-gray-800">
+              ₦{poster.price}+
+            </h5>
           </div>
           <div className="flex justify-between mb-7">
             <div className="flex items-center">
@@ -21,8 +22,8 @@ const Profile = () => {
                 className="w-10 max-h-10 rounded-full mr-3"
               />
               <div className="flex flex-col">
-                <h4 className="ext-base font-bold text-gray-800">
-                  faithodesola
+                <h4 className="text-base font-bold text-gray-800">
+                  {poster.displayName}
                 </h4>
                 <div className="flex">
                   <svg
@@ -39,7 +40,7 @@ const Profile = () => {
                   </svg>
 
                   <h5 className="text-xs self-end text-gray-500">
-                    Ogun, Lagos
+                    {poster.location}
                   </h5>
                 </div>
               </div>
@@ -48,28 +49,13 @@ const Profile = () => {
               Get in Touch
             </button>
           </div>
-          <h6 className="text-md text-gray-600">Level 2</h6>
+          {/* <h6 className="text-md text-gray-600">Level 2</h6> */}
           <h1 className="text-lg font-semibold mt-5">My Works</h1>
-          <ProfileCarousel />
+          <ProfileCarousel images={poster?.works} />
           <h1 className="font-bold text-lg my-5 text-gray-800">Description</h1>
-          <p className="my-3 text-sm">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
-          </p>
-          <p className="my-3 text-sm">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
-          </p>
+          {poster.description.map((text) => (
+            <p className="my-3 text-sm">{text}</p>
+          ))}
           <div className="mt-20">
             <h1 className="font-bold text-lg text-gray-800 mb-5">Reviews</h1>
             <div className="my-5">
@@ -89,3 +75,25 @@ const Profile = () => {
 };
 
 export default Profile;
+
+export const getStaticPaths = async () => {
+  let posterIds = await getAllPostersId();
+  posterIds = JSON.parse(posterIds);
+  const paths = posterIds.map((id) => ({
+    params: { id },
+  }));
+  return {
+    paths,
+    fallback: false,
+  };
+};
+
+export const getStaticProps = async ({ params }) => {
+  let poster = await fetchPostersbyId(params.id);
+  poster = JSON.parse(poster);
+  return {
+    props: {
+      poster,
+    },
+  };
+};

@@ -1,3 +1,4 @@
+import { truncate } from "../utils/truncate";
 import Image from "next/image";
 const ProfileCard = ({ data }) => {
   return (
@@ -8,8 +9,7 @@ const ProfileCard = ({ data }) => {
       <div className="flex flex-col p-2">
         <h1 className="text-md font-medium text-gray-800">{data.title}</h1>
         <h1 className="text-xs text-gray-600">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod temporary...
+          {truncate(data.description[0])}
         </h1>
         <div className="flex my-1">
           <div className="flex w-full justify-between">

@@ -5,7 +5,7 @@ import Link from "next/link";
 import Layout from "../../components/Layout";
 import fs from "fs";
 import path from "path";
-import { fetchPosters } from "../../redux/actions/posters";
+import { fetchPostersbyCategory } from "../../redux/actions/posters";
 
 const Category = ({ category, posters }) => {
   return (
@@ -62,7 +62,7 @@ export const getStaticProps = async ({ params }) => {
   let fileData = fs.readFileSync(filePath);
   fileData = JSON.parse(fileData);
   const category = fileData.filter((data) => data.id === params.id)[0];
-  let posters = await fetchPosters(params.id);
+  let posters = await fetchPostersbyCategory(params.id);
   posters = JSON.parse(posters);
   return {
     props: {
