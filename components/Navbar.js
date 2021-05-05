@@ -1,14 +1,18 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { Avatar } from "@material-ui/core";
 const Navbar = ({ auth }) => {
+  const keywordRef = useRef();
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const search = (e) => {
     e.preventDefault();
-    router.push("/search");
+    router.push({
+      pathname: "/search",
+      query: { keyword: keywordRef.current.value },
+    });
   };
   return (
     <nav className="flex flex-col justify-between items-center py-2 px-5 sm:py-5  top-0 left-0 right-0 sm:flex-row w-screen bg-white border-b-2 border-gray-100 border-solid">
@@ -41,6 +45,8 @@ const Navbar = ({ auth }) => {
             <input
               className="rounded-l-lg  px-3 py-2 w-full border-t mr-0 border-b border-l text-gray-800  text-sm border-gray-200 bg-white focus:outline-none focus:border-gray-400"
               placeholder="Search Services"
+              ref={keywordRef}
+              required
             />
             <button className="px-3 rounded-r-lg bg-gray-700  text-gray-800 font-bold py-2 uppercase border-gray-400 border-t border-b border-r focus:outline-none">
               <svg
@@ -103,7 +109,9 @@ const Navbar = ({ auth }) => {
             <ul className="flex items-center">
               <li className="sm:my-0 my-1">
                 <Link href="/signin">
-                  <h1 className="mx-4 hover: cursor-pointer text-lg font-semibold text-gray-600">Notifications</h1>
+                  <h1 className="mx-4 hover: cursor-pointer text-lg font-semibold text-gray-600">
+                    Notifications
+                  </h1>
                 </Link>
               </li>
               <li className="sm:my-0 my-1">
