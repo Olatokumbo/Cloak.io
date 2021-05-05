@@ -1,23 +1,21 @@
 import Carousel from "react-material-ui-carousel";
-// import style from "./slideshow.module.css";
-
 const Slideshow = ({ images }) => {
   return (
     <Carousel
       autoPlay={true}
       //   className={style.carouselItem}
-      className="max-h-screen my-5 relative"
+      className="h-96 max-h-96 my-5 relative"
       navButtonsAlwaysVisible={true}
       nav
       indicators={false}
       // animation="slide"
 
-      timeout={500}
+      timeout={100}
     >
       {images.map((data, index) => (
         <img
           key={index}
-          className="h-full w-full"
+          className="h-full w-full absolute object-cover"
           src={data}
           alt="headerImages"
         />

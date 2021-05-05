@@ -4,7 +4,7 @@ const ProfileCard = ({ data }) => {
   return (
     <div className="flex flex-col border-2 border-solid border-white shadow-xl hover:shadow-2xl cursor-pointer rounded">
       <div className="h-40 relative -z-1">
-        <Image src={data.works[0]} className="object-cover" layout="fill" />
+        <Image src={data.works[0]} className="object-cover" layout="fill" loading="eager"/>
       </div>
       <div className="flex flex-col p-2">
         <h1 className="text-md font-medium text-gray-800">{data.title}</h1>
@@ -50,7 +50,7 @@ const ProfileCard = ({ data }) => {
               </svg>
 
               <h5 className="text-xs self-end text-gray-500">
-                {data.location || "Unspecified"}
+                {data.location}
               </h5>
             </div>
           </div>

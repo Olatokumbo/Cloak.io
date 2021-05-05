@@ -26,6 +26,7 @@ const Category = ({ category, posters }) => {
             src={category.photoURL}
             className="object-cover"
             layout="fill"
+            loading="eager"
           />
         </div>
       </div>

@@ -2,9 +2,11 @@ import Layout from "../../components/Layout";
 import ProfileCarousel from "../../components/ProfileCarousel";
 import ProfileComment from "../../components/ProfileComment";
 import { getAllPostersId, fetchPostersbyId } from "../../redux/actions/posters";
+import CategoryList from "../../sections/CategoryList";
 const Profile = ({ poster }) => {
   return (
     <Layout>
+      <CategoryList />
       <div className="flex">
         <div className="flex-none lg:flex-1 bg-gray-200"></div>
         <div className="flex-3 bg-white py-5 px-10">
@@ -17,7 +19,7 @@ const Profile = ({ poster }) => {
           <div className="flex justify-between mb-7">
             <div className="flex items-center">
               <img
-                src="/davidO.jpg"
+                src={poster.photoURL}
                 alt="me"
                 className="w-10 max-h-10 rounded-full mr-3"
               />
@@ -53,19 +55,25 @@ const Profile = ({ poster }) => {
           <h1 className="text-lg font-semibold mt-5">My Works</h1>
           <ProfileCarousel images={poster?.works} />
           <h1 className="font-bold text-lg my-5 text-gray-800">Description</h1>
-          {poster.description.map((text) => (
-            <p className="my-3 text-sm">{text}</p>
+          {poster.description.map((text, index) => (
+            <p key={index} className="my-3 text-sm">
+              {text}
+            </p>
           ))}
           <div className="mt-20">
             <h1 className="font-bold text-lg text-gray-800 mb-5">Reviews</h1>
             <div className="my-5">
-              <ProfileComment />
-              <ProfileComment />
-              <ProfileComment />
+              {poster.reviews ? (
+                poster.reviews?.map((review) => (
+                  <ProfileComment review={review} />
+                ))
+              ) : (
+                <h5 className="text-center text-xl">No Reviews Yet</h5>
+              )}
             </div>
-            <button className="mx-auto focus:outline-none px-2 py-2 sm:px-4 sm:py-2 md:px-4 border-gray-800 border-solid border-4 rounded-md hover:bg-gray-200">
+            {/* <button className="mx-auto focus:outline-none px-2 py-2 sm:px-4 sm:py-2 md:px-4 border-gray-800 border-solid border-4 rounded-md hover:bg-gray-200">
               Load More
-            </button>
+            </button> */}
           </div>
         </div>
         <div className="flex-none lg:flex-1 bg-gray-200"></div>

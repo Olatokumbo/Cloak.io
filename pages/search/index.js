@@ -11,7 +11,7 @@ const Search = () => {
           </h1>
         </div>
         <div className="mb-5 w-full px-2 grid gap-x-2 gap-y-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-5">
-          <Link href="/search/12">
+          {/* <Link href="/search/12">
             <a>
               <ProfileCard />
             </a>
@@ -40,7 +40,7 @@ const Search = () => {
             <a>
               <ProfileCard />
             </a>
-          </Link>
+          </Link> */}
         </div>
       </div>
     </Layout>
