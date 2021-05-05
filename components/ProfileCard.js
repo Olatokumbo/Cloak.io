@@ -1,11 +1,11 @@
 import { truncate } from "../utils/truncate";
 import Image from "next/image";
-const ProfileCard = ({ data }) => {
+const ProfileCard = ({ data, searched }) => {
   return (
     <div className="flex flex-col border-2 border-solid border-white shadow-xl hover:shadow-2xl cursor-pointer rounded">
       <div className="h-40 relative -z-1">
         <Image
-          src={data.works[0]}
+          src={searched ? data.works: data.works[0]}
           className="object-cover"
           layout="fill"
           loading="eager"
@@ -14,22 +14,23 @@ const ProfileCard = ({ data }) => {
       <div className="flex flex-col p-2">
         <h1 className="text-md font-medium text-gray-800">{data.title}</h1>
         <h1 className="text-xs text-gray-600">
-          {truncate(data.description[0])}
+          {searched ? truncate(data.description): truncate(data.description[0])}
         </h1>
         <div className="flex my-1">
           <div className="flex w-full justify-between">
             <div className="flex items-center">
               <div className="w-7 h-7 mr-3 relative">
                 <Image
-                  src={data.photoURL}
+                  src={searched ? data.photoURL : data.authorData.photoURL}
                   alt="me"
                   className="rounded-full"
                   layout="fill"
+                  loading="lazy"
                 />
               </div>
 
               <div className="flex flex-col">
-                <h4 className="text-sm">{data.authorData.displayName}</h4>
+                <h4 className="text-sm">{searched ? data.displayName : data.authorData.displayName}</h4>
                 {/* <h6 className="text-xs text-gray-600">Level 2</h6> */}
                 {/* <div className="flex items-center">
                   <svg

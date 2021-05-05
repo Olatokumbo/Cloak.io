@@ -5,7 +5,7 @@ import algoliasearch from "algoliasearch";
 import Layout from "../../components/Layout";
 import { useRouter } from "next/router";
 const Search = () => {
-  // const [searchResults, setSearchResults] = useState([]);
+  const [searchResults, setSearchResults] = useState([]);
   var client = algoliasearch(
     process.env.NEXT_PUBLIC__ALGOLIA_APP_ID,
     process.env.NEXT_PUBLIC__ALGOLIA_SEARCH_KEY
@@ -20,7 +20,7 @@ const Search = () => {
       await index
         .search(query)
         .then((responses) => {
-          console.log(responses);
+          setSearchResults(responses.hits);
         })
         .catch((e) => {
           console.log(e);
@@ -35,11 +35,13 @@ const Search = () => {
           <h1 className="text-3xl font-semibold">Results for "{keyword}"</h1>
         </div>
         <div className="mb-5 w-full px-2 grid gap-x-2 gap-y-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-5">
-          {/* <Link href="/search/12">
-            <a>
-              <ProfileCard />
-            </a>
-          </Link>  */}
+          {searchResults.map((hit) => (
+            <Link key={hit.objectID} href={`/search/${hit.objectID}`}>
+              <a>
+                <ProfileCard data={hit} searched={true} />
+              </a>
+            </Link>
+          ))}
         </div>
       </div>
     </Layout>
