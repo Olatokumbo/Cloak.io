@@ -2,7 +2,8 @@ import { useState, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Image from "next/image";
-import { Avatar } from "@material-ui/core";
+// import { Avatar } from "@material-ui/core";
+import { BellIcon, MenuAlt3Icon, SearchIcon } from "@heroicons/react/outline";
 const Navbar = ({ auth }) => {
   const keywordRef = useRef();
   const router = useRouter();
@@ -24,22 +25,10 @@ const Navbar = ({ auth }) => {
                 cloak.io
               </h1>
             </Link>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
+            <MenuAlt3Icon
               className="h-6 w-6 lg:hidden md:hidden sm:hidden cursor-pointer block"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              htmlFor="menu-toggle"
               onClick={() => setIsOpen(!isOpen)}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 6h16M4 12h16m-7 6h7"
-              />
-            </svg>
+            />
           </div>
           <form className="flex w-full sm:w-60 my-3 sm:my-0" onSubmit={search}>
             <input
@@ -49,39 +38,10 @@ const Navbar = ({ auth }) => {
               required
             />
             <button className="px-3 rounded-r-lg bg-gray-700  text-gray-800 font-bold py-2 uppercase border-gray-400 border-t border-b border-r focus:outline-none">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6 text-white"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                />
-              </svg>
+              <SearchIcon className="h-6 w-6 text-white" />
             </button>
           </form>
         </div>
-        {/* <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-6 w-6 lg:hidden md:hidden sm:hidden cursor-pointer block"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          htmlFor="menu-toggle"
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M4 6h16M4 12h16m-7 6h7"
-          />
-        </svg> */}
       </div>
       <div
         id="menu"
@@ -109,9 +69,7 @@ const Navbar = ({ auth }) => {
             <ul className="flex items-center">
               <li className="sm:my-0 my-1">
                 <Link href="/signin">
-                  <h1 className="mx-4 hover: cursor-pointer text-lg font-semibold text-gray-600">
-                    Notifications
-                  </h1>
+                  <BellIcon className="h-6 w-6 text-gray-600 mx-5" />
                 </Link>
               </li>
               <li className="sm:my-0 my-1">
