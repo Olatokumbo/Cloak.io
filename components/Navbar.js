@@ -37,7 +37,7 @@ const Navbar = ({ auth }) => {
     });
   };
   const signedOut = () => {
-    dispatch(actionCreator.signout);
+    dispatch(actionCreator.signout());
   };
 
   return (

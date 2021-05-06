@@ -1,34 +1,29 @@
 import { HeartIcon } from "@heroicons/react/outline";
-const JobCard = () => {
+const JobCard = ({ data }) => {
   return (
     <div className="rounded-md my-2 p-6 shadow-lg bg-white cursor-pointer hover:shadow-xl">
       <div className="flex justify-between items-center">
         <div className="flex items-center mr-4">
           <img
-            src="/davidO.jpg"
+            src={data?.photoURL}
             alt="me"
             className="w-10 max-h-10 rounded-full mr-3"
           />
           <div className="flex flex-col">
-            <h2 className="font-semibold text-lg">
-              Looking for an editor for my Book
-            </h2>
-            <h6 className="text-xs text-gray-400 font-medium">faithodesola</h6>
+            <h2 className="font-semibold text-lg">{data?.title}</h2>
+            <h6 className="text-xs text-gray-400 font-medium">
+              {data?.displayName}
+            </h6>
           </div>
         </div>
-        <h1 className="text-2xl">₦35,000</h1>
+        <h1 className="text-2xl">{`₦${data.price}`|| "" }</h1>
       </div>
       <div className="my-5">
-        <h5 className="text-gray-800 text-sm">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat.{" "}
-        </h5>
+        <h5 className="text-gray-800 text-sm">{data?.description}</h5>
       </div>
       <div className="flex justify-between items-center">
         <HeartIcon className="h-6 w-6" />
-        <h5 className="text-sm font-semibold text-gray-400">Jan 20, 2021</h5>
+        {/* <h5 className="text-sm font-semibold text-gray-400">Jan 20, 2021</h5> */}
       </div>
     </div>
   );

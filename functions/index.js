@@ -54,3 +54,26 @@ exports.onPosterCreated = functions.firestore
         return index.saveObject(poster);
       });
   });
+
+exports.onJobCreated = functions.firestore
+  .document("jobs/{jobId}")
+  .onCreate((snap, context) => {
+     // Get the note document
+     const job = snap.data();
+     // Add an 'objectID' field which Algolia requires
+     job.objectID = context.params.posterId;
+     // Write to the algolia index
+     const index = client.initIndex("jobs");
+     admin
+       .auth()
+       .getUser(job.userId)
+       .then((user) => {
+         job.photoURL = user.photoURL;
+         job.displayName = user.displayName;
+         job.location = user.location;
+       })
+       .then(() => {
+         return index.saveObject(job);
+       });
+
+  });

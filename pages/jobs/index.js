@@ -1,8 +1,30 @@
+import { useEffect, useState, useRef } from "react";
 import JobCard from "../../components/JobCard";
 import Layout from "../../components/Layout";
 import { SearchIcon, ChevronDownIcon } from "@heroicons/react/outline";
+import algoliasearch from "algoliasearch";
 
 const Jobs = () => {
+  const [searchResults, setSearchResults] = useState([]);
+  const keywordRef = useRef();
+  var client = algoliasearch(
+    process.env.NEXT_PUBLIC__ALGOLIA_APP_ID,
+    process.env.NEXT_PUBLIC__ALGOLIA_SEARCH_KEY
+  );
+  var index = client.initIndex("jobs");
+  const jobSearch = async (e) => {
+    e.preventDefault();
+    console.log("Searching...");
+    await index
+      .search(keywordRef.current.value)
+      .then((responses) => {
+        console.log(responses);
+        setSearchResults(responses.hits);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
   return (
     <Layout>
       <div className="min-h-screen bg-gray-100">
@@ -47,10 +69,11 @@ const Jobs = () => {
                 </div>
               </div>
               <div className="flex flex-col flex-1 w-full">
-                <form className="my-4 flex">
+                <form className="my-4 flex" onSubmit={jobSearch}>
                   <input
                     className="rounded-l-lg  px-3 py-2 w-full border-t mr-0 border-b border-l text-gray-800  text-sm border-gray-200 bg-white focus:outline-none focus:border-gray-800"
                     placeholder="Search for jobs"
+                    ref={keywordRef}
                   />
                   <button className="px-5 rounded-r-lg bg-gray-700  text-gray-800 font-bold p-2 uppercase border-gray-800 border-t border-b border-r focus:outline-none">
                     <SearchIcon className="h-6 w-6 text-white" />
@@ -76,15 +99,13 @@ const Jobs = () => {
                 </div>
                 <div>
                   <div className="grid gap-3 grid-cols-1 lg:grid-cols-2">
-                    <JobCard />
-                    <JobCard />
-                    <JobCard />
-                    <JobCard />
-                    <JobCard />
+                    {searchResults.map((job) => (
+                      <JobCard key={job.objectID} data={job} />
+                    ))}
                   </div>
-                  <button className="mx-auto focus:outline-none px-2 py-2 sm:px-4 sm:py-2 md:px-4 border-gray-800 border-solid border-4 rounded-md hover:bg-gray-200">
+                  {/* <button className="mx-auto focus:outline-none px-2 py-2 sm:px-4 sm:py-2 md:px-4 border-gray-800 border-solid border-4 rounded-md hover:bg-gray-200">
                     Load More
-                  </button>
+                  </button> */}
                 </div>
               </div>
             </div>
