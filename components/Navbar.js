@@ -2,12 +2,30 @@ import { useState, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Image from "next/image";
-// import { Avatar } from "@material-ui/core";
+import { Avatar, Menu, MenuItem, makeStyles } from "@material-ui/core";
 import { BellIcon, MenuAlt3Icon, SearchIcon } from "@heroicons/react/outline";
+
+const useStyles = makeStyles((theme) => ({
+  avatar: {
+    marginLeft: theme.spacing(3),
+    marginRight: theme.spacing(3),
+  },
+}));
+
 const Navbar = ({ auth }) => {
   const keywordRef = useRef();
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const classes = useStyles();
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   const search = (e) => {
     e.preventDefault();
     router.push({
@@ -15,6 +33,7 @@ const Navbar = ({ auth }) => {
       query: { keyword: keywordRef.current.value },
     });
   };
+
   return (
     <nav className="flex flex-col justify-between items-center py-2 px-5 sm:py-5  top-0 left-0 right-0 sm:flex-row w-screen bg-white border-b-2 border-gray-100 border-solid">
       <div className="flex w-full justify-between items-center">
@@ -68,24 +87,41 @@ const Navbar = ({ auth }) => {
           ) : (
             <ul className="flex items-center">
               <li className="sm:my-0 my-1">
-                <Link href="/signin">
-                  <BellIcon className="h-6 w-6 text-gray-600 mx-5" />
+                <Link href="/jobs">
+                  <h1 className="mx-4 hover: cursor-pointer text-lg font-semibold text-gray-700">
+                    Jobs
+                  </h1>
                 </Link>
               </li>
               <li className="sm:my-0 my-1">
-                {/* <img
-                class="inline object-cover w-10 h-10 mr-2 rounded-full"
-                src={auth.photoURL}
-                alt="Profile image"
-              /> */}
-                <div className="relative object-cover w-10 h-10 mx-4">
+                <Link href="/signin">
+                  <BellIcon className="h-6 w-6 text-gray-600 mx-5 cursor-pointer hover:text-gray-900" />
+                </Link>
+              </li>
+              <li className="sm:my-0 my-1">
+                {/* <div className="relative object-cover w-10 h-10 mx-4">
                   <Image
                     src={auth.photoURL}
                     layout="fill"
                     className="rounded-full"
+                    onClick={handleClick}
                   />
-                </div>
-                {/* <Avatar src={auth.photoURL} /> */}
+                </div> */}
+                <Avatar src={auth.photoURL} className={classes.avatar} onClick={handleClick}/>
+                <Menu
+                  id="simple-menu"
+                  anchorEl={anchorEl}
+                  keepMounted
+                  open={Boolean(anchorEl)}
+                  onClose={handleClose}
+                  anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                  transformOrigin={{ vertical: "top", horizontal: "center" }}
+                  getContentAnchorEl={null}
+                >
+                  <MenuItem onClick={handleClose}>Profile</MenuItem>
+                  <MenuItem onClick={handleClose}>My account</MenuItem>
+                  <MenuItem onClick={handleClose}>Logout</MenuItem>
+                </Menu>
               </li>
             </ul>
           )}
