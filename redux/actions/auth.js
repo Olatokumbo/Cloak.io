@@ -21,12 +21,15 @@ export const signinGoogle = () => {
 };
 
 export const signout = () => {
-  auth
-    .signOut()
-    .then(() => {
+  return (dispatch) => {
+    auth
+      .signOut()
+      .then(() => {
         console.log("Logged Out");
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+        dispatch({ type: actionTypes.SIGNOUT });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 };

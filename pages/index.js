@@ -1,10 +1,10 @@
 import Head from "next/head";
 import ReactTypingEffect from "react-typing-effect";
 import Image from "next/image";
+import CategoryList from "../sections/CategoryList";
 import Explore from "../sections/Explore";
 import SignupBanner from "../sections/SignupBanner";
 import Guides from "../sections/Guides";
-import CategoryList from "../sections/CategoryList";
 import Layout from "../components/Layout";
 
 export default function Home() {
@@ -15,7 +15,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <CategoryList />
+        <CategoryList/>
         <main className="md:p-10 p-2">
           <div className="flex flex-1 flex-col justify-center items-center">
             <div className="flex flex-col my-9">

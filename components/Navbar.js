@@ -1,9 +1,11 @@
 import { useState, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import Image from "next/image";
+// import Image from "next/image";
 import { Avatar, Menu, MenuItem, makeStyles } from "@material-ui/core";
 import { BellIcon, MenuAlt3Icon, SearchIcon } from "@heroicons/react/outline";
+import { useDispatch } from "react-redux";
+import * as actionCreator from "../redux/actions/auth";
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
@@ -13,6 +15,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Navbar = ({ auth }) => {
+  const dispatch = useDispatch();
   const keywordRef = useRef();
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
@@ -33,9 +36,12 @@ const Navbar = ({ auth }) => {
       query: { keyword: keywordRef.current.value },
     });
   };
+  const signedOut = () => {
+    dispatch(actionCreator.signout);
+  };
 
   return (
-    <nav className="flex flex-col justify-between items-center py-2 px-5 sm:py-5  top-0 left-0 right-0 sm:flex-row w-screen bg-white border-b-2 border-gray-100 border-solid">
+    <nav className="flex flex-col justify-between items-center py-2 px-5 sm:py-5  top-0 left-0 right-0 sm:flex-row w-full bg-white border-b-2 border-gray-100 border-solid">
       <div className="flex w-full justify-between items-center">
         <div className="flex items-start flex-col sm:flex-row sm:items-center w-full">
           <div className="flex items-center justify-between w-full sm:w-auto md:w-auto">
@@ -94,9 +100,9 @@ const Navbar = ({ auth }) => {
                 </Link>
               </li>
               <li className="sm:my-0 my-1">
-                <Link href="/signin">
+                {/* <Link href="/signin"> */}
                   <BellIcon className="h-6 w-6 text-gray-600 mx-5 cursor-pointer hover:text-gray-900" />
-                </Link>
+                {/* </Link> */}
               </li>
               <li className="sm:my-0 my-1">
                 {/* <div className="relative object-cover w-10 h-10 mx-4">
@@ -107,7 +113,11 @@ const Navbar = ({ auth }) => {
                     onClick={handleClick}
                   />
                 </div> */}
-                <Avatar src={auth.photoURL} className={classes.avatar} onClick={handleClick}/>
+                <Avatar
+                  src={auth.photoURL}
+                  className={classes.avatar}
+                  onClick={handleClick}
+                />
                 <Menu
                   id="simple-menu"
                   anchorEl={anchorEl}
@@ -120,7 +130,7 @@ const Navbar = ({ auth }) => {
                 >
                   <MenuItem onClick={handleClose}>Profile</MenuItem>
                   <MenuItem onClick={handleClose}>My account</MenuItem>
-                  <MenuItem onClick={handleClose}>Logout</MenuItem>
+                  <MenuItem onClick={signedOut}>Logout</MenuItem>
                 </Menu>
               </li>
             </ul>

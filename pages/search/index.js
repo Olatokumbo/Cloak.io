@@ -3,6 +3,7 @@ import ProfileCard from "../../components/ProfileCard";
 import Link from "next/link";
 import algoliasearch from "algoliasearch";
 import Layout from "../../components/Layout";
+import CategoryList from "../../sections/CategoryList";
 import { useRouter } from "next/router";
 const Search = () => {
   const [searchResults, setSearchResults] = useState([]);
@@ -30,6 +31,7 @@ const Search = () => {
   }, [keyword]);
   return (
     <Layout>
+      <CategoryList />
       <div>
         <div className="p-5">
           <h1 className="text-3xl font-semibold">Results for "{keyword}"</h1>
