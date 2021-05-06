@@ -42,5 +42,15 @@ exports.onPosterCreated = functions.firestore
     poster.objectID = context.params.posterId;
     // Write to the algolia index
     const index = client.initIndex(ALGOLIA_INDEX_NAME);
-    return index.saveObject(poster);
+    admin
+      .auth()
+      .getUser(poster.userId)
+      .then((user) => {
+        poster.photoURL = user.photoURL;
+        poster.displayName = user.displayName;
+        poster.location = user.location;
+      })
+      .then(() => {
+        return index.saveObject(poster);
+      });
   });

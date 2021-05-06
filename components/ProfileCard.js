@@ -25,7 +25,7 @@ const ProfileCard = ({ data, searched }) => {
                   alt="me"
                   className="rounded-full"
                   layout="fill"
-                  loading="lazy"
+                  loading="eager"
                 />
               </div>
 
