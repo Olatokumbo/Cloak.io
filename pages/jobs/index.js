@@ -80,7 +80,10 @@ const Jobs = () => {
                   </button>
                 </form>
                 <div className="flex justify-between mb-2 items-center">
-                  <h4 className="font-semibold text-2xl">Book Editing Jobs</h4>
+                  <h4 className="font-semibold text-2xl">
+                    {keywordRef.current?.value &&
+                      `Results for "${keywordRef.current?.value}"`}
+                  </h4>
                   {/* Location Dropdown menu */}
                   <div className="relative inline-flex my-1">
                     <ChevronDownIcon className="w-3 h-3 absolute top-0 right-0 m-4 pointer-events-none" />

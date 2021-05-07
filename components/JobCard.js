@@ -1,4 +1,5 @@
 import { HeartIcon } from "@heroicons/react/outline";
+import { truncate } from "../utils/truncate";
 const JobCard = ({ data }) => {
   return (
     <div className="rounded-md my-2 p-6 shadow-lg bg-white cursor-pointer hover:shadow-xl">
@@ -16,10 +17,10 @@ const JobCard = ({ data }) => {
             </h6>
           </div>
         </div>
-        <h1 className="text-2xl">{`₦${data.price}`|| "" }</h1>
+        <h1 className="text-2xl">{`₦${data.price}` || ""}</h1>
       </div>
       <div className="my-5">
-        <h5 className="text-gray-800 text-sm">{data?.description}</h5>
+        <h5 className="text-gray-800 text-sm">{truncate(data?.description)}</h5>
       </div>
       <div className="flex justify-between items-center">
         <HeartIcon className="h-6 w-6" />
