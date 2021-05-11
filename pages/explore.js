@@ -1,10 +1,14 @@
 import Layout from "../components/Layout";
 import CategoryList from "../sections/CategoryList";
-const Explore = () => {
+import Explore from "../sections/Explore";
+import Link from "next/link";
+import ProfileCard from "../components/ProfileCard";
+import { fetchPosters } from "../redux/actions/posters";
+const Explores = ({ posters }) => {
   return (
     <Layout>
       <CategoryList />
-      <div className="w-full flex flex-col-reverse md:flex-row lg:flex-row ">
+      <div className="w-full flex flex-col-reverse md:flex-row lg:flex-row">
         <div className="flex-1 p-1 md:py-5 md:px-4">
           <div className="p-2 h-full w-full rounded border-solid border-gray-200 border-2 flex flex-col items-center justify-center">
             <h1>Hi Gifted,</h1>
@@ -31,9 +35,29 @@ const Explore = () => {
           </div>
         </div>
       </div>
-      <div className="mb-5 w-full px-2 grid gap-x-2 gap-y-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-5"></div>
+      <Explore />
+      <h1 className="text-3xl font-bold text-gray-800 ml-2">Popular Posters</h1>
+      <div className="my-5 w-full px-2 grid gap-x-2 gap-y-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-5">
+        {posters?.map((poster) => (
+          <Link key={poster.id} href={`/search/${poster.id}`}>
+            <a>
+              <ProfileCard data={poster} />
+            </a>
+          </Link>
+        ))}
+      </div>
     </Layout>
   );
 };
 
-export default Explore;
+export default Explores;
+
+export const getStaticProps = async () => {
+  const res = await fetchPosters();
+  const posters = JSON.parse(res);
+  return {
+    props: {
+      posters,
+    },
+  };
+};

@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 const Layout = (props) => {
   const auth = useSelector((state) => state.auth);
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen px-1">
       <Navbar auth={auth} />
       <div>{props.children}</div>
     </div>

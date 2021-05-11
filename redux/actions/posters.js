@@ -65,3 +65,31 @@ export const fetchPostersbyId = (documentId) => {
       return JSON.stringify(poster);
     });
 };
+
+export const fetchPosters = () => {
+  let posters = [];
+  let promises = [];
+  return firestore
+    .collection("posters")
+    .limit(10)
+    .get()
+    .then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        let posterData = doc.data();
+        posterData.id = doc.id;
+        if (posterData.authorRef) {
+          promises.push(
+            posterData.authorRef.get().then((res) => {
+              posterData.authorData = res.data();
+            })
+          );
+        }
+        posters.push(posterData);
+      });
+      return Promise.all(promises);
+    })
+    .then(() => {
+      return JSON.stringify(posters);
+    })
+    .catch((err) => err.message);
+};
