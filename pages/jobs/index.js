@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from "react";
+import Link from "next/link";
 import JobCard from "../../components/JobCard";
 import Layout from "../../components/Layout";
 import { SearchIcon, ChevronDownIcon } from "@heroicons/react/outline";
@@ -103,7 +104,11 @@ const Jobs = () => {
                 <div>
                   <div className="grid gap-3 grid-cols-1 lg:grid-cols-2">
                     {searchResults.map((job) => (
-                      <JobCard key={job.objectID} data={job} />
+                      <Link  href={`/jobs/${job.objectID}`} key={job.objectID}>
+                        <a target="_blank">
+                          <JobCard data={job} />
+                        </a>
+                      </Link>
                     ))}
                   </div>
                   {/* <button className="mx-auto focus:outline-none px-2 py-2 sm:px-4 sm:py-2 md:px-4 border-gray-800 border-solid border-4 rounded-md hover:bg-gray-200">

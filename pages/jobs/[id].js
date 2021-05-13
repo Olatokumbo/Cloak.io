@@ -1,28 +1,27 @@
 import Layout from "../../components/Layout";
-const JobInfo = () => {
+import { fetchJobById, getAllJobsId } from "../../redux/actions/jobs";
+const JobInfo = ({ job }) => {
   return (
     <Layout>
-      <div className="flex h-min-screen">
+      <div className="flex min-h-screen">
         <div className="flex-none lg:flex-1 bg-gray-200"></div>
         <div className="flex-3 bg-white py-5 px-10">
           <div className="flex justify-between items-center">
-            <h1 className="text-2xl font-semibold my-5">
-              Looking for a Book editor
-            </h1>
+            <h1 className="text-2xl font-semibold my-5">{job?.title}</h1>
             <h5 className="text-2xl font-semibold text-gray-800">
-              ₦100,000/m
+            {`₦${job.price}` || ""}
             </h5>
           </div>
           <div className="flex justify-between mb-7">
             <div className="flex items-center">
-              {/* <img
+              <img
                 src="/davidO.jpg"
                 alt="me"
                 className="w-10 max-h-10 rounded-full mr-3"
-              /> */}
+              />
               <div className="flex flex-col">
                 <h4 className="text-base font-bold text-gray-800">
-                  Collins Aerospace
+                  faithodesola
                 </h4>
                 <div className="flex">
                   <svg
@@ -39,7 +38,7 @@ const JobInfo = () => {
                   </svg>
 
                   <h5 className="text-xs self-end text-gray-500">
-                    Lagos, Ogun
+                    {job?.location}
                   </h5>
                 </div>
               </div>
@@ -52,38 +51,17 @@ const JobInfo = () => {
             <h1 className="font-bold text-lg mb-3 text-gray-800">
               Description
             </h1>
-            <p /* key={index} */ className="my-3 text-sm">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit
-              amet, consectetur adipiscing elit, sed do eiusmod tempor
-              incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-              veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-              ex ea commodo consequat.
-            </p>
-            <p /* key={index} */ className="my-3 text-sm">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit
-              amet, consectetur adipiscing elit, sed do eiusmod tempor
-              incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-              veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-              ex ea commodo consequat.
-            </p>
-            <p /* key={index} */ className="my-3 text-sm">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat.
-            </p>
+            {job?.description.map((text, index) => (
+              <p key={index} className="my-3 text-sm">
+                {text}
+              </p>
+            ))}
           </div>
-          <div className="mt-5">
+          {/* <div className="mt-5">
             <h1 className="font-bold text-lg mb-3 text-gray-800">
               About Us
             </h1>
-            <p /* key={index} */ className="my-3 text-sm">
+            <p className="my-3 text-sm">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris
@@ -93,7 +71,7 @@ const JobInfo = () => {
               veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
               ex ea commodo consequat.
             </p>
-            <p /* key={index} */ className="my-3 text-sm">
+            <p className="my-3 text-sm">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris
@@ -103,13 +81,13 @@ const JobInfo = () => {
               veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
               ex ea commodo consequat.
             </p>
-            <p /* key={index} */ className="my-3 text-sm">
+            <p className="my-3 text-sm">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris
               nisi ut aliquip ex ea commodo consequat.
             </p>
-          </div>
+          </div> */}
         </div>
         <div className="flex-none lg:flex-1 bg-gray-200"></div>
       </div>
@@ -118,3 +96,23 @@ const JobInfo = () => {
 };
 
 export default JobInfo;
+
+export const getStaticPaths = async () => {
+  const res = await getAllJobsId();
+  const data = JSON.parse(res);
+  const paths = data.map((id) => ({ params: { id } }));
+  return {
+    paths,
+    fallback: false,
+  };
+};
+
+export const getStaticProps = async (context) => {
+  const res = await fetchJobById(context.params.id);
+  const data = JSON.parse(res);
+  return {
+    props: {
+      job: data,
+    },
+  };
+};
