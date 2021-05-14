@@ -6,7 +6,7 @@ const Layout = (props) => {
   return (
     <div className="min-h-screen">
       <Navbar auth={auth} />
-      <div>{props.children}</div>
+      <div className="min-h-screen">{props.children}</div>
       <Footer />
     </div>
   );

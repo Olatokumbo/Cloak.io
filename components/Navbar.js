@@ -45,7 +45,7 @@ const Navbar = ({ auth }) => {
       <div className="flex w-full justify-between items-center">
         <div className="flex items-start flex-col sm:flex-row sm:items-center w-full">
           <div className="flex items-center justify-between w-full sm:w-auto md:w-auto">
-            <Link href="/">
+            <Link href={auth.isAuth ? "/explore" : "/"}>
               <h1 className="text-2xl font-light hover: cursor-pointer mr-5">
                 cloak.io
               </h1>

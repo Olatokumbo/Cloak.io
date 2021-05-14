@@ -4,7 +4,6 @@ import JobCard from "../../components/JobCard";
 import Layout from "../../components/Layout";
 import { SearchIcon, ChevronDownIcon } from "@heroicons/react/outline";
 import algoliasearch from "algoliasearch";
-import PrivateRoute from "../../hoc/PrivateRoute";
 
 const Jobs = () => {
   const [searchResults, setSearchResults] = useState([]);
@@ -126,4 +125,4 @@ const Jobs = () => {
   );
 };
 
-export default PrivateRoute(Jobs);
+export default Jobs;

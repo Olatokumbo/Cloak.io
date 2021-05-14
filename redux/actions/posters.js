@@ -93,3 +93,19 @@ export const fetchPosters = () => {
     })
     .catch((err) => err.message);
 };
+
+export const fetchPostersByUserId = (userId) => {
+  const posters = [];
+  return firestore
+    .collection("posters")
+    .where("userId", "==", userId)
+    .get()
+    .then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        posters.push({ ...doc.data(), id: doc.id });
+      });
+    })
+    .then(() => {
+      return JSON.stringify(posters);
+    });
+};
