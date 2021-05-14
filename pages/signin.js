@@ -2,6 +2,7 @@ import { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { signinGoogle } from "../redux/actions/auth";
+import PublicRoute from "../hoc/PublicRoute";
 const Signin = () => {
   const email = useRef();
   const password = useRef();
@@ -74,4 +75,4 @@ const Signin = () => {
   );
 };
 
-export default Signin;
+export default PublicRoute (Signin);

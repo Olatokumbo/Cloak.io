@@ -4,6 +4,7 @@ import JobCard from "../../components/JobCard";
 import Layout from "../../components/Layout";
 import { SearchIcon, ChevronDownIcon } from "@heroicons/react/outline";
 import algoliasearch from "algoliasearch";
+import PrivateRoute from "../../hoc/PrivateRoute";
 
 const Jobs = () => {
   const [searchResults, setSearchResults] = useState([]);
@@ -104,7 +105,7 @@ const Jobs = () => {
                 <div>
                   <div className="grid gap-3 grid-cols-1 lg:grid-cols-2">
                     {searchResults.map((job) => (
-                      <Link  href={`/jobs/${job.objectID}`} key={job.objectID}>
+                      <Link href={`/jobs/${job.objectID}`} key={job.objectID}>
                         <a target="_blank">
                           <JobCard data={job} />
                         </a>
@@ -125,4 +126,4 @@ const Jobs = () => {
   );
 };
 
-export default Jobs;
+export default PrivateRoute(Jobs);

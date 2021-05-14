@@ -4,6 +4,7 @@ import Explore from "../sections/Explore";
 import Link from "next/link";
 import ProfileCard from "../components/ProfileCard";
 import { fetchPosters } from "../redux/actions/posters";
+import PrivateRoute from "../hoc/PrivateRoute";
 const Explores = ({ posters }) => {
   return (
     <Layout>
@@ -50,7 +51,7 @@ const Explores = ({ posters }) => {
   );
 };
 
-export default Explores;
+export default PrivateRoute(Explores);
 
 export const getStaticProps = async () => {
   const res = await fetchPosters();

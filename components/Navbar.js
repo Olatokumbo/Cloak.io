@@ -78,6 +78,13 @@ const Navbar = ({ auth }) => {
           {!auth.uid ? (
             <ul className="flex items-center">
               <li className="sm:my-0 my-1">
+                <Link href="/jobs">
+                  <h1 className="mx-4 hover: cursor-pointer text-lg font-semibold text-gray-700 whitespace-nowrap">
+                    Find Jobs
+                  </h1>
+                </Link>
+              </li>
+              <li className="sm:my-0 my-1">
                 <Link href="/signin">
                   <h1 className="mx-4 hover: cursor-pointer">Login</h1>
                 </Link>
@@ -94,14 +101,14 @@ const Navbar = ({ auth }) => {
             <ul className="flex items-center">
               <li className="sm:my-0 my-1">
                 <Link href="/jobs">
-                  <h1 className="mx-4 hover: cursor-pointer text-lg font-semibold text-gray-700">
-                    Jobs
+                  <h1 className="mx-4 hover: cursor-pointer text-lg font-semibold text-gray-700 whitespace-nowrap">
+                    Find Jobs
                   </h1>
                 </Link>
               </li>
               <li className="sm:my-0 my-1">
                 {/* <Link href="/signin"> */}
-                  <BellIcon className="h-6 w-6 text-gray-600 mx-5 cursor-pointer hover:text-gray-900" />
+                <BellIcon className="h-6 w-6 text-gray-600 mx-5 cursor-pointer hover:text-gray-900" />
                 {/* </Link> */}
               </li>
               <li className="sm:my-0 my-1">
