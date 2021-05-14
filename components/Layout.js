@@ -1,11 +1,13 @@
 import Navbar from "../components/Navbar";
 import { useSelector } from "react-redux";
+import Footer from "./Footer";
 const Layout = (props) => {
   const auth = useSelector((state) => state.auth);
   return (
-    <div className="min-h-screen px-1">
+    <div className="min-h-screen">
       <Navbar auth={auth} />
       <div>{props.children}</div>
+      <Footer />
     </div>
   );
 };

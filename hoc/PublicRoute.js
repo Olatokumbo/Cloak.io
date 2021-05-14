@@ -11,7 +11,7 @@ const PublicRoute = (WrappedComponent) => {
         if (!isAuthenicated) {
           return <WrappedComponent {...props} />;
         }
-        router.replace("/");
+        router.replace("/explore");
       }, [isAuthenicated]);
     }
     return <WrappedComponent {...props} />;

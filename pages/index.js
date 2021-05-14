@@ -6,8 +6,9 @@ import Explore from "../sections/Explore";
 import SignupBanner from "../sections/SignupBanner";
 import Guides from "../sections/Guides";
 import Layout from "../components/Layout";
+import PublicRoute from "../hoc/PublicRoute";
 
-export default function Home() {
+const Home = () => {
   return (
     <div className="min-h-screen">
       <Head>
@@ -15,7 +16,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <CategoryList/>
+        <CategoryList />
         <main className="md:p-10 p-2">
           <div className="flex flex-1 flex-col justify-center items-center">
             <div className="flex flex-col my-9">
@@ -70,4 +71,6 @@ export default function Home() {
       </Layout>
     </div>
   );
-}
+};
+
+export default PublicRoute(Home);
