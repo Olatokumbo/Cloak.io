@@ -4,19 +4,20 @@ import { Avatar, makeStyles } from "@material-ui/core";
 import { LocationMarkerIcon } from "@heroicons/react/solid";
 import { fetchUser, getAllProfileId } from "../../redux/actions/profile";
 import { fetchPostersByUserId } from "../../redux/actions/posters";
+import MyPosterCard from "../../components/MyPosterCard";
 const useStyles = makeStyles((theme) => ({
   avatar: {
     marginLeft: theme.spacing(5),
     marginRight: theme.spacing(5),
   },
 }));
-const Profile = ({user}) => {
+const Profile = ({ user }) => {
   const classes = useStyles();
   return (
     <Layout>
       <CategoryList />
       <div className="flex p-3 flex-col md:flex-row">
-        <div className="flex-1 px-3 sticky h-screen top-5">
+        <div className="flex-1 px-3">
           <div className="flex flex-col justify-center items-center p-10 w-full border-solid border-gray-300 border-2">
             <Avatar src="/davidO.jpg" className={classes.avatar} />
             <h1>{user.displayName}</h1>
@@ -31,17 +32,25 @@ const Profile = ({user}) => {
           </div>
           <div className="flex flex-col p-5 w-full border-solid border-gray-300 border-2 mt-5">
             <h1 className="font-semibold text-gray-700 mb-3">Description</h1>
-            <h5 className="text-sm">
-              {user.description}
-            </h5>
+            <h5 className="text-sm">{user.description}</h5>
           </div>
         </div>
-        <div className="flex-1 md:flex-2 lg:flex-3 h-screen w-full p-5 border-solid border-gray-100 border-2">
+        <div className="flex-1 md:flex-2 lg:flex-3 min-h-screen w-full p-5 border-solid border-gray-100 border-2">
           <h1 className="text-3xl font-bold text-gray-800 ml-2">My Posters</h1>
-          <div className="mb-5 w-full px-2 grid gap-x-2 gap-y-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-5">
+          <div className="my-5 w-full px-2 grid gap-x-2 gap-y-4 grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {/* {posters.map((poster)=>(
               <
             ))} */}
+            <MyPosterCard />
+            <MyPosterCard />
+            <MyPosterCard />
+            <MyPosterCard />
+            <MyPosterCard />
+            <MyPosterCard />
+            <MyPosterCard />
+            <MyPosterCard />
+            <MyPosterCard />
+            <MyPosterCard />
           </div>
         </div>
       </div>
@@ -72,7 +81,7 @@ export const getStaticProps = async (context) => {
   return {
     props: {
       user,
-      posters
+      posters,
     },
   };
 };
