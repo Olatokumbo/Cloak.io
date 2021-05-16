@@ -7,6 +7,7 @@ import { fetchPostersByUserId } from "../../redux/actions/posters";
 import MyPosterCard from "../../components/MyPosterCard";
 import { useSelector } from "react-redux";
 import { format } from "date-fns";
+import Link from "next/link";
 const useStyles = makeStyles((theme) => ({
   avatar: {
     marginLeft: theme.spacing(5),
@@ -57,9 +58,11 @@ const Profile = ({ user, posters }) => {
               My Posters
             </h1>
             {uid === user.id && (
-              <button className="bg-black focus:outline-none text-white px-3 py-2 md:px-4 rounded-md hover:bg-gray-900">
-                Add Poster
-              </button>
+              <Link href="/poster/new">
+                <button className="bg-black focus:outline-none text-white px-3 py-2 md:px-4 rounded-md hover:bg-gray-900">
+                  Add Poster
+                </button>
+              </Link>
             )}
           </div>
           <div className="my-5 w-full px-2 grid gap-x-2 gap-y-4 grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">

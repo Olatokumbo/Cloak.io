@@ -2,6 +2,7 @@ import { useState } from "react";
 import { TextField, Button } from "@material-ui/core";
 import { UploadIcon } from "@heroicons/react/solid";
 import Layout from "../../components/Layout";
+import { uploadPoster } from "../../redux/actions/posters";
 const NewPoster = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -13,10 +14,20 @@ const NewPoster = () => {
     console.log(files);
     setPhotos(files);
   };
+
+  const addPoster = async (e) => {
+    e.preventDefault();
+    try {
+      uploadPoster({ title, description, location, price, photos });
+    } catch (error) {
+      console.log(error);
+      alert(error.message)
+    }
+  };
   return (
     <Layout>
       <div className="w-full min-h-screen p-4">
-        <form className="w-96 m-auto">
+        <form onSubmit={addPoster} className="w-96 m-auto">
           <h1 className="text-lg font-semibold">New Poster</h1>
           <TextField
             name="Title"

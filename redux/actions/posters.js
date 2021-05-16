@@ -1,4 +1,4 @@
-import firebase, { firestore } from "../../firebase/firebase";
+import firebase, { firestore, storage } from "../../firebase/firebase";
 
 export const getAllPostersId = () => {
   let posters = [];
@@ -109,3 +109,56 @@ export const fetchPostersByUserId = (userId) => {
       return JSON.stringify(posters);
     });
 };
+export const uploadPoster = (poster) => {
+  // return () => {
+  const promises = [];
+  const photoURLs = [];
+  poster.photos.forEach((file) => {
+    const name = Date.now().toString() + Math.random(3).toFixed(3);
+    var path = `${poster.userId}/posters/${name}`;
+    var storageRef = storage.ref(path);
+    //Upload file
+    var task = storageRef.put(file);
+    promises.push(task);
+    //Update progress bar
+    task.on(
+      "state_changed",
+      (snapshot) => {
+        var percentage =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log(percentage);
+      },
+      (err) => {
+        // console.log(err);
+        alert(err.message);
+        throw new Error(err.message);
+      },
+      () => {
+        task.snapshot.ref.getDownloadURL().then((url) => {
+          console.log("File available at", url);
+          photoURLs.push(url);
+        });
+      }
+    );
+  });
+  Promise.all(promises)
+    .then(() => {
+      console.log("Upload complete");
+      firestore.collection("posters").add({
+        title: poster.title,
+        description: poster.description,
+        works: photoURLs,
+        userId: poster.userId,
+        authorRef: `/users/${poster.userId}`,
+        price: poster.price,
+        location: poster.location,
+      });
+    })
+    .catch((err) => {
+      alert(err.message);
+      throw new Error(err.message);
+    });
+};
+// };
+
+//   });

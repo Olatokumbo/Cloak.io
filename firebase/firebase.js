@@ -1,6 +1,6 @@
 import firebase from "firebase/app";
 import "firebase/firestore";
-// import "firebase/storage";
+import "firebase/storage";
 import "firebase/auth";
 import "firebase/analytics";
 
@@ -25,11 +25,11 @@ provider.setCustomParameters({
 });
 
 const firestore = firebase.firestore();
-// const storage = firebase.storage();
+const storage = firebase.storage();
 const auth = firebase.auth();
 
 // if (process.env.NODE_ENV === "production") {
 //   firebase.analytics();
 // }
 
-export { firebase as default, firestore, auth, provider };
+export { firebase as default, firestore, auth, provider, storage };
