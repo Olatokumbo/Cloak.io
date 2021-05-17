@@ -41,7 +41,11 @@ const MyPosterCard = ({ data }) => {
                 <MenuItem>View</MenuItem>
               </a>
             </Link>
-            <MenuItem onClick={handleClose}>Edit</MenuItem>
+            <Link href={`/search/${data.id}`}>
+              <a target="_blank">
+                <MenuItem >Edit</MenuItem>
+              </a>
+            </Link>
             <MenuItem onClick={handleClose}>Delete</MenuItem>
           </Menu>
           <div className="flex items-center">
