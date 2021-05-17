@@ -43,7 +43,7 @@ const ProfileCard = ({ data, searched }) => {
             <div className="flex self-end">
               <LocationMarkerIcon className="h-5 w-5 text-gray-500" />
               <h5 className="text-xs self-end text-gray-500">
-                {data.authorData.location || "Unspecified"}
+                {data.location || "Unspecified"}
               </h5>
             </div>
           </div>

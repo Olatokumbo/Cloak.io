@@ -45,7 +45,7 @@ const Profile = ({ poster }) => {
                   </svg>
 
                   <h5 className="text-xs self-end text-gray-500">
-                    {poster.authorData.location || "Unspecified"}
+                    {poster.location || "Unspecified"}
                   </h5>
                 </div>
               </div>
