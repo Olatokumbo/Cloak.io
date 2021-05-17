@@ -1,14 +1,28 @@
 import { useState } from "react";
-import { TextField, Button } from "@material-ui/core";
+import {
+  TextField,
+  Button,
+  FormControl,
+  Select,
+  MenuItem,
+  InputLabel,
+} from "@material-ui/core";
 import { UploadIcon } from "@heroicons/react/solid";
 import Layout from "../../components/Layout";
 import { uploadPoster } from "../../redux/actions/posters";
-const NewPoster = () => {
+import { useSelector } from "react-redux";
+import fs from "fs";
+import path from "path";
+const NewPoster = ({ categories }) => {
+  const userId = useSelector((state) => state.auth.uid);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [location, setLocation] = useState("");
   const [price, setPrice] = useState(0);
   const [photos, setPhotos] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(
+    "graphics-and-design"
+  );
   const handleUpload = (e) => {
     const files = Array.from(e.target.files);
     console.log(files);
@@ -18,11 +32,15 @@ const NewPoster = () => {
   const addPoster = async (e) => {
     e.preventDefault();
     try {
-      uploadPoster({ title, description, location, price, photos });
+      uploadPoster({ title, description, location, price, photos, userId, category:selectedCategory });
     } catch (error) {
       console.log(error);
-      alert(error.message)
+      alert(error.message);
     }
+  };
+
+  const changeCategory = (e) => {
+    setSelectedCategory(e.target.value);
   };
   return (
     <Layout>
@@ -81,6 +99,21 @@ const NewPoster = () => {
             fullWidth={true}
             margin="normal"
           /> */}
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">Category</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={selectedCategory}
+              onChange={changeCategory}
+            >
+              {categories.map((category) => (
+                <MenuItem key={category.id} value={category.id}>
+                  {category.title}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
           <div className="my-5">
             <label htmlFor="photos">
               <div className="flex justify-center">
@@ -113,3 +146,14 @@ const NewPoster = () => {
 };
 
 export default NewPoster;
+
+export const getStaticProps = async () => {
+  const filePath = path.join(process.cwd(), "utils", "category.json");
+  let fileData = fs.readFileSync(filePath);
+  let categories = JSON.parse(fileData);
+  return {
+    props: {
+      categories,
+    },
+  };
+};

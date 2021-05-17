@@ -3,6 +3,7 @@ import ProfileCarousel from "../../components/ProfileCarousel";
 import ProfileComment from "../../components/ProfileComment";
 import { getAllPostersId, fetchPostersbyId } from "../../redux/actions/posters";
 import CategoryList from "../../sections/CategoryList";
+import Link from "next/link";
 const Profile = ({ poster }) => {
   return (
     <Layout>
@@ -24,9 +25,11 @@ const Profile = ({ poster }) => {
                 className="w-10 max-h-10 rounded-full mr-3"
               />
               <div className="flex flex-col">
-                <h4 className="text-base font-bold text-gray-800">
-                  {poster.authorData.displayName}
-                </h4>
+                <Link href={`/profile/${poster.userId}`}>
+                  <h4 className="text-base font-bold text-gray-800 cursor-pointer hover:underline">
+                    {poster.authorData.displayName}
+                  </h4>
+                </Link>
                 <div className="flex">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

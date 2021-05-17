@@ -110,53 +110,60 @@ export const fetchPostersByUserId = (userId) => {
     });
 };
 export const uploadPoster = (poster) => {
-  // return () => {
-  const promises = [];
-  const photoURLs = [];
-  poster.photos.forEach((file) => {
-    const name = Date.now().toString() + Math.random(3).toFixed(3);
-    var path = `${poster.userId}/posters/${name}`;
-    var storageRef = storage.ref(path);
-    //Upload file
-    var task = storageRef.put(file);
-    promises.push(task);
-    //Update progress bar
-    task.on(
-      "state_changed",
-      (snapshot) => {
-        var percentage =
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log(percentage);
-      },
-      (err) => {
-        // console.log(err);
-        alert(err.message);
-        throw new Error(err.message);
-      },
-      () => {
-        task.snapshot.ref.getDownloadURL().then((url) => {
-          console.log("File available at", url);
-          photoURLs.push(url);
-        });
-      }
-    );
-  });
-  Promise.all(promises)
-    .then(() => {
-      console.log("Upload complete");
-      firestore.collection("posters").add({
-        title: poster.title,
-        description: poster.description,
-        works: photoURLs,
-        userId: poster.userId,
-        authorRef: `/users/${poster.userId}`,
-        price: poster.price,
-        location: poster.location,
-      });
+  firestore
+    .collection("posters")
+    .add({
+      title: poster.title,
+      description: [poster.description],
+      category: poster.category,
+      works: [],
+      userId: poster.userId,
+      authorRef: firestore.doc(`/users/${poster.userId}`),
+      price: parseInt(poster.price),
+      location: poster.location,
+      date: firebase.firestore.FieldValue.serverTimestamp(),
     })
-    .catch((err) => {
-      alert(err.message);
-      throw new Error(err.message);
+    .then((docRef) => {
+      const promises = [];
+      const urls = [];
+      poster.photos.forEach((file) => {
+        const name = Date.now().toString() + Math.random(3).toFixed(3);
+        const uploadTask = firebase
+          .storage()
+          .ref()
+          .child(`${poster.userId}/posters/${name}`)
+          .put(file);
+        promises.push(uploadTask);
+        uploadTask.on(
+          firebase.storage.TaskEvent.STATE_CHANGED,
+          (snapshot) => {
+            const progress =
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            if (snapshot.state === firebase.storage.TaskState.RUNNING) {
+              console.log(`Progress: ${progress}%`);
+            }
+          },
+          (error) => console.log(error.code),
+          async () => {
+            const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
+            // do something with the url
+            console.log(downloadURL);
+            firestore
+              .collection("posters")
+              .doc(docRef.id)
+              .update({
+                works: firebase.firestore.FieldValue.arrayUnion(downloadURL),
+              });
+          }
+        );
+      });
+      return Promise.all(promises)
+        .then(() => {
+          alert("All files uploaded");
+          console.log(urls);
+          return urls;
+        })
+        .catch((err) => console.log(err.code));
     });
 };
 // };
