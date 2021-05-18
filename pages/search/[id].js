@@ -106,5 +106,6 @@ export const getStaticProps = async ({ params }) => {
     props: {
       poster,
     },
+    revalidate: 1
   };
 };

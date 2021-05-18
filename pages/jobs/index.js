@@ -71,9 +71,11 @@ const Jobs = () => {
                   </div>
                 </div>
                 {isAuth && (
-                  <button className="my-6 mx-auto bg-black text-white py-1.5 px-2.5 rounded-md hover:bg-gray-900 focus:outline-none w-full">
-                    Add new Job
-                  </button>
+                  <Link href="/job/new">
+                    <button className="my-6 mx-auto bg-black text-white py-1.5 px-2.5 rounded-md hover:bg-gray-900 focus:outline-none w-full max-w-xs">
+                      Add new Job
+                    </button>
+                  </Link>
                 )}
               </div>
               <div className="flex flex-col flex-1 w-full">

@@ -102,7 +102,7 @@ const Navbar = ({ auth }) => {
               <li className="sm:my-0 my-1">
                 <Link href="/jobs">
                   <h1 className="mx-4 hover: cursor-pointer text-lg font-semibold text-gray-700 whitespace-nowrap">
-                    Find Jobs
+                    Jobs
                   </h1>
                 </Link>
               </li>

@@ -56,8 +56,8 @@ exports.onPosterCreated = functions.firestore
 
 exports.onPosterUpdate = functions.firestore
   .document("posters/{posterId}")
-  .onUpdate((snap, context) => {
-    const poster = snap.data();
+  .onUpdate((change, context) => {
+    const poster = change.after.data();
     const index = client.initIndex(ALGOLIA_INDEX_NAME);
     poster.objectID = context.params.posterId;
     return admin

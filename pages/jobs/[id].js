@@ -114,5 +114,6 @@ export const getStaticProps = async (context) => {
     props: {
       job: data,
     },
+    revalidate: 30
   };
 };

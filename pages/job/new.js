@@ -12,7 +12,7 @@ const NewJob = () => {
   return (
     <Layout>
       <div className="w-full min-h-screen p-4">
-        <form className="w-96 m-auto">
+        <form className="w-full m-auto md:w-96">
           <h1 className="text-lg font-semibold">New Job</h1>
           <TextField
             name="Title"

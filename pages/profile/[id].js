@@ -101,5 +101,6 @@ export const getStaticProps = async (context) => {
       user,
       posters,
     },
+    revalidate: 1
   };
 };
