@@ -56,7 +56,7 @@ const EditPoster = ({ categories, poster }) => {
     <Layout>
       <div className="w-full min-h-screen p-4">
         <form onSubmit={editPosterHandler} className="w-96 m-auto">
-          <h1 className="text-lg font-semibold">New Poster</h1>
+          <h1 className="text-lg font-semibold">Edit Poster</h1>
           <TextField
             name="Title"
             size="small"

@@ -14,7 +14,7 @@ const MyPosterCard = ({ data }) => {
     setAnchorEl(null);
   };
   return (
-    <div className="flex flex-col border-solid border-gray-200 border-2">
+    <div className="flex flex-col border-solid border-gray-200 border-2 h-72">
       <div className="flex h-40 relative -z-1">
         <Image
           src={data.works[0]}
@@ -23,9 +23,9 @@ const MyPosterCard = ({ data }) => {
           loading="eager"
         />
       </div>
-      <div className="p-2">
+      <div className="p-2 flex-1 flex flex-col justify-between">
         <h1>{data.title}</h1>
-        <div className="w-full flex justify-between items-center mt-10">
+        <div className="w-full flex justify-between items-center">
           <IconButton onClick={handleClick} size="small">
             <DotsHorizontalIcon className="h-4 w-4 m-1 text-gray-700 cursor-pointer" />
           </IconButton>
@@ -43,7 +43,7 @@ const MyPosterCard = ({ data }) => {
             </Link>
             <Link href={`/poster/${data.id}/edit`}>
               <a>
-                <MenuItem >Edit</MenuItem>
+                <MenuItem>Edit</MenuItem>
               </a>
             </Link>
             <MenuItem onClick={handleClose}>Delete</MenuItem>
