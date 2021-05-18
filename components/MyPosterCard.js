@@ -41,8 +41,8 @@ const MyPosterCard = ({ data }) => {
                 <MenuItem>View</MenuItem>
               </a>
             </Link>
-            <Link href={`/search/${data.id}`}>
-              <a target="_blank">
+            <Link href={`/poster/${data.id}/edit`}>
+              <a>
                 <MenuItem >Edit</MenuItem>
               </a>
             </Link>

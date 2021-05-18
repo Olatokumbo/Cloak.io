@@ -166,6 +166,23 @@ export const uploadPoster = (poster) => {
         .catch((err) => console.log(err.code));
     });
 };
-// };
 
-//   });
+export const updatePoster = (poster) => {
+  console.log(poster);
+  firestore
+    .collection("posters")
+    .doc(poster.id)
+    .update({
+      title: poster.title,
+      description: poster.description,
+      category: poster.category,
+      price: parseInt(poster.price),
+      location: poster.location,
+    })
+    .then(() => {
+      console.log("Document Updated");
+    })
+    .catch((e) => {
+      throw new Error(e.message);
+    });
+};

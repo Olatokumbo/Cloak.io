@@ -10,6 +10,7 @@ import {
 } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import { fetchPostersbyId } from "../../../redux/actions/posters";
+import { updatePoster } from "../../../redux/actions/posters";
 
 import fs from "fs";
 import path from "path";
@@ -33,11 +34,28 @@ const EditPoster = ({ categories, poster }) => {
   const changeCategory = (e) => {
     setSelectedCategory(e.target.value);
   };
+
+  const editPosterHandler = async (e) => {
+    e.preventDefault();
+    try {
+      updatePoster({
+        id: poster.id,
+        title,
+        description,
+        price,
+        category: selectedCategory,
+        location
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   if (userId !== poster.userId) return <Layout>Unauthorized</Layout>;
   return (
     <Layout>
       <div className="w-full min-h-screen p-4">
-        <form className="w-96 m-auto">
+        <form onSubmit={editPosterHandler} className="w-96 m-auto">
           <h1 className="text-lg font-semibold">New Poster</h1>
           <TextField
             name="Title"
@@ -103,6 +121,7 @@ const EditPoster = ({ categories, poster }) => {
             fullWidth
             size="large"
             color="primary"
+            margin="normal"
           >
             Save
           </Button>
