@@ -131,7 +131,7 @@ export const uploadPoster = (poster) => {
         const uploadTask = firebase
           .storage()
           .ref()
-          .child(`${poster.userId}/posters/${name}`)
+          .child(`${poster.userId}/posters/${docRef.id}/${name}`)
           .put(file);
         promises.push(uploadTask);
         uploadTask.on(
@@ -180,7 +180,20 @@ export const updatePoster = (poster) => {
       location: poster.location,
     })
     .then(() => {
-      console.log("Document Updated");
+      alert("Document Updated");
+    })
+    .catch((e) => {
+      throw new Error(e.message);
+    });
+};
+
+export const deletePoster = (id) => {
+  firestore
+    .collection("posters")
+    .doc(id)
+    .delete()
+    .then(() => {
+      alert("Poster Deleted");
     })
     .catch((e) => {
       throw new Error(e.message);

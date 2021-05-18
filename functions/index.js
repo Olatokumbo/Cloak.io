@@ -48,32 +48,62 @@ exports.onPosterCreated = functions.firestore
       .then((user) => {
         poster.photoURL = user.photoURL;
         poster.displayName = user.displayName;
-        poster.location = user.location;
       })
       .then(() => {
         return index.saveObject(poster);
       });
   });
 
+exports.onPosterUpdate = functions.firestore
+  .document("posters/{posterId}")
+  .onUpdate((snap, context) => {
+    const poster = snap.data();
+    const index = client.initIndex(ALGOLIA_INDEX_NAME);
+    poster.objectID = context.params.posterId;
+    return admin
+      .firestore()
+      .collection("users")
+      .doc(poster.userId)
+      .get()
+      .then((res) => {
+        // poster.authorData = res.data();
+        poster.photoURL = res.data().photoURL;
+        poster.displayName = res.data().displayName;
+      })
+      .then(() => {
+        return index.partialUpdateObject(poster).then((data) => {
+          functions.logger.info("Algolia", data);
+        });
+      });
+  });
+
+// exports.onPosterDeleted = functions.firestore
+//   .document("posters/{posterId}")
+//   .onDelete((_snap, context) => {
+//     const index = client.initIndex(ALGOLIA_INDEX_NAME);
+//     index.delete().then(() => {
+//       functions.logger.info("Algolia has been deleted");
+//     });
+//   });
+
 exports.onJobCreated = functions.firestore
   .document("jobs/{jobId}")
   .onCreate((snap, context) => {
-     // Get the note document
-     const job = snap.data();
-     // Add an 'objectID' field which Algolia requires
-     job.objectID = context.params.posterId;
-     // Write to the algolia index
-     const index = client.initIndex("jobs");
-     admin
-       .auth()
-       .getUser(job.userId)
-       .then((user) => {
-         job.photoURL = user.photoURL;
-         job.displayName = user.displayName;
-         job.location = user.location;
-       })
-       .then(() => {
-         return index.saveObject(job);
-       });
-
+    // Get the note document
+    const job = snap.data();
+    // Add an 'objectID' field which Algolia requires
+    job.objectID = context.params.posterId;
+    // Write to the algolia index
+    const index = client.initIndex("jobs");
+    return admin
+      .auth()
+      .getUser(job.userId)
+      .then((user) => {
+        job.photoURL = user.photoURL;
+        job.displayName = user.displayName;
+        job.location = user.location;
+      })
+      .then(() => {
+        return index.saveObject(job);
+      });
   });
