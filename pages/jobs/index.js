@@ -4,8 +4,10 @@ import JobCard from "../../components/JobCard";
 import Layout from "../../components/Layout";
 import { SearchIcon, ChevronDownIcon } from "@heroicons/react/outline";
 import algoliasearch from "algoliasearch";
+import { useSelector } from "react-redux";
 
 const Jobs = () => {
+  const isAuth = useSelector((state) => state.auth.isAuth);
   const [searchResults, setSearchResults] = useState([]);
   const keywordRef = useRef();
   var client = algoliasearch(
@@ -30,12 +32,12 @@ const Jobs = () => {
     <Layout>
       <div className="min-h-screen bg-gray-100">
         <div className="bg-gray-800 py-12 px-4">
-          <h3 className="text-white text-3xl font-medium">Find Jobs</h3>
+          <h3 className="text-white text-3xl font-medium">Jobs</h3>
         </div>
         <div className="flex min-h-screen">
           <div className="flex-3 p-5 flex-col">
             <div className="flex items-start flex-col-reverse md:flex-row">
-              <div className="py-1 pr-0  w-full md:w-min md:py-6 md:pr-5">
+              <div className="py-1 pr-0  w-full md:w-min md:py-6 md:pr-5 flex flex-col">
                 <h5 className="text-sm font-semibold text-gray-600">
                   Filter by:
                 </h5>
@@ -68,6 +70,11 @@ const Jobs = () => {
                     </select>
                   </div>
                 </div>
+                {isAuth && (
+                  <button className="my-6 mx-auto bg-black text-white py-1.5 px-2.5 rounded-md hover:bg-gray-900 focus:outline-none w-full">
+                    Add new Job
+                  </button>
+                )}
               </div>
               <div className="flex flex-col flex-1 w-full">
                 <form className="my-4 flex" onSubmit={jobSearch}>
