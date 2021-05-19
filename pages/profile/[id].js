@@ -1,6 +1,15 @@
+import { useState } from "react";
 import Layout from "../../components/Layout";
 import CategoryList from "../../sections/CategoryList";
-import { Avatar, makeStyles } from "@material-ui/core";
+import {
+  Avatar,
+  makeStyles,
+  Modal,
+  TextField,
+  Button,
+  Backdrop,
+  Fade,
+} from "@material-ui/core";
 import { LocationMarkerIcon } from "@heroicons/react/solid";
 import { fetchUser, getAllProfileId } from "../../redux/actions/profile";
 import { fetchPostersByUserId } from "../../redux/actions/posters";
@@ -12,11 +21,43 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     marginLeft: theme.spacing(5),
     marginRight: theme.spacing(5),
+    width: 90,
+    height: 90,
   },
+  paper: {
+    // position: "absolute",
+    transform: `translate(0%, 80%)`,
+    minWidth: 180,
+    maxWidth: 400,
+    backgroundColor: theme.palette.background.paper,
+    // border: "2px solid #000",
+    boxShadow: theme.shadows[5],
+    padding: theme.spacing(2, 4, 3),
+    margin: "auto",
+    display: "flex",
+    flexDirection: "column",
+  },
+  btn:{
+    backgroundColor: "#374151",
+    '&:hover': {
+      background: "#535e70",
+   },
+  }
 }));
+
 const Profile = ({ user, posters }) => {
+  const [open, setOpen] = useState(false);
+  const [description, setDescription] = useState(user.description);
   const classes = useStyles();
   const uid = useSelector((state) => state.auth.uid);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
     <Layout>
@@ -44,12 +85,53 @@ const Profile = ({ user, posters }) => {
             <div className="flex justify-between items-center">
               <h1 className="font-semibold text-gray-700 mb-3">Description</h1>
               {uid === user.id && (
-                <h1 className="font-normal text-gray-500 mb-3 cursor-pointer underline">
+                <h1
+                  className="font-normal text-gray-500 mb-3 cursor-pointer underline"
+                  onClick={handleOpen}
+                >
                   Edit
                 </h1>
               )}
             </div>
             <h5 className="text-sm">{user.description}</h5>
+            <Modal
+              aria-labelledby="transition-modal-title"
+              aria-describedby="transition-modal-description"
+              open={open}
+              onClose={handleClose}
+              closeAfterTransition
+              BackdropComponent={Backdrop}
+              BackdropProps={{
+                timeout: 500,
+              }}
+            >
+              <Fade in={open}>
+                <div className={classes.paper}>
+                  <h1 className="text-gray-700 font-semibold">Edit Description</h1>
+                  <TextField
+                    placeholder="Folder Name..."
+                    variant="outlined"
+                    multiline
+                    rows={5}
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    margin="normal"
+                    inputProps={{
+                      maxLength: 30,
+                    }}
+                  />
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    margin="normal"
+                    className={classes.btn}
+                    // onClick={handleSubmit}
+                  >
+                    Done
+                  </Button>
+                </div>
+              </Fade>
+            </Modal>
           </div>
         </div>
         <div className="flex-1 md:flex-2 lg:flex-3 min-h-screen w-full p-5 border-solid border-gray-100 border-2">
@@ -101,6 +183,6 @@ export const getStaticProps = async (context) => {
       user,
       posters,
     },
-    revalidate: 1
+    revalidate: 1,
   };
 };
