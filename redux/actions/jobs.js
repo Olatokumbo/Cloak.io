@@ -55,3 +55,32 @@ export const addJob = (job) => {
       console.log("Error getting documents: ", error);
     });
 };
+
+
+export const fetchJobs = () =>{
+  let jobs = [];
+  let promises = [];
+  return firestore
+    .collection("jobs")
+    .limit(10)
+    .get()
+    .then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        let jobData = doc.data();
+        jobData.id = doc.id;
+        if (jobData.authorRef) {
+          promises.push(
+            jobData.authorRef.get().then((res) => {
+              jobData.authorData = res.data();
+            })
+          );
+        }
+        jobs.push(jobData);
+      });
+      return Promise.all(promises);
+    })
+    .then(() => {
+      return JSON.stringify(jobs);
+    })
+    .catch((err) => err.message);
+}
