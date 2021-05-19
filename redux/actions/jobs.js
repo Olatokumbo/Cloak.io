@@ -86,14 +86,12 @@ export const fetchJobs = () =>{
 }
 
 export const updateJob = (job) => {
-  console.log(job);
   firestore
     .collection("jobs")
     .doc(job.id)
     .update({
       title: job.title,
       description: [job.description],
-      category: job.category,
       price: parseInt(job.price),
       location: job.location,
     })

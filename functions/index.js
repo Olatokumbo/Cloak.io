@@ -113,7 +113,7 @@ exports.onJobUpdated = functions.firestore
   .onUpdate((change, context) => {
     const job = change.after.data();
     const index = client.initIndex("jobs");
-    job.objectID = context.params.posterId;
+    job.objectID = context.params.jobId;
     return admin
       .firestore()
       .collection("users")
