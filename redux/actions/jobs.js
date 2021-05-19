@@ -1,4 +1,4 @@
-import { firestore } from "../../firebase/firebase";
+import firebase, { firestore } from "../../firebase/firebase";
 
 export const fetchJobById = (documentId) => {
   let promises = [];
@@ -33,6 +33,24 @@ export const getAllJobsId = () => {
       });
     })
     .then(() => JSON.stringify(jobs))
+    .catch((error) => {
+      console.log("Error getting documents: ", error);
+    });
+};
+
+export const addJob = (job) => {
+  firestore
+    .collection("jobs")
+    .add({
+      title: job.title,
+      description: [job.description],
+      price: parseInt(job.price),
+      location: job.location,
+      userId: job.userId,
+      authorRef: firestore.doc(`/users/${job.userId}`),
+      date: firebase.firestore.FieldValue.serverTimestamp(),
+    })
+    .then(() => alert("Posted Your Job"))
     .catch((error) => {
       console.log("Error getting documents: ", error);
     });

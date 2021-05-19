@@ -9,19 +9,19 @@ const JobInfo = ({ job }) => {
           <div className="flex justify-between items-center">
             <h1 className="text-2xl font-semibold my-5">{job?.title}</h1>
             <h5 className="text-2xl font-semibold text-gray-800">
-            {`₦${job.price}` || ""}
+              {`₦${job.price}` || ""}
             </h5>
           </div>
           <div className="flex justify-between mb-7">
             <div className="flex items-center">
               <img
-                src="/davidO.jpg"
+                src={job.authorData.photoURL}
                 alt="me"
                 className="w-10 max-h-10 rounded-full mr-3"
               />
               <div className="flex flex-col">
                 <h4 className="text-base font-bold text-gray-800">
-                  faithodesola
+                  {job.authorData.displayName}
                 </h4>
                 <div className="flex">
                   <svg
@@ -114,6 +114,6 @@ export const getStaticProps = async (context) => {
     props: {
       job: data,
     },
-    revalidate: 30
+    revalidate: 30,
   };
 };

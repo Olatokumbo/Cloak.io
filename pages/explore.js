@@ -12,7 +12,7 @@ const Explores = ({ posters }) => {
       <div className="w-full flex flex-col-reverse md:flex-row lg:flex-row">
         <div className="flex-1 p-1 md:py-5 md:px-4">
           <div className="p-2 h-full w-full rounded border-solid border-gray-200 border-2 flex flex-col items-center justify-center">
-            <h1>Hi Gifted,</h1>
+            <h1>Hello there,</h1>
             <h5 className="text-xs text-center">
               Get offers from sellers for your project
             </h5>
@@ -60,5 +60,6 @@ export const getStaticProps = async () => {
     props: {
       posters,
     },
+    revalidate: 1
   };
 };

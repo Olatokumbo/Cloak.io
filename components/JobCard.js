@@ -20,7 +20,7 @@ const JobCard = ({ data }) => {
         <h1 className="text-2xl">{`₦${data.price}` || ""}</h1>
       </div>
       <div className="my-5">
-        <h5 className="text-gray-800 text-sm">{truncate(data?.description)}</h5>
+        <h5 className="text-gray-800 text-sm">{truncate(data?.description[0])}</h5>
       </div>
       <div className="flex justify-between items-center">
         <HeartIcon className="h-6 w-6" />

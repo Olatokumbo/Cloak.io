@@ -5,6 +5,13 @@ import { getAllPostersId, fetchPostersbyId } from "../../redux/actions/posters";
 import CategoryList from "../../sections/CategoryList";
 import Link from "next/link";
 const Profile = ({ poster }) => {
+  if (!poster)
+    return (
+      <Layout>
+        <CategoryList />
+        Loading...
+      </Layout>
+    );
   return (
     <Layout>
       <CategoryList />
@@ -106,6 +113,6 @@ export const getStaticProps = async ({ params }) => {
     props: {
       poster,
     },
-    revalidate: 1
+    revalidate: 10,
   };
 };

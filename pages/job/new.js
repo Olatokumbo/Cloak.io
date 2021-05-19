@@ -3,16 +3,26 @@ import { TextField, Button } from "@material-ui/core";
 import Layout from "../../components/Layout";
 import { useSelector } from "react-redux";
 import PrivateRoute from "../../hoc/PrivateRoute";
+import { addJob } from "../../redux/actions/jobs";
 const NewJob = () => {
-  const isAuth = useSelector((state) => state.auth.isAuth);
+  const userId = useSelector((state) => state.auth.uid);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [location, setLocation] = useState("");
   const [price, setPrice] = useState(0);
+
+  const addJobHandler = async (e) => {
+    e.preventDefault();
+    try {
+      addJob({ title, description, location, price, userId });
+    } catch (error) {
+      alert(error.message);
+    }
+  };
   return (
     <Layout>
       <div className="w-full min-h-screen p-4">
-        <form className="w-full m-auto md:w-96">
+        <form onSubmit={addJobHandler} className="w-full m-auto md:w-96">
           <h1 className="text-lg font-semibold">New Job</h1>
           <TextField
             name="Title"

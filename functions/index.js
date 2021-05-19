@@ -92,7 +92,7 @@ exports.onJobCreated = functions.firestore
     // Get the note document
     const job = snap.data();
     // Add an 'objectID' field which Algolia requires
-    job.objectID = context.params.posterId;
+    job.objectID = context.params.jobId;
     // Write to the algolia index
     const index = client.initIndex("jobs");
     return admin
