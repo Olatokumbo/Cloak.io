@@ -45,7 +45,7 @@ const NewPoster = ({ categories }) => {
   return (
     <Layout>
       <div className="w-full min-h-screen p-4">
-        <form onSubmit={addPoster} className="w-96 m-auto">
+        <form onSubmit={addPoster} className="max-w-96 sm:w-96 m-auto">
           <h1 className="text-lg font-semibold">New Poster</h1>
           <TextField
             name="Title"

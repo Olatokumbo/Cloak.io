@@ -107,3 +107,26 @@ exports.onJobCreated = functions.firestore
         return index.saveObject(job);
       });
   });
+
+exports.onJobUpdated = functions.firestore
+  .document("jobs/{jobId}")
+  .onUpdate((change, context) => {
+    const job = change.after.data();
+    const index = client.initIndex("jobs");
+    job.objectID = context.params.posterId;
+    return admin
+      .firestore()
+      .collection("users")
+      .doc(job.userId)
+      .get()
+      .then((res) => {
+        // poster.authorData = res.data();
+        job.photoURL = res.data().photoURL;
+        job.displayName = res.data().displayName;
+      })
+      .then(() => {
+        return index.partialUpdateObject(job).then((data) => {
+          functions.logger.info("Algolia", data);
+        });
+      });
+  });

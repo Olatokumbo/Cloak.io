@@ -14,7 +14,7 @@ const JobCard = ({ data }) => {
           <div className="flex flex-col">
             <h2 className="font-semibold text-lg">{data?.title}</h2>
             <h6 className="text-xs text-gray-400 font-medium">
-              {data?.displayName}
+              {data?.displayName || data?.authorData.displayName}
             </h6>
           </div>
         </div>

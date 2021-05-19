@@ -48,7 +48,7 @@ const Jobs = ({ jobs }) => {
                   {/* Location Dropdown menu */}
                   <div className="relative inline-flex m-1">
                     <ChevronDownIcon className="w-3 h-3 absolute top-0 right-0 m-4 pointer-events-none" />
-                    <select className="border border-gray-300 rounded-md text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none">
+                    <select disabled className="border border-gray-300 rounded-md text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none">
                       <option defaultValue>
                         Choose Location &nbsp; &nbsp;
                       </option>
@@ -59,7 +59,7 @@ const Jobs = ({ jobs }) => {
                     </select>
                   </div>
                   {/* Job type Dropdown menu */}
-                  <div className="relative inline-flex m-1">
+                  {/* <div className="relative inline-flex m-1">
                     <ChevronDownIcon className="w-3 h-3 absolute top-0 right-0 m-4 pointer-events-none" />
                     <select className="border border-gray-300 rounded-md text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none">
                       <option defaultValue>
@@ -71,7 +71,7 @@ const Jobs = ({ jobs }) => {
                       <option>Contract</option>
                       <option>Internship</option>
                     </select>
-                  </div>
+                  </div> */}
                 </div>
                 {isAuth && (
                   <Link href="/job/new">
@@ -98,7 +98,7 @@ const Jobs = ({ jobs }) => {
                     {keyword && `Results for "${keyword}"`}
                   </h4>
                   {/* Location Dropdown menu */}
-                  <div className="relative inline-flex my-1">
+                  {/* <div className="relative inline-flex my-1">
                     <ChevronDownIcon className="w-3 h-3 absolute top-0 right-0 m-4 pointer-events-none" />
                     <select className="border border-gray-300 rounded-md text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none">
                       <option defaultValue>Date Posted</option>
@@ -111,7 +111,7 @@ const Jobs = ({ jobs }) => {
                       <option>Gray</option>
                       <option>White</option>
                     </select>
-                  </div>
+                  </div> */}
                 </div>
                 <div>
                   <div className="grid gap-3 grid-cols-1 lg:grid-cols-2">
@@ -127,7 +127,7 @@ const Jobs = ({ jobs }) => {
                           </Link>
                         ))
                       : jobs.map((job) => (
-                          <Link href={`/jobs/${job.id}`} key={job.objectID}>
+                          <Link href={`/jobs/${job.id}`} key={job.id}>
                             <a target="_blank">
                               <JobCard data={job} />
                             </a>
