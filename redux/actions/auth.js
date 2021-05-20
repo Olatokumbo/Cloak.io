@@ -13,7 +13,10 @@ export const signinGoogle = () => {
   auth
     .signInWithPopup(provider)
     .then((result) => {
-      console.log(result);
+      console.log("Signin", result);
+      auth.currentUser.updateProfile({
+        displayName: result.user.email.split("@")[0]
+      })
     })
     .catch((error) => {
       console.log(error);

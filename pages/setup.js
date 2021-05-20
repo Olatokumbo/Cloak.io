@@ -32,6 +32,7 @@ const NewUser = () => {
             onChange={(e) => setDisplayName(e.target.value)}
             value={displayName}
             required
+            disabled
           />
           <TextField
             name="phoneNumber"
@@ -46,6 +47,7 @@ const NewUser = () => {
             required
             // inputProps={{ maxLength: 10 }}
             value={phoneNumber}
+            disabled
           />
           <Button
             type="submit"

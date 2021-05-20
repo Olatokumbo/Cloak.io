@@ -21,7 +21,7 @@ const addUser = (cred) => {
     .doc(cred.uid)
     .set({
       email: cred.email,
-      displayName: cred.displayName,
+      displayName: cred.email.split("@")[0],
       emailVerified: cred.emailVerified,
       phoneNumber: cred.phoneNumber,
       location: null,

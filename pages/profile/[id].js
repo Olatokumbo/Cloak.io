@@ -64,7 +64,7 @@ const Profile = ({ user, posters }) => {
     try {
       updateProfileDescription({ id: uid, description });
     } catch (error) {
-    console.log(error.message)
+      console.log(error.message);
     }
   };
 
@@ -74,12 +74,14 @@ const Profile = ({ user, posters }) => {
       <div className="flex p-3 flex-col md:flex-row">
         <div className="flex-1 px-3">
           <div className="flex flex-col justify-center items-center p-10 w-full border-solid border-gray-300 border-2">
-            <Avatar src="/davidO.jpg" className={classes.avatar} />
+            <Avatar src={user.photoURL} className={classes.avatar} />
             <h1>{user.displayName}</h1>
-            <div className="flex items-end mb-2">
-              <LocationMarkerIcon className="h-5 w-5 text-gray-500" />
-              <h5 className="text-xs text-gray-500">{user.location}</h5>
-            </div>
+            {user.location && (
+              <div className="flex items-end mb-2">
+                <LocationMarkerIcon className="h-5 w-5 text-gray-500" />
+                <h5 className="text-xs text-gray-500">{user.location}</h5>
+              </div>
+            )}
             {uid !== user.id && (
               <button className="mt-2 mb-1 bg-black focus:outline-none text-white px-3 py-2 md:px-4 rounded-md hover:bg-gray-900">
                 Contact Me
@@ -119,9 +121,12 @@ const Profile = ({ user, posters }) => {
                   <h1 className="text-gray-700 font-semibold">
                     Edit Description
                   </h1>
-                  <form onSubmit={updateDescriptionHandler} className="flex flex-col w-full">
+                  <form
+                    onSubmit={updateDescriptionHandler}
+                    className="flex flex-col w-full"
+                  >
                     <TextField
-                      placeholder="Folder Name..."
+                      placeholder="Enter Your Description"
                       variant="outlined"
                       multiline
                       rows={5}
