@@ -1,4 +1,4 @@
-import { auth, provider } from "../../firebase/firebase";
+import { auth, provider, firestore } from "../../firebase/firebase";
 import * as actionTypes from "../actions/actionTypes";
 
 export const signinEaP = (cred) => {
@@ -32,4 +32,22 @@ export const signout = () => {
         console.log(err);
       });
   };
+};
+
+export const setupAccount = (displayName, phoneNumber, uid) => {
+  auth.currentUser
+    .updateProfile({
+      displayName,
+    })
+    .then(() => {
+      firestore.collection("users").doc(uid).update({
+        phoneNumber,
+        displayName,
+      });
+    }).then(()=>{
+      alert("Changes Saved")
+    })
+    .catch((e) => {
+      console.log(e.message);
+    });
 };
