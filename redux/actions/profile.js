@@ -22,5 +22,23 @@ export const fetchUser = (userId) => {
     .get()
     .then((doc) => {
       return JSON.stringify({ ...doc.data(), id: doc.id });
+    })
+    .catch((e) => {
+      return new Error(e.message);
+    });
+};
+
+export const updateProfileDescription = (profile) => {
+  return firestore
+    .collection("users")
+    .doc(profile.id)
+    .update({
+      description: profile.description,
+    })
+    .then(() => {
+      alert("Successfully Updated Your Description");
+    })
+    .catch((e) => {
+      return new Error(e.message);
     });
 };

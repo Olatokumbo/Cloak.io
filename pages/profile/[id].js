@@ -17,6 +17,7 @@ import MyPosterCard from "../../components/MyPosterCard";
 import { useSelector } from "react-redux";
 import { format } from "date-fns";
 import Link from "next/link";
+import { updateProfileDescription } from "../../redux/actions/profile";
 const useStyles = makeStyles((theme) => ({
   avatar: {
     marginLeft: theme.spacing(5),
@@ -37,12 +38,12 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
   },
-  btn:{
+  btn: {
     backgroundColor: "#374151",
-    '&:hover': {
+    "&:hover": {
       background: "#535e70",
-   },
-  }
+    },
+  },
 }));
 
 const Profile = ({ user, posters }) => {
@@ -57,6 +58,14 @@ const Profile = ({ user, posters }) => {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const updateDescriptionHandler = async () => {
+    try {
+      updateProfileDescription({ id: uid, description });
+    } catch (error) {
+    console.log(error.message)
+    }
   };
 
   return (
@@ -107,28 +116,32 @@ const Profile = ({ user, posters }) => {
             >
               <Fade in={open}>
                 <div className={classes.paper}>
-                  <h1 className="text-gray-700 font-semibold">Edit Description</h1>
-                  <TextField
-                    placeholder="Folder Name..."
-                    variant="outlined"
-                    multiline
-                    rows={5}
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                    margin="normal"
-                    inputProps={{
-                      maxLength: 30,
-                    }}
-                  />
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    margin="normal"
-                    className={classes.btn}
-                    // onClick={handleSubmit}
-                  >
-                    Done
-                  </Button>
+                  <h1 className="text-gray-700 font-semibold">
+                    Edit Description
+                  </h1>
+                  <form onSubmit={updateDescriptionHandler} className="flex flex-col w-full">
+                    <TextField
+                      placeholder="Folder Name..."
+                      variant="outlined"
+                      multiline
+                      rows={5}
+                      value={description}
+                      onChange={(e) => setDescription(e.target.value)}
+                      margin="normal"
+                      inputProps={{
+                        maxLength: 430,
+                      }}
+                    />
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      color="primary"
+                      margin="normal"
+                      className={classes.btn}
+                    >
+                      Done
+                    </Button>
+                  </form>
                 </div>
               </Fade>
             </Modal>
