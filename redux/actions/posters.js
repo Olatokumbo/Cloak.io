@@ -121,6 +121,7 @@ export const uploadPoster = (poster) => {
       authorRef: firestore.doc(`/users/${poster.userId}`),
       price: parseInt(poster.price),
       location: poster.location,
+      phoneNumber: poster.phoneNumber,
       date: firebase.firestore.FieldValue.serverTimestamp(),
     })
     .then((docRef) => {
@@ -178,6 +179,7 @@ export const updatePoster = (poster) => {
       category: poster.category,
       price: parseInt(poster.price),
       location: poster.location,
+      phoneNumber: poster.phoneNumber,
     })
     .then(() => {
       alert("Document Updated");

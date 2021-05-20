@@ -17,6 +17,7 @@ const NewPoster = ({ categories }) => {
   const userId = useSelector((state) => state.auth.uid);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [location, setLocation] = useState("");
   const [price, setPrice] = useState(0);
   const [photos, setPhotos] = useState([]);
@@ -32,7 +33,16 @@ const NewPoster = ({ categories }) => {
   const addPoster = async (e) => {
     e.preventDefault();
     try {
-      uploadPoster({ title, description, location, price, photos, userId, category:selectedCategory });
+      uploadPoster({
+        title,
+        description,
+        location,
+        phoneNumber,
+        price,
+        photos,
+        userId,
+        category: selectedCategory,
+      });
     } catch (error) {
       console.log(error);
       alert(error.message);
@@ -55,6 +65,7 @@ const NewPoster = ({ categories }) => {
             fullWidth={true}
             margin="normal"
             onChange={(e) => setTitle(e.target.value)}
+            required
             value={title}
           />
           <TextField
@@ -68,6 +79,7 @@ const NewPoster = ({ categories }) => {
             rows={5}
             onChange={(e) => setDescription(e.target.value)}
             value={description}
+            required
           />
           <TextField
             name="location"
@@ -78,6 +90,19 @@ const NewPoster = ({ categories }) => {
             margin="normal"
             onChange={(e) => setLocation(e.target.value)}
             value={location}
+            required
+          />
+          <TextField
+            type="text"
+            name="phoneNumber"
+            size="small"
+            label="Phone Number"
+            variant="outlined"
+            fullWidth={true}
+            margin="normal"
+            onChange={(e) => setPhoneNumber(e.target.value)}
+            value={phoneNumber}
+            required
           />
           <TextField
             type="number"
@@ -90,15 +115,6 @@ const NewPoster = ({ categories }) => {
             onChange={(e) => setPrice(e.target.value)}
             value={price}
           />
-          {/* <TextField
-            type="file"
-            name="Photos"
-            size="small"
-            label="Photos"
-            variant="outlined"
-            fullWidth={true}
-            margin="normal"
-          /> */}
           <FormControl fullWidth>
             <InputLabel id="demo-simple-select-label">Category</InputLabel>
             <Select
@@ -106,6 +122,7 @@ const NewPoster = ({ categories }) => {
               id="demo-simple-select"
               value={selectedCategory}
               onChange={changeCategory}
+              required
             >
               {categories.map((category) => (
                 <MenuItem key={category.id} value={category.id}>
@@ -128,6 +145,7 @@ const NewPoster = ({ categories }) => {
               hidden
               accept=".jpeg, .jpg, .png"
               onChange={handleUpload}
+              required
             />
           </div>
           <Button

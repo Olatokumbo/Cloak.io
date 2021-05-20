@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { DotsHorizontalIcon } from "@heroicons/react/solid";
 import { IconButton, Menu, MenuItem } from "@material-ui/core";
-const MyPosterCard = ({ data }) => {
+const MyPosterCard = ({ data, editable }) => {
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClick = (event) => {
@@ -41,12 +41,16 @@ const MyPosterCard = ({ data }) => {
                 <MenuItem>View</MenuItem>
               </a>
             </Link>
-            <Link href={`/poster/${data.id}/edit`}>
-              <a>
-                <MenuItem>Edit</MenuItem>
-              </a>
-            </Link>
-            <MenuItem onClick={handleClose}>Delete</MenuItem>
+            {editable && (
+              <>
+                <Link href={`/poster/${data.id}/edit`}>
+                  <a>
+                    <MenuItem>Edit</MenuItem>
+                  </a>
+                </Link>
+                <MenuItem onClick={handleClose}>Delete</MenuItem>
+              </>
+            )}
           </Menu>
           <div className="flex items-center">
             <h5 className="text-gray-800 mr-1 text-xs">Starting at</h5>

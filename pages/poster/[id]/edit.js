@@ -18,6 +18,7 @@ const EditPoster = ({ categories, poster }) => {
   const userId = useSelector((state) => state.auth.uid);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [location, setLocation] = useState("");
   const [price, setPrice] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState(
@@ -29,6 +30,7 @@ const EditPoster = ({ categories, poster }) => {
     setDescription(poster.description[0]);
     setLocation(poster.location);
     setPrice(poster.price);
+    setPhoneNumber(poster.phoneNumber)
     setSelectedCategory(poster.category);
   }, []);
   const changeCategory = (e) => {
@@ -44,7 +46,8 @@ const EditPoster = ({ categories, poster }) => {
         description,
         price,
         category: selectedCategory,
-        location
+        location,
+        phoneNumber
       });
     } catch (error) {
       console.log(error);
@@ -90,6 +93,18 @@ const EditPoster = ({ categories, poster }) => {
             value={location}
           />
           <TextField
+            type="text"
+            name="phoneNumber"
+            size="small"
+            label="Phone Number"
+            variant="outlined"
+            fullWidth={true}
+            margin="normal"
+            onChange={(e) => setPhoneNumber(e.target.value)}
+            value={phoneNumber}
+            required
+          />
+          <TextField
             type="number"
             name="price"
             size="small"
@@ -99,6 +114,7 @@ const EditPoster = ({ categories, poster }) => {
             margin="normal"
             onChange={(e) => setPrice(e.target.value)}
             value={price}
+            required
           />
           <FormControl fullWidth margin="normal">
             <InputLabel id="demo-simple-select-label">Category</InputLabel>

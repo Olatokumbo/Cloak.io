@@ -167,7 +167,7 @@ const Profile = ({ user, posters }) => {
           </div>
           <div className="my-5 w-full px-2 grid gap-x-2 gap-y-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
             {posters.map((poster) => (
-              <MyPosterCard key={poster.id} data={poster} />
+              <MyPosterCard key={poster.id} data={poster} editable={uid === user.id} />
             ))}
           </div>
         </div>
