@@ -135,8 +135,8 @@ const Navbar = ({ auth }) => {
                   transformOrigin={{ vertical: "top", horizontal: "center" }}
                   getContentAnchorEl={null}
                 >
-                  <MenuItem onClick={()=>router.push(`/profile/${auth.uid}`)}>Profile</MenuItem>
-                  <MenuItem onClick={handleClose}>My account</MenuItem>
+                  <MenuItem onClick={()=>router.push(`/profile/${auth.uid}`)}>My Profile</MenuItem>
+                  {/* <MenuItem onClick={handleClose}>My account</MenuItem> */}
                   <MenuItem onClick={signedOut}>Logout</MenuItem>
                 </Menu>
               </li>

@@ -1,10 +1,14 @@
+import { useState } from "react";
 import Layout from "../../components/Layout";
 import ProfileCarousel from "../../components/ProfileCarousel";
 import ProfileComment from "../../components/ProfileComment";
 import { getAllPostersId, fetchPostersbyId } from "../../redux/actions/posters";
 import CategoryList from "../../sections/CategoryList";
 import Link from "next/link";
+import { useSelector } from "react-redux";
 const Profile = ({ poster }) => {
+  const uid = useSelector((state) => state.auth.uid);
+  const [buttonState, setButtonState] = useState(false);
   if (!poster)
     return (
       <Layout>
@@ -12,6 +16,10 @@ const Profile = ({ poster }) => {
         Loading...
       </Layout>
     );
+  const contactMe = () => {
+    if (uid) setButtonState(true);
+    else alert("Please Signin First");
+  };
   return (
     <Layout>
       <CategoryList />
@@ -57,9 +65,14 @@ const Profile = ({ poster }) => {
                 </div>
               </div>
             </div>
-            <button className="ml-5 bg-black focus:outline-none text-white px-3 py-2 md:px-4 rounded-md hover:bg-gray-900">
-              Get in Touch
-            </button>
+            {uid !== poster.userId && (
+              <button
+                onClick={contactMe}
+                className="ml-5 bg-black focus:outline-none text-white px-3 py-2 md:px-4 rounded-md hover:bg-gray-900"
+              >
+                {buttonState ? poster.phoneNumber : "Show Contact"}
+              </button>
+            )}
           </div>
           {/* <h6 className="text-md text-gray-600">Level 2</h6> */}
           <h1 className="text-lg font-semibold mt-5">My Works</h1>

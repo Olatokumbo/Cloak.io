@@ -82,11 +82,11 @@ const Profile = ({ user, posters }) => {
                 <h5 className="text-xs text-gray-500">{user.location}</h5>
               </div>
             )}
-            {uid !== user.id && (
+            {/* {uid !== user.id && (
               <button className="mt-2 mb-1 bg-black focus:outline-none text-white px-3 py-2 md:px-4 rounded-md hover:bg-gray-900">
                 Contact Me
               </button>
-            )}
+            )} */}
             <h5 className="text-xs text-gray-500">
               Member Since{" "}
               {format(new Date(user.joined.seconds * 1000), "MMMM yyyy")}
