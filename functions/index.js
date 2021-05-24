@@ -77,15 +77,40 @@ exports.onPosterUpdate = functions.firestore
       });
   });
 
-// exports.onPosterDeleted = functions.firestore
-//   .document("posters/{posterId}")
-//   .onDelete((_snap, context) => {
-//     const index = client.initIndex(ALGOLIA_INDEX_NAME);
-//     index.delete().then(() => {
-//       functions.logger.info("Algolia has been deleted");
-//     });
-//   });
+exports.onPosterDeleted = functions.firestore
+  .document("posters/{posterId}")
+  .onDelete((snap, context) => {
+    const { posterId } = context.params;
+    const userId = snap.data().userId;
+    return deletePoster(posterId, userId);
+  });
 
+const deleteAlgoliaObject = (objectID) => {
+  // Write to the algolia index
+  const index = client.initIndex(ALGOLIA_INDEX_NAME);
+  return index
+    .deleteObject(objectID)
+    .then(() => {
+      return console.log("Successfully deleted File");
+    })
+    .catch((err) => {
+      return Error("Error::", err.message);
+    });
+};
+
+const deletePoster = (posterId, userId) => {
+  const bucket = admin.storage().bucket();
+  return bucket
+    .deleteFiles({
+      prefix: `${userId}/posters/${posterId}`,
+    })
+    .then(() => {
+      return deleteAlgoliaObject(posterId);
+    })
+    .catch((err) => {
+      return Error("Error::", err.message);
+    });
+};
 exports.onJobCreated = functions.firestore
   .document("jobs/{jobId}")
   .onCreate((snap, context) => {

@@ -67,7 +67,7 @@ const MyPosterCard = ({ data, editable }) => {
           </div>
         </div>
       </div>
-      <DeleteModal open={deleteModalOpen} handleClose={closeDeleteModal} />
+      <DeleteModal open={deleteModalOpen} handleClose={closeDeleteModal} id={data.id}/>
     </div>
   );
 };

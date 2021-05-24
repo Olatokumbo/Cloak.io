@@ -1,5 +1,5 @@
 import { Modal, Fade, Backdrop, Button, makeStyles } from "@material-ui/core";
-
+import { deletePoster } from "../redux/actions/posters";
 const useStyles = makeStyles((theme) => ({
   paper: {
     // position: "absolute",
@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-const DeleteModal = ({ open, handleClose }) => {
+const DeleteModal = ({ open, handleClose, id }) => {
   const classes = useStyles();
   return (
     <Modal
@@ -62,6 +62,7 @@ const DeleteModal = ({ open, handleClose }) => {
                 color="primary"
                 margin="normal"
                 className={classes.btn}
+                onClick={() => deletePoster(id)}
               >
                 Done
               </Button>
