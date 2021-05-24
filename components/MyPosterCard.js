@@ -3,8 +3,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { DotsHorizontalIcon } from "@heroicons/react/solid";
 import { IconButton, Menu, MenuItem } from "@material-ui/core";
+import DeleteModal from "../components/DeleteModal";
 const MyPosterCard = ({ data, editable }) => {
   const [anchorEl, setAnchorEl] = useState(null);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -13,6 +15,11 @@ const MyPosterCard = ({ data, editable }) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const closeDeleteModal = () =>{
+    setDeleteModalOpen(false);
+  }
+
   return (
     <div className="flex flex-col border-solid border-gray-200 border-2 h-72">
       <div className="flex h-40 relative -z-1">
@@ -48,7 +55,7 @@ const MyPosterCard = ({ data, editable }) => {
                     <MenuItem>Edit</MenuItem>
                   </a>
                 </Link>
-                <MenuItem onClick={handleClose}>Delete</MenuItem>
+                <MenuItem onClick={()=>setDeleteModalOpen(true)}>Delete</MenuItem>
               </>
             )}
           </Menu>
@@ -60,6 +67,7 @@ const MyPosterCard = ({ data, editable }) => {
           </div>
         </div>
       </div>
+      <DeleteModal open={deleteModalOpen} handleClose={closeDeleteModal} />
     </div>
   );
 };
