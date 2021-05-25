@@ -23,6 +23,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 const DeleteModal = ({ open, handleClose, id }) => {
   const classes = useStyles();
+
+  const handleDeletePoster = () => {
+    deletePoster(id);
+    handleClose();
+  };
   return (
     <Modal
       aria-labelledby="transition-modal-title"
@@ -62,7 +67,7 @@ const DeleteModal = ({ open, handleClose, id }) => {
                 color="primary"
                 margin="normal"
                 className={classes.btn}
-                onClick={() => deletePoster(id)}
+                onClick={handleDeletePoster}
               >
                 Done
               </Button>

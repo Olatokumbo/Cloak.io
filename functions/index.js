@@ -155,3 +155,13 @@ exports.onJobUpdated = functions.firestore
         });
       });
   });
+
+exports.onJobDeleted = functions.firestore
+  .document("jobs/{jobId}")
+  .onDelete((snap, context) => {
+    const index = client.initIndex("jobs");
+    const { jobId } = context.params;
+    index.deleteObject(jobId).then((data) => {
+      functions.logger.info("Delete the Algolia Object", data);
+    });
+  });

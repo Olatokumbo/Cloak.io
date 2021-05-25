@@ -102,3 +102,16 @@ export const updateJob = (job) => {
       throw new Error(e.message);
     });
 };
+
+export const deleteJob = (id) => {
+  firestore
+    .collection("jobs")
+    .doc(id)
+    .delete()
+    .then(() => {
+      alert("Job Deleted");
+    })
+    .catch((e) => {
+      throw new Error(e.message);
+    });
+};
