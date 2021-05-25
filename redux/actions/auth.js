@@ -1,4 +1,9 @@
-import { auth, provider, firestore } from "../../firebase/firebase";
+import {
+  auth,
+  googleProvider,
+  firestore,
+  facebookProvider,
+} from "../../firebase/firebase";
 import * as actionTypes from "../actions/actionTypes";
 
 export const signinEaP = (cred) => {
@@ -11,12 +16,26 @@ export const signinEaP = (cred) => {
 
 export const signinGoogle = () => {
   auth
-    .signInWithPopup(provider)
+    .signInWithPopup(googleProvider)
     .then((result) => {
       console.log("Signin", result);
       auth.currentUser.updateProfile({
-        displayName: result.user.email.split("@")[0]
-      })
+        displayName: result.user.email.split("@")[0],
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+export const signinFacebook = () => {
+  auth
+    .signInWithPopup(facebookProvider)
+    .then((result) => {
+      console.log("Signin", result);
+      auth.currentUser.updateProfile({
+        displayName: result.user.email.split("@")[0],
+      });
     })
     .catch((error) => {
       console.log(error);
@@ -47,8 +66,9 @@ export const setupAccount = (displayName, phoneNumber, uid) => {
         phoneNumber,
         displayName,
       });
-    }).then(()=>{
-      alert("Changes Saved")
+    })
+    .then(() => {
+      alert("Changes Saved");
     })
     .catch((e) => {
       console.log(e.message);

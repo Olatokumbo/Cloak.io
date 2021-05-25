@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { signinGoogle } from "../redux/actions/auth";
+import { signinGoogle, signinFacebook } from "../redux/actions/auth";
 import PublicRoute from "../hoc/PublicRoute";
 const Signup = () => {
   const firstName = useRef();
@@ -37,9 +37,16 @@ const Signup = () => {
           </h1>
           <button
             onClick={signinGoogle}
-            className="flex items-center justify-center w-full text-gray-600  text-sm border-2 rounded-md py-3 focus:outline-none hover:bg-gray-100"
+            className=" my-1 flex items-center justify-center w-full text-gray-600  text-sm border-2 rounded-md py-3 focus:outline-none hover:bg-gray-100"
           >
             <img className="h-5 mx-3" src="/google.svg" /> Continue with Google
+          </button>
+          <button
+            onClick={signinFacebook}
+            className="my-1 flex items-center justify-center w-full text-gray-600  text-sm border-2 rounded-md py-3 focus:outline-none hover:bg-gray-100"
+          >
+            <img className="h-5 mx-3" src="/facebook.svg" /> Continue with
+            Facebook
           </button>
           <h5 className="text-gray-500 my-3">or</h5>
           <div className="flex">

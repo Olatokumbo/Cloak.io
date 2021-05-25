@@ -19,10 +19,13 @@ if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
 // Google Provider
-const provider = new firebase.auth.GoogleAuthProvider();
-provider.setCustomParameters({
+const googleProvider = new firebase.auth.GoogleAuthProvider();
+googleProvider.setCustomParameters({
   prompt: "select_account",
 });
+
+// Facebook Provider
+const facebookProvider = new firebase.auth.FacebookAuthProvider();
 
 const firestore = firebase.firestore();
 const storage = firebase.storage();
@@ -32,4 +35,11 @@ const auth = firebase.auth();
 //   firebase.analytics();
 // }
 
-export { firebase as default, firestore, auth, provider, storage };
+export {
+  firebase as default,
+  firestore,
+  auth,
+  googleProvider,
+  facebookProvider,
+  storage,
+};
