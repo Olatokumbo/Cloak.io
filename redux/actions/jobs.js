@@ -49,6 +49,7 @@ export const addJob = (job) => {
       userId: job.userId,
       authorRef: firestore.doc(`/users/${job.userId}`),
       date: firebase.firestore.FieldValue.serverTimestamp(),
+      applied: [],
     })
     .then(() => alert("Posted Your Job"))
     .catch((error) => {
@@ -56,8 +57,7 @@ export const addJob = (job) => {
     });
 };
 
-
-export const fetchJobs = () =>{
+export const fetchJobs = () => {
   let jobs = [];
   let promises = [];
   return firestore
@@ -83,7 +83,7 @@ export const fetchJobs = () =>{
       return JSON.stringify(jobs);
     })
     .catch((err) => err.message);
-}
+};
 
 export const updateJob = (job) => {
   firestore
@@ -110,6 +110,36 @@ export const deleteJob = (id) => {
     .delete()
     .then(() => {
       alert("Job Deleted");
+    })
+    .catch((e) => {
+      throw new Error(e.message);
+    });
+};
+
+export const applyJob = (jobId, userId) => {
+  firestore
+    .collection("jobs")
+    .doc(jobId)
+    .update({
+      applied: firebase.firestore.FieldValue.arrayUnion(userId),
+    })
+    .then(() => {
+      alert("Success");
+    })
+    .catch((e) => {
+      throw new Error(e.message);
+    });
+};
+
+export const withdrawJob = (jobId, userId) => {
+  firestore
+    .collection("jobs")
+    .doc(jobId)
+    .update({
+      applied: firebase.firestore.FieldValue.arrayRemove(userId),
+    })
+    .then(() => {
+      alert("Success");
     })
     .catch((e) => {
       throw new Error(e.message);

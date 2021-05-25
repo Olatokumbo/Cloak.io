@@ -1,6 +1,44 @@
 import Layout from "../../components/Layout";
-import { fetchJobById, getAllJobsId } from "../../redux/actions/jobs";
+import { useSelector } from "react-redux";
+import {
+  fetchJobById,
+  getAllJobsId,
+  applyJob,
+  withdrawJob,
+} from "../../redux/actions/jobs";
+import { useState, useEffect } from "react";
 const JobInfo = ({ job }) => {
+  const { isAuth, uid } = useSelector((state) => state.auth);
+  const [appliedState, setAppliedState] = useState(false);
+  const [buffer, setBuffer] = useState(true);
+
+  useEffect(() => {
+    console.log("buffer", localStorage.getItem(job.id));
+    if (localStorage.getItem(job.id) !== null) setAppliedState(true);
+    else setAppliedState(false);
+  }, [buffer]);
+
+  const apply = () => {
+    if (isAuth) {
+      try {
+        applyJob(job.id, uid);
+        localStorage.setItem(job.id, uid);
+        setBuffer((prevState) => !prevState);
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      alert("Please Signin your Account");
+    }
+  };
+
+  const withdraw = () => {
+    withdrawJob(job.id, uid);
+    setBuffer((prevState) => !prevState);
+    console.log("remove");
+    localStorage.removeItem(job.id);
+    setAppliedState(false);
+  };
   return (
     <Layout>
       <div className="flex min-h-screen">
@@ -43,9 +81,25 @@ const JobInfo = ({ job }) => {
                 </div>
               </div>
             </div>
-            <button className="ml-5 bg-black focus:outline-none text-white px-3 py-2 md:px-4 rounded-md hover:bg-gray-900">
-              Apply Now
-            </button>
+            {uid !== job.userId && (
+              <div>
+                {!appliedState ? (
+                  <button
+                    onClick={apply}
+                    className="ml-5 bg-black focus:outline-none text-white px-3 py-2 md:px-4 rounded-md hover:bg-gray-900"
+                  >
+                    Apply Now
+                  </button>
+                ) : (
+                  <button
+                    onClick={withdraw}
+                    className="ml-5 bg-black focus:outline-none text-white px-3 py-2 md:px-4 rounded-md hover:bg-gray-900"
+                  >
+                    Cancel Application
+                  </button>
+                )}
+              </div>
+            )}
           </div>
           <div className="mt-5">
             <h1 className="font-bold text-lg mb-3 text-gray-800">

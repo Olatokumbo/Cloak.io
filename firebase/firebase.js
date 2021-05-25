@@ -26,6 +26,7 @@ googleProvider.setCustomParameters({
 
 // Facebook Provider
 const facebookProvider = new firebase.auth.FacebookAuthProvider();
+facebookProvider.setCustomParameters({ auth_type: "reauthenticate" });
 
 const firestore = firebase.firestore();
 const storage = firebase.storage();

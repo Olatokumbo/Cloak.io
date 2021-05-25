@@ -24,7 +24,7 @@ export const signinGoogle = () => {
       });
     })
     .catch((error) => {
-      console.log(error);
+      alert(error.message);
     });
 };
 
@@ -38,7 +38,7 @@ export const signinFacebook = () => {
       });
     })
     .catch((error) => {
-      console.log(error);
+      alert(error.message);
     });
 };
 
