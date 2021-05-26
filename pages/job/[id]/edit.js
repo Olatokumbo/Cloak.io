@@ -1,14 +1,28 @@
 import { useState, useEffect } from "react";
-import { TextField, Button } from "@material-ui/core";
+import { TextField, Button, makeStyles } from "@material-ui/core";
 import Layout from "../../../components/Layout";
 import { useSelector } from "react-redux";
 import { updateJob, fetchJobById } from "../../../redux/actions/jobs";
+import DeleteJobModal from "../../../components/DeleteJobModal";
+
+const useStyles = makeStyles((theme) => ({
+  btn: {
+    // marginTop: theme.spacing(3),
+    marginBottom: theme.spacing(1),
+  },
+}));
 const EditJob = ({ job }) => {
+  const classes = useStyles();
   const userId = useSelector((state) => state.auth.uid);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [location, setLocation] = useState("");
   const [price, setPrice] = useState(0);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+
+  const closeDeleteModal = () => {
+    setDeleteModalOpen(false);
+  };
 
   useEffect(() => {
     setTitle(job.title);
@@ -87,10 +101,26 @@ const EditJob = ({ job }) => {
             fullWidth
             size="large"
             color="primary"
+            className={classes.btn}
           >
             Done
           </Button>
+          <Button
+            variant="contained"
+            fullWidth
+            size="large"
+            color="secondary"
+            className={classes.btn}
+            onClick={()=>setDeleteModalOpen(true)}
+          >
+            Delete Job
+          </Button>
         </form>
+        <DeleteJobModal
+          open={deleteModalOpen}
+          handleClose={closeDeleteModal}
+          id={job.id}
+        />
       </div>
     </Layout>
   );
