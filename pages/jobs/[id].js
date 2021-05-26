@@ -11,10 +11,10 @@ const JobInfo = ({ job }) => {
   const { isAuth, uid } = useSelector((state) => state.auth);
   const [appliedState, setAppliedState] = useState(false);
   const [buffer, setBuffer] = useState(true);
-
   useEffect(() => {
-    console.log("buffer", localStorage.getItem(job.id));
     if (localStorage.getItem(job.id) !== null) setAppliedState(true);
+    else if (job.applied.filter((a) => a === uid).length > 0)
+      setAppliedState(true);
     else setAppliedState(false);
   }, [buffer]);
 
