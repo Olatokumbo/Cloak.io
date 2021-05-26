@@ -74,9 +74,9 @@ const Jobs = ({ jobs }) => {
                   </div> */}
                 </div>
                 {isAuth && (
-                  <Link href="/job/new">
+                  <Link href="/job/all">
                     <button className="my-6 mx-auto bg-black text-white py-1.5 px-2.5 rounded-md hover:bg-gray-900 focus:outline-none w-full max-w-xs">
-                      Add new Job
+                      My Jobs
                     </button>
                   </Link>
                 )}

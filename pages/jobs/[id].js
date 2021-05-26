@@ -6,6 +6,7 @@ import {
   applyJob,
   withdrawJob,
 } from "../../redux/actions/jobs";
+import Link from "next/link";
 import { useState, useEffect } from "react";
 const JobInfo = ({ job }) => {
   const { isAuth, uid } = useSelector((state) => state.auth);
@@ -81,7 +82,7 @@ const JobInfo = ({ job }) => {
                 </div>
               </div>
             </div>
-            {uid !== job.userId && (
+            {uid !== job.userId ? (
               <div>
                 {!appliedState ? (
                   <button
@@ -99,6 +100,12 @@ const JobInfo = ({ job }) => {
                   </button>
                 )}
               </div>
+            ) : (
+              <Link href={`/job/${job.id}/edit`}>
+                <button className="ml-5 bg-black focus:outline-none text-white px-3 py-2 md:px-4 rounded-md hover:bg-gray-900">
+                  Edit
+                </button>
+              </Link>
             )}
           </div>
           <div className="mt-5">

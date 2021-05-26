@@ -145,3 +145,23 @@ export const withdrawJob = (jobId, userId) => {
       throw new Error(e.message);
     });
 };
+
+export const getJobList = (userId) => {
+  const jobList = [];
+  return firestore
+    .collection("jobs")
+    .where("userId", "==", userId)
+    .get()
+    .then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        jobList.push({ id: doc.id, ...doc.data() });
+      });
+    })
+    .then(() => {
+      console.log(jobList)
+      return JSON.stringify(jobList);
+    })
+    .catch((e) => {
+      throw new Error(e.message);
+    });
+};
