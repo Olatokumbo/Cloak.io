@@ -13,11 +13,13 @@ const JobInfo = ({ job }) => {
   const [appliedState, setAppliedState] = useState(false);
   const [buffer, setBuffer] = useState(true);
   useEffect(() => {
-    if (localStorage.getItem(job.id) !== null) setAppliedState(true);
-    else if (job.applied.filter((a) => a === uid).length > 0)
+    if (localStorage.getItem(job.id) !== null) {
       setAppliedState(true);
-    else setAppliedState(false);
-  }, [buffer]);
+    } else {
+      setAppliedState(false);
+    }
+    if (job.applied.filter((a) => a === uid).length > 0) setAppliedState(true);
+  }, [buffer, uid]);
 
   const apply = () => {
     if (isAuth) {
@@ -44,7 +46,7 @@ const JobInfo = ({ job }) => {
     <Layout>
       <div className="flex min-h-screen">
         <div className="flex-none lg:flex-1 bg-gray-200"></div>
-        <div className="flex-3 bg-white py-5 px-10">
+        <div className="flex-3 bg-white py-5 px-5 md:px-10">
           <div className="flex justify-between items-center">
             <h1 className="text-2xl font-semibold my-5">{job?.title}</h1>
             <h5 className="text-2xl font-semibold text-gray-800">
@@ -59,9 +61,11 @@ const JobInfo = ({ job }) => {
                 className="w-10 max-h-10 rounded-full mr-3"
               />
               <div className="flex flex-col">
-                <h4 className="text-base font-bold text-gray-800">
-                  {job.authorData.displayName}
-                </h4>
+                <Link href={`/profile/${job.userId}`}>
+                  <h4 className="text-base font-bold text-gray-800 cursor-pointer hover:underline">
+                    {job.authorData.displayName}
+                  </h4>
+                </Link>
                 <div className="flex">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

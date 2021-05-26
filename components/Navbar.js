@@ -136,7 +136,7 @@ const Navbar = ({ auth }) => {
                   getContentAnchorEl={null}
                 >
                   <MenuItem onClick={()=>router.push(`/profile/${auth.uid}`)}>My Profile</MenuItem>
-                  {/* <MenuItem onClick={handleClose}>My account</MenuItem> */}
+                  <MenuItem onClick={()=>router.push(`/job/all`)}>My Jobs</MenuItem>
                   <MenuItem onClick={signedOut}>Logout</MenuItem>
                 </Menu>
               </li>

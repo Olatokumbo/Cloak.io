@@ -15,6 +15,7 @@ import VisibilityIcon from "@material-ui/icons/Visibility";
 import { getJobList } from "../../redux/actions/jobs";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import PrivateRoute from "../../hoc/PrivateRoute";
 const MyJobs = () => {
   const [jobs, setJobs] = useState([]);
   const userId = useSelector((state) => state.auth.uid);
@@ -76,7 +77,7 @@ const MyJobs = () => {
   );
 };
 
-export default MyJobs;
+export default PrivateRoute(MyJobs);
 
 // export const getServerSideProps = async () => {
 //   let jobs;
