@@ -8,6 +8,16 @@ import {
 } from "../../redux/actions/jobs";
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import {
+  Table,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TableBody,
+  TableCell,
+  Paper,
+} from "@material-ui/core";
+import AppliedUser from "../../components/AppliedUser";
 const JobInfo = ({ job }) => {
   const { isAuth, uid } = useSelector((state) => state.auth);
   const [appliedState, setAppliedState] = useState(false);
@@ -122,37 +132,37 @@ const JobInfo = ({ job }) => {
               </p>
             ))}
           </div>
-          {/* <div className="mt-5">
-            <h1 className="font-bold text-lg mb-3 text-gray-800">
-              About Us
-            </h1>
-            <p className="my-3 text-sm">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit
-              amet, consectetur adipiscing elit, sed do eiusmod tempor
-              incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-              veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-              ex ea commodo consequat.
-            </p>
-            <p className="my-3 text-sm">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit
-              amet, consectetur adipiscing elit, sed do eiusmod tempor
-              incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-              veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-              ex ea commodo consequat.
-            </p>
-            <p className="my-3 text-sm">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat.
-            </p>
-          </div> */}
+          {uid === job.userId && (
+            <div className="my-5">
+              <h1 className="text-xl font-semibold text-gray-700 mb-4">
+                Applications
+              </h1>
+              <div>
+                {job.applied.length > 0 ? (
+                  <TableContainer
+                    /* className={style.table}*/ component={Paper}
+                  >
+                    <Table aria-label="simple table">
+                      <TableHead>
+                        <TableRow>
+                          <TableCell align="left">Username</TableCell>
+                          <TableCell align="right">Email</TableCell>
+                          <TableCell align="right">View Profile</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {job.applied.map((id) => (
+                          <AppliedUser key={id} id={id} />
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                ) : (
+                  <h1 className="text-center">None Applied Yet</h1>
+                )}
+              </div>
+            </div>
+          )}
         </div>
         <div className="flex-none lg:flex-1 bg-gray-200"></div>
       </div>

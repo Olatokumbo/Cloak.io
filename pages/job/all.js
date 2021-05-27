@@ -23,7 +23,6 @@ const MyJobs = () => {
     const getJob = async () => {
       let jobList = await getJobList(userId);
       jobList = JSON.parse(jobList);
-      console.log(jobList);
       setJobs(jobList);
     };
     getJob();
