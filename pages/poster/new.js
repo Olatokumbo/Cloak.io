@@ -11,6 +11,7 @@ import { UploadIcon } from "@heroicons/react/solid";
 import Layout from "../../components/Layout";
 import { uploadPoster } from "../../redux/actions/posters";
 import { useSelector } from "react-redux";
+import PrivateRoute from "../../hoc/PrivateRoute";
 import fs from "fs";
 import path from "path";
 const NewPoster = ({ categories }) => {
@@ -163,7 +164,7 @@ const NewPoster = ({ categories }) => {
   );
 };
 
-export default NewPoster;
+export default PrivateRoute(NewPoster);
 
 export const getStaticProps = async () => {
   const filePath = path.join(process.cwd(), "utils", "category.json");

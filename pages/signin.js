@@ -46,7 +46,7 @@ const Signin = () => {
             <img className="h-5 mx-3" src="/facebook.svg" /> Continue with
             Facebook
           </button>
-          <h5 className="text-gray-500 my-3">or</h5>
+          {/* <h5 className="text-gray-500 my-3">or</h5>
           <div className="w-full mb-2">
             <label htmlFor="email" className="text-gray-700 text-sm">
               Email
@@ -75,7 +75,7 @@ const Signin = () => {
           </div>
           <button className="my-5 w-full bg-gradient-to-r from-blue-500 to-indigo-800 hover:bg-gradient-to-r hover:from-blue-600 hover:to-indigo-900  text-white rounded-md py-4 focus:outline-none">
             Sign in
-          </button>
+          </button> */}
         </div>
       </div>
     </div>
