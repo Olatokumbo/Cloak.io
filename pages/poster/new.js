@@ -14,6 +14,8 @@ import { useSelector } from "react-redux";
 import PrivateRoute from "../../hoc/PrivateRoute";
 import fs from "fs";
 import path from "path";
+import useDisplayPhoto from "../../hooks/useDisplayPhoto";
+import ImageCard from "../../components/ImageCard";
 const NewPoster = ({ categories }) => {
   const userId = useSelector((state) => state.auth.uid);
   const [title, setTitle] = useState("");
@@ -25,12 +27,12 @@ const NewPoster = ({ categories }) => {
   const [selectedCategory, setSelectedCategory] = useState(
     "graphics-and-design"
   );
+  const display = useDisplayPhoto(photos);
   const handleUpload = (e) => {
     const files = Array.from(e.target.files);
     console.log(files);
-    setPhotos(files);
+    setPhotos((prevState) => prevState.concat(files));
   };
-
   const addPoster = async (e) => {
     e.preventDefault();
     try {
@@ -52,6 +54,12 @@ const NewPoster = ({ categories }) => {
 
   const changeCategory = (e) => {
     setSelectedCategory(e.target.value);
+  };
+
+  const deletePhoto = (removedPhoto) => {
+    setPhotos((prevState) =>
+      prevState.filter((photo) => photo !== removedPhoto)
+    );
   };
   return (
     <Layout>
@@ -115,6 +123,7 @@ const NewPoster = ({ categories }) => {
             margin="normal"
             onChange={(e) => setPrice(e.target.value)}
             value={price}
+            required
           />
           <FormControl fullWidth>
             <InputLabel id="demo-simple-select-label">Category</InputLabel>
@@ -149,6 +158,18 @@ const NewPoster = ({ categories }) => {
               required
             />
           </div>
+          <div className="flex flex-col items-center">
+            {display.map((url, index) => (
+              // <img key={index} src={url} alt="Display Photos"  className="h-auto w-52 m-3.5"/>
+              <ImageCard
+                key={index}
+                url={url}
+                photo={photos[index]}
+                deletePhoto={deletePhoto}
+                alt="Display Photos"
+              />
+            ))}
+          </div>
           <Button
             type="submit"
             variant="contained"
@@ -164,7 +185,7 @@ const NewPoster = ({ categories }) => {
   );
 };
 
-export default PrivateRoute(NewPoster);
+export default NewPoster;
 
 export const getStaticProps = async () => {
   const filePath = path.join(process.cwd(), "utils", "category.json");
