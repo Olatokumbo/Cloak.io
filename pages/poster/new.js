@@ -176,6 +176,7 @@ const NewPoster = ({ categories }) => {
             fullWidth
             size="large"
             color="primary"
+            disabled={!(title && description && phoneNumber && location && price>0 && photos.length>0)}
           >
             Done
           </Button>

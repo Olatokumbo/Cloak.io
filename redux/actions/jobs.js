@@ -39,7 +39,7 @@ export const getAllJobsId = () => {
 };
 
 export const addJob = (job) => {
-  firestore
+  return firestore
     .collection("jobs")
     .add({
       title: job.title,
@@ -52,8 +52,8 @@ export const addJob = (job) => {
       applied: [],
     })
     .then(() => alert("Posted Your Job"))
-    .catch((error) => {
-      console.log("Error getting documents: ", error);
+    .catch((e) => {
+       return new Error(e.message);
     });
 };
 
@@ -86,7 +86,7 @@ export const fetchJobs = () => {
 };
 
 export const updateJob = (job) => {
-  firestore
+  return firestore
     .collection("jobs")
     .doc(job.id)
     .update({
@@ -99,12 +99,12 @@ export const updateJob = (job) => {
       alert("Document Updated");
     })
     .catch((e) => {
-      throw new Error(e.message);
+      return new Error(e.message);
     });
 };
 
 export const deleteJob = (id) => {
-  firestore
+  return firestore
     .collection("jobs")
     .doc(id)
     .delete()
@@ -112,7 +112,7 @@ export const deleteJob = (id) => {
       alert("Job Deleted");
     })
     .catch((e) => {
-      throw new Error(e.message);
+      return new Error(e.message);
     });
 };
 
@@ -158,7 +158,7 @@ export const getJobList = (userId) => {
       });
     })
     .then(() => {
-      console.log(jobList)
+      console.log(jobList);
       return JSON.stringify(jobList);
     })
     .catch((e) => {

@@ -1,7 +1,13 @@
 import { useState, useEffect } from "react";
-import { TextField, Button, makeStyles } from "@material-ui/core";
+import {
+  TextField,
+  Button,
+  makeStyles,
+  CircularProgress,
+} from "@material-ui/core";
 import Layout from "../../../components/Layout";
 import { useSelector } from "react-redux";
+import { useRouter } from "next/router";
 import { updateJob, fetchJobById } from "../../../redux/actions/jobs";
 import DeleteJobModal from "../../../components/DeleteJobModal";
 
@@ -12,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const EditJob = ({ job }) => {
+  const router = useRouter();
   const classes = useStyles();
   const userId = useSelector((state) => state.auth.uid);
   const [title, setTitle] = useState("");
@@ -19,6 +26,7 @@ const EditJob = ({ job }) => {
   const [location, setLocation] = useState("");
   const [price, setPrice] = useState(0);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [buttonState, setButtonState] = useState(false);
 
   const closeDeleteModal = () => {
     setDeleteModalOpen(false);
@@ -33,14 +41,16 @@ const EditJob = ({ job }) => {
 
   const editJobHandler = async (e) => {
     e.preventDefault();
+    setButtonState(true);
     try {
-      updateJob({
+      await updateJob({
         id: job.id,
         title,
         description,
         price,
         location,
       });
+      router.replace("/job/all");
     } catch (error) {
       console.log(error);
     }
@@ -102,6 +112,9 @@ const EditJob = ({ job }) => {
             size="large"
             color="primary"
             className={classes.btn}
+            disabled={
+              !(title && description && location && price > 0) || buttonState
+            }
           >
             Done
           </Button>
@@ -111,10 +124,11 @@ const EditJob = ({ job }) => {
             size="large"
             color="secondary"
             className={classes.btn}
-            onClick={()=>setDeleteModalOpen(true)}
+            onClick={() => setDeleteModalOpen(true)}
           >
             Delete Job
           </Button>
+          {buttonState && <CircularProgress />}
         </form>
         <DeleteJobModal
           open={deleteModalOpen}

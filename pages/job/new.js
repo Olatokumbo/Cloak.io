@@ -1,22 +1,29 @@
 import { useState } from "react";
-import { TextField, Button } from "@material-ui/core";
+import { TextField, Button, CircularProgress } from "@material-ui/core";
 import Layout from "../../components/Layout";
 import { useSelector } from "react-redux";
 import PrivateRoute from "../../hoc/PrivateRoute";
+import { useRouter } from "next/router";
 import { addJob } from "../../redux/actions/jobs";
 const NewJob = () => {
+  const router = useRouter();
   const userId = useSelector((state) => state.auth.uid);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [location, setLocation] = useState("");
   const [price, setPrice] = useState(0);
+  const [buttonState, setButtonState] = useState(false);
 
   const addJobHandler = async (e) => {
     e.preventDefault();
+    setButtonState(true);
     try {
-      addJob({ title, description, location, price, userId });
+      await addJob({ title, description, location, price, userId });
+      router.replace("/job/all");
     } catch (error) {
+      console.log("ERROR");
       alert(error.message);
+      setButtonState(false)
     }
   };
   return (
@@ -73,13 +80,17 @@ const NewJob = () => {
             fullWidth
             size="large"
             color="primary"
+            disabled={
+              !(title && description && location && price > 0) || buttonState
+            }
           >
             Done
           </Button>
+          {buttonState && <CircularProgress />}
         </form>
       </div>
     </Layout>
   );
 };
 
-export default PrivateRoute(NewJob);
+export default NewJob;

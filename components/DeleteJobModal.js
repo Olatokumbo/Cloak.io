@@ -1,5 +1,6 @@
 import { Modal, Fade, Backdrop, Button, makeStyles } from "@material-ui/core";
 import { deleteJob } from "../redux/actions/jobs";
+import { useRouter } from "next/router";
 const useStyles = makeStyles((theme) => ({
   paper: {
     // position: "absolute",
@@ -23,9 +24,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 const DeleteModal = ({ open, handleClose, id }) => {
   const classes = useStyles();
+  const router = useRouter();
 
-  const handleDeleteJob = () => {
-    deleteJob(id);
+  const handleDeleteJob = async () => {
+    try {
+      await deleteJob(id);
+      router.replace("/job/all");
+    } catch (error) {
+     alert(error.message)
+    }
     handleClose();
   };
   return (
