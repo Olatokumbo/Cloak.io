@@ -24,7 +24,7 @@ const MyPosterCard = ({ data, editable }) => {
     <div className="flex flex-col border-solid border-gray-200 border-2 h-72">
       <div className="flex h-40 relative -z-1">
         <Image
-          src={data.works[0]}
+          src={data.works[0] || "/code.jpg"}
           className="object-cover"
           layout="fill"
           loading="eager"

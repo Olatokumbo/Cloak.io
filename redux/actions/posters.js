@@ -169,8 +169,7 @@ export const uploadPoster = (poster) => {
 };
 
 export const updatePoster = (poster) => {
-  console.log(poster);
-  firestore
+  return firestore
     .collection("posters")
     .doc(poster.id)
     .update({
@@ -185,7 +184,7 @@ export const updatePoster = (poster) => {
       alert("Document Updated");
     })
     .catch((e) => {
-      throw new Error(e.message);
+      return new Error(e.message);
     });
 };
 

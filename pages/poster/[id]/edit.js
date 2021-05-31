@@ -7,14 +7,17 @@ import {
   MenuItem,
   InputLabel,
   Button,
+  CircularProgress,
 } from "@material-ui/core";
 import { useSelector } from "react-redux";
+import { useRouter } from "next/router";
 import { fetchPostersbyId } from "../../../redux/actions/posters";
 import { updatePoster } from "../../../redux/actions/posters";
 
 import fs from "fs";
 import path from "path";
 const EditPoster = ({ categories, poster }) => {
+  const router = useRouter();
   const userId = useSelector((state) => state.auth.uid);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -24,13 +27,14 @@ const EditPoster = ({ categories, poster }) => {
   const [selectedCategory, setSelectedCategory] = useState(
     "graphics-and-design"
   );
+  const [buttonState, setButtonState] = useState(false);
 
   useEffect(() => {
     setTitle(poster.title);
     setDescription(poster.description[0]);
     setLocation(poster.location);
     setPrice(poster.price);
-    setPhoneNumber(poster.phoneNumber)
+    setPhoneNumber(poster.phoneNumber);
     setSelectedCategory(poster.category);
   }, []);
   const changeCategory = (e) => {
@@ -39,19 +43,23 @@ const EditPoster = ({ categories, poster }) => {
 
   const editPosterHandler = async (e) => {
     e.preventDefault();
+    setButtonState(true);
     try {
-      updatePoster({
+      await updatePoster({
         id: poster.id,
         title,
         description,
         price,
         category: selectedCategory,
         location,
-        phoneNumber
+        phoneNumber,
       });
+      router.replace("/job/all");
     } catch (error) {
-      console.log(error);
+      setButtonState(false);
+      alert(error.message);
     }
+    setButtonState(false);
   };
 
   if (userId !== poster.userId) return <Layout>Unauthorized</Layout>;
@@ -138,9 +146,19 @@ const EditPoster = ({ categories, poster }) => {
             size="large"
             color="primary"
             margin="normal"
+            disabled={
+              !(
+                title &&
+                description &&
+                phoneNumber &&
+                location &&
+                price > 0
+              ) || buttonState
+            }
           >
             Save
           </Button>
+          {buttonState && <CircularProgress />}
         </form>
       </div>
     </Layout>
