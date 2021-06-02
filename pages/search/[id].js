@@ -1,4 +1,5 @@
 import { useState } from "react";
+import HireModal from "../../components/HireModal";
 import Layout from "../../components/Layout";
 import ProfileCarousel from "../../components/ProfileCarousel";
 import ProfileComment from "../../components/ProfileComment";
@@ -9,6 +10,14 @@ import { useSelector } from "react-redux";
 const Profile = ({ poster }) => {
   const uid = useSelector((state) => state.auth.uid);
   const [buttonState, setButtonState] = useState(false);
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
   if (!poster)
     return (
       <Layout>
@@ -21,7 +30,7 @@ const Profile = ({ poster }) => {
     else alert("Please Signin First");
   };
   const hireMe = () => {
-    if (uid) console.log("Hire Me");
+    if (uid) handleOpen();
     else alert("Please Signin First");
   };
   return (
@@ -110,6 +119,7 @@ const Profile = ({ poster }) => {
         </div>
         <div className="flex-none lg:flex-1 bg-gray-200"></div>
       </div>
+      <HireModal open={open} handleClose={handleClose} id={uid} data={{title: poster.title, price: poster.price}}/>
     </Layout>
   );
 };
