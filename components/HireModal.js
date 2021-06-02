@@ -69,9 +69,9 @@ const DeleteModal = ({ open, handleClose, id, data }) => {
         <div className={classes.paper}>
           <h1 className="text-gray-700 font-semibold">Hire Request Form</h1>
           <h5 className="text-gray-700 font-light my-3 text-sm">
-            *Please contact the seller before filling this form*
+            *Please contact the seller before hiring*
           </h5>
-          <div>
+          <form>
             <TextField
               name="Title"
               size="small"
@@ -111,14 +111,13 @@ const DeleteModal = ({ open, handleClose, id, data }) => {
               value={description}
               required
             />
-          </div>
+          </form>
           <div
             // onSubmit={updateDescriptionHandler}
             className="flex flex-col w-full"
           >
             <div className="w-full flex justify-between">
               <Button
-                type="submit"
                 variant="contained"
                 color="secondary"
                 margin="dense"
