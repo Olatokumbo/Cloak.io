@@ -76,6 +76,7 @@ const Profile = ({ user, posters }) => {
           <div className="flex flex-col justify-center items-center p-10 w-full border-solid border-gray-300 border-2">
             <Avatar src={user.photoURL} className={classes.avatar} />
             <h1>{user.displayName}</h1>
+            <h5 className="text-xs text-gray-600">{user.email}</h5>
             {user.location && (
               <div className="flex items-end mb-2">
                 <LocationMarkerIcon className="h-5 w-5 text-gray-500" />
@@ -166,7 +167,7 @@ const Profile = ({ user, posters }) => {
                 </Link>
                 <Link href="/poster/requests/pending">
                   <button className="mx-5 focus:outline-none px-2 py-2 sm:px-4 sm:py-2 md:px-4 border-black border-solid border-2 rounded-md hover:bg-gray-200">
-                    Pending
+                    My Work
                   </button>
                 </Link>
               </div>

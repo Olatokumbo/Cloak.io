@@ -96,6 +96,7 @@ const DeleteModal = ({ open, handleClose, id, data }) => {
               onChange={(e) => setPrice(e.target.value)}
               value={price}
               required
+              disabled
             />
             <TextField
               name="description"
