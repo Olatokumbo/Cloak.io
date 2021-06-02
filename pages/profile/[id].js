@@ -158,16 +158,27 @@ const Profile = ({ user, posters }) => {
               My Posters
             </h1>
             {uid === user.id && (
-              <Link href="/poster/new">
-                <button className="bg-black focus:outline-none text-white px-3 py-2 md:px-4 rounded-md hover:bg-gray-900">
-                  Add Poster
-                </button>
-              </Link>
+              <div>
+                <Link href="/poster/new">
+                  <button className="bg-black focus:outline-none text-white px-3 py-2 md:px-4 rounded-md hover:bg-gray-900">
+                    Add Poster
+                  </button>
+                </Link>
+                <Link href="/poster/requests/pending">
+                  <button className="mx-5 focus:outline-none px-2 py-2 sm:px-4 sm:py-2 md:px-4 border-black border-solid border-2 rounded-md hover:bg-gray-200">
+                    Pending
+                  </button>
+                </Link>
+              </div>
             )}
           </div>
           <div className="my-5 w-full px-2 grid gap-x-2 gap-y-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
             {posters.map((poster) => (
-              <MyPosterCard key={poster.id} data={poster} editable={uid === user.id} />
+              <MyPosterCard
+                key={poster.id}
+                data={poster}
+                editable={uid === user.id}
+              />
             ))}
           </div>
         </div>

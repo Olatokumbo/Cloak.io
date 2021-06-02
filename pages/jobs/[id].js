@@ -31,26 +31,30 @@ const JobInfo = ({ job }) => {
     if (job.applied.filter((a) => a === uid).length > 0) setAppliedState(true);
   }, [buffer, uid]);
 
-  const apply = () => {
+  const apply = async () => {
     if (isAuth) {
       try {
-        applyJob(job.id, uid);
+        await applyJob(job.id, uid);
         localStorage.setItem(job.id, uid);
         setBuffer((prevState) => !prevState);
       } catch (error) {
-        console.log(error);
+        alert(error.message);
       }
     } else {
       alert("Please Signin your Account");
     }
   };
 
-  const withdraw = () => {
-    withdrawJob(job.id, uid);
-    setBuffer((prevState) => !prevState);
-    console.log("remove");
-    localStorage.removeItem(job.id);
-    setAppliedState(false);
+  const withdraw = async () => {
+    try {
+      await withdrawJob(job.id, uid);
+      setBuffer((prevState) => !prevState);
+      console.log("remove");
+      localStorage.removeItem(job.id);
+      setAppliedState(false);
+    } catch (error) {
+      alert(error.message);
+    }
   };
   return (
     <Layout>

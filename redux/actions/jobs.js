@@ -53,7 +53,7 @@ export const addJob = (job) => {
     })
     .then(() => alert("Posted Your Job"))
     .catch((e) => {
-       return new Error(e.message);
+       throw new Error(e.message);
     });
 };
 
@@ -117,7 +117,7 @@ export const deleteJob = (id) => {
 };
 
 export const applyJob = (jobId, userId) => {
-  firestore
+  return firestore
     .collection("jobs")
     .doc(jobId)
     .update({
@@ -132,7 +132,7 @@ export const applyJob = (jobId, userId) => {
 };
 
 export const withdrawJob = (jobId, userId) => {
-  firestore
+  return firestore
     .collection("jobs")
     .doc(jobId)
     .update({
