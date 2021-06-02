@@ -8,6 +8,7 @@ export const hireMe = (data) => {
       description: data.description,
       price: data.price,
       approvedStatus: null,
+      done: false,
       userId: data.userId,
       customerId: data.customerId,
       date: firebase.firestore.FieldValue.serverTimestamp(),
@@ -19,3 +20,56 @@ export const hireMe = (data) => {
       throw new Error(e.message);
     });
 };
+
+export const listPendingHires = (id) => {
+  const hireList = [];
+  console.log(id);
+  return firestore
+    .collection("hires")
+    .where("userId", "==", id)
+    .where("approvedStatus", "==", null)
+    .get()
+    .then((querySnapShot) => {
+      querySnapShot.forEach((doc) => {
+        hireList.push({ ...doc.data(), id: doc.id });
+      });
+    })
+    .then(() => {
+      return hireList;
+    })
+    .catch((e) => {
+      throw new Error(e.message);
+    });
+};
+
+export const acceptHire = (id) => {
+  return firestore
+    .collection("hires")
+    .doc(id)
+    .update({
+      approvedStatus: true,
+    })
+    .then(() => {
+      alert("You have approved this job");
+    })
+    .catch((e) => {
+      throw new Error(e.message);
+    });
+};
+
+
+export const rejectHire = (id) => {
+    return firestore
+      .collection("hires")
+      .doc(id)
+      .update({
+        approvedStatus: false,
+      })
+      .then(() => {
+        alert("You have rejected this job");
+      })
+      .catch((e) => {
+        throw new Error(e.message);
+      });
+  };
+  
