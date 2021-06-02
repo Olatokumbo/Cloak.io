@@ -20,20 +20,24 @@ const Profile = ({ poster }) => {
     if (uid) setButtonState(true);
     else alert("Please Signin First");
   };
+  const hireMe = () => {
+    if (uid) console.log("Hire Me");
+    else alert("Please Signin First");
+  };
   return (
     <Layout>
       <CategoryList />
       <div className="flex">
         <div className="flex-none lg:flex-1 bg-gray-200"></div>
-        <div className="flex-3 bg-white py-5 px-10">
-          <div className="flex justify-between items-center">
-            <h1 className="text-2xl font-semibold my-5">{poster.title}</h1>
+        <div className="flex-3 bg-white py-5 px-5 md:px-10">
+          <div className="flex justify-between items-center flex-col md:flex-row">
+            <h1 className="text-2xl font-semibold my-1 text-center md:my-5">{poster.title}</h1>
             <h5 className="text-2xl font-semibold text-gray-800">
               ₦{poster.price}+
             </h5>
           </div>
-          <div className="flex justify-between mb-7">
-            <div className="flex items-center">
+          <div className="flex justify-between mb-7 flex-col xs:flex-row">
+            <div className="flex items-center my-3 md:my-5 mx-auto xs:mx-0">
               <img
                 src={poster.authorData.photoURL}
                 alt="me"
@@ -66,12 +70,17 @@ const Profile = ({ poster }) => {
               </div>
             </div>
             {uid !== poster.userId && (
-              <button
-                onClick={contactMe}
-                className="ml-5 bg-black focus:outline-none text-white px-3 py-2 md:px-4 rounded-md hover:bg-gray-900"
-              >
-                {buttonState ? poster.phoneNumber : "Show Contact"}
-              </button>
+              <div className="flex flex-col">
+                <button
+                  onClick={contactMe}
+                  className="mb-2 md:ml-5 bg-black focus:outline-none text-white px-3 py-2 md:px-4 xs:w-full rounded-md hover:bg-gray-900"
+                >
+                  {buttonState ? poster.phoneNumber : "Show Contact"}
+                </button>
+                <button onClick={hireMe} className="md:ml-5 focus:outline-none px-3 py-2 sm:px-4 md:px-4 xs:w-full border-black border-solid border-2 rounded-md hover:bg-gray-200">
+                  Hire Me
+                </button>
+              </div>
             )}
           </div>
           {/* <h6 className="text-md text-gray-600">Level 2</h6> */}
