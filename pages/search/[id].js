@@ -119,7 +119,7 @@ const Profile = ({ poster }) => {
         </div>
         <div className="flex-none lg:flex-1 bg-gray-200"></div>
       </div>
-      <HireModal open={open} handleClose={handleClose} id={uid} data={{title: poster.title, price: poster.price}}/>
+      <HireModal open={open} handleClose={handleClose} id={uid} data={{title: poster.title, price: poster.price, userId: poster.userId}}/>
     </Layout>
   );
 };

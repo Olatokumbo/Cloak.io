@@ -129,8 +129,7 @@ export const uploadPoster = (poster) => {
       const urls = [];
       poster.photos.forEach((file) => {
         const name = Date.now().toString() + Math.random(3).toFixed(3);
-        const uploadTask = firebase
-          .storage()
+        const uploadTask = storage
           .ref()
           .child(`${poster.userId}/posters/${docRef.id}/${name}`)
           .put(file);

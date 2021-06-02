@@ -9,7 +9,7 @@ import {
 } from "@material-ui/core";
 // import { deleteJob } from "../redux/actions/jobs";
 import { useRouter } from "next/router";
-import { set } from "date-fns";
+import { hireMe } from "../redux/actions/hires";
 const useStyles = makeStyles((theme) => ({
   paper: {
     // position: "absolute",
@@ -38,13 +38,14 @@ const DeleteModal = ({ open, handleClose, id, data }) => {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState(data.price);
 
-  const hire = async () => {
-    // try {
-    //   await deleteJob(id);
+  const handleHire = async () => {
+    try {
+      await hireMe({title, description, price, userId: data.userId, customerId: id })
+      alert("Success")
     //   router.replace("/job/all");
-    // } catch (error) {
-    //  alert(error.message)
-    // }
+    } catch (error) {
+     alert(error.message)
+    }
     handleClose();
   };
 
@@ -66,7 +67,7 @@ const DeleteModal = ({ open, handleClose, id, data }) => {
     >
       <Fade in={open}>
         <div className={classes.paper}>
-          <h1 className="text-gray-700 font-semibold">Hire Form</h1>
+          <h1 className="text-gray-700 font-semibold">Hire Request Form</h1>
           <h5 className="text-gray-700 font-light my-3 text-sm">
             *Please contact the seller before filling this form*
           </h5>
@@ -91,7 +92,7 @@ const DeleteModal = ({ open, handleClose, id, data }) => {
               variant="outlined"
               fullWidth={true}
               margin="dense"
-              //   InputProps={{ inputProps: { min: data.price} }}
+                InputProps={{ inputProps: { min: data.price} }}
               onChange={(e) => setPrice(e.target.value)}
               value={price}
               required
@@ -131,7 +132,7 @@ const DeleteModal = ({ open, handleClose, id, data }) => {
                 color="primary"
                 margin="normal"
                 className={classes.btn}
-                onClick={handleDeleteJob}
+                onClick={handleHire}
               >
                 Done
               </Button>
