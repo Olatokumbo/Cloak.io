@@ -23,7 +23,6 @@ export const hireMe = (data) => {
 
 export const listPendingHires = (id) => {
   const hireList = [];
-  console.log(id);
   return firestore
     .collection("hires")
     .where("userId", "==", id)
@@ -57,19 +56,30 @@ export const acceptHire = (id) => {
     });
 };
 
-
 export const rejectHire = (id) => {
-    return firestore
-      .collection("hires")
-      .doc(id)
-      .update({
-        approvedStatus: false,
-      })
-      .then(() => {
-        alert("You have rejected this job");
-      })
-      .catch((e) => {
-        throw new Error(e.message);
-      });
-  };
-  
+  return firestore
+    .collection("hires")
+    .doc(id)
+    .update({
+      approvedStatus: false,
+    })
+    .then(() => {
+      alert("You have rejected this job");
+    })
+    .catch((e) => {
+      throw new Error(e.message);
+    });
+};
+
+export const viewWorkOrder = (id) => {
+  return firestore
+    .collection("hires")
+    .doc(id)
+    .get()
+    .then((doc) => {
+      return { ...doc.data(), id: doc.id };
+    })
+    .catch((e) => {
+      throw new Error(e.message);
+    });
+};

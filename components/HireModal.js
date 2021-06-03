@@ -40,7 +40,7 @@ const DeleteModal = ({ open, handleClose, id, data }) => {
 
   const handleHire = async () => {
     try {
-      await hireMe({title, description, price, userId: data.userId, customerId: id })
+      await hireMe({title, description:description.split("\n"), price, userId: data.userId, customerId: id })
       alert("Success")
     //   router.replace("/job/all");
     } catch (error) {
