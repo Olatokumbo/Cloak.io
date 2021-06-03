@@ -40,18 +40,26 @@ const DeleteModal = ({ open, handleClose, id, data }) => {
 
   const handleHire = async () => {
     try {
-      await hireMe({title, description:description.split("\n"), price, userId: data.userId, customerId: id })
-      alert("Success")
-    //   router.replace("/job/all");
+      await hireMe({
+        title,
+        description: description.split("\n"),
+        price,
+        userId: data.userId,
+        customerId: id,
+        posterId: data.posterId,
+      });
+      setDescription("");
+      alert("Success");
+      //   router.replace("/job/all");
     } catch (error) {
-     alert(error.message)
+      alert(error.message);
     }
     handleClose();
   };
 
   useEffect(() => {
     setTitle(data.title);
-    setPrice(data.price)
+    setPrice(data.price);
   }, [open]);
   return (
     <Modal
@@ -92,7 +100,7 @@ const DeleteModal = ({ open, handleClose, id, data }) => {
               variant="outlined"
               fullWidth={true}
               margin="dense"
-                InputProps={{ inputProps: { min: data.price} }}
+              InputProps={{ inputProps: { min: data.price } }}
               onChange={(e) => setPrice(e.target.value)}
               value={price}
               required

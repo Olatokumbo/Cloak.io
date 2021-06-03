@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import HireModal from "../../components/HireModal";
 import Layout from "../../components/Layout";
 import ProfileCarousel from "../../components/ProfileCarousel";
@@ -6,9 +6,15 @@ import ProfileComment from "../../components/ProfileComment";
 import { getAllPostersId, fetchPostersbyId } from "../../redux/actions/posters";
 import CategoryList from "../../sections/CategoryList";
 import Link from "next/link";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { isWorkOrderActive } from "../../redux/actions/hires";
+import { useRouter } from "next/router";
 const Profile = ({ poster }) => {
+  const router = useRouter();
+  const { id } = router.query;
   const uid = useSelector((state) => state.auth.uid);
+  const isActive = useSelector((state) => state.hire.isWorkOrderActive)
+  const dispatch = useDispatch();
   const [buttonState, setButtonState] = useState(false);
   const [open, setOpen] = useState(false);
   const handleOpen = () => {
@@ -30,9 +36,17 @@ const Profile = ({ poster }) => {
     else alert("Please Signin First");
   };
   const hireMe = () => {
-    if (uid) handleOpen();
+    if (uid && isActive === true) handleOpen();
+    else if (uid && isActive === false)
+      alert("You have an active work order with this Service");
     else alert("Please Signin First");
   };
+
+  useEffect(() => {
+    if ((uid && id)) {
+      dispatch(isWorkOrderActive(uid, poster.userId, id));
+    }
+  }, [uid]);
   return (
     <Layout>
       <CategoryList />
@@ -40,7 +54,9 @@ const Profile = ({ poster }) => {
         <div className="flex-none lg:flex-1 bg-gray-200"></div>
         <div className="flex-3 bg-white py-5 px-5 md:px-10">
           <div className="flex justify-between items-center flex-col md:flex-row">
-            <h1 className="text-2xl font-semibold my-1 text-center md:my-5">{poster.title}</h1>
+            <h1 className="text-2xl font-semibold my-1 text-center md:my-5">
+              {poster.title}
+            </h1>
             <h5 className="text-2xl font-semibold text-gray-800">
               ₦{poster.price}+
             </h5>
@@ -86,7 +102,10 @@ const Profile = ({ poster }) => {
                 >
                   {buttonState ? poster.phoneNumber : "Show Contact"}
                 </button>
-                <button onClick={hireMe} className="md:ml-5 focus:outline-none px-3 py-2 sm:px-4 md:px-4 xs:w-full border-black border-solid border-2 rounded-md hover:bg-gray-200">
+                <button
+                  onClick={hireMe}
+                  className="md:ml-5 focus:outline-none px-3 py-2 sm:px-4 md:px-4 xs:w-full border-black border-solid border-2 rounded-md hover:bg-gray-200"
+                >
                   Hire Me
                 </button>
               </div>
@@ -119,7 +138,17 @@ const Profile = ({ poster }) => {
         </div>
         <div className="flex-none lg:flex-1 bg-gray-200"></div>
       </div>
-      <HireModal open={open} handleClose={handleClose} id={uid} data={{title: poster.title, price: poster.price, userId: poster.userId}}/>
+      <HireModal
+        open={open}
+        handleClose={handleClose}
+        id={uid}
+        data={{
+          title: poster.title,
+          price: poster.price,
+          userId: poster.userId,
+          posterId: id,
+        }}
+      />
     </Layout>
   );
 };

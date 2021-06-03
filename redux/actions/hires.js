@@ -1,5 +1,5 @@
 import firebase, { firestore } from "../../firebase/firebase";
-
+import * as actionTypes from "../../redux/actions/actionTypes";
 export const hireMe = (data) => {
   return firestore
     .collection("hires")
@@ -11,6 +11,7 @@ export const hireMe = (data) => {
       done: false,
       userId: data.userId,
       customerId: data.customerId,
+      posterId: data.posterId,
       date: firebase.firestore.FieldValue.serverTimestamp(),
     })
     .then(() => {
@@ -82,4 +83,20 @@ export const viewWorkOrder = (id) => {
     .catch((e) => {
       throw new Error(e.message);
     });
+};
+
+export const isWorkOrderActive = (customerId, userId, posterId) => {
+  return (dispatch) => {
+    const unsubscribe = firestore
+      .collection("hires")
+      .where("customerId", "==", customerId)
+      .where("userId", "==", userId)
+      .where("posterId", "==", posterId)
+      .where("done", "==", false)
+      .onSnapshot((doc) => {
+        if (doc.empty) dispatch({ type: actionTypes.IS_ACTIVE });
+        else dispatch({ type: actionTypes.NOT_ACTIVE });
+      });
+    return unsubscribe;
+  };
 };
