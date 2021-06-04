@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import Layout from "../../../components/Layout";
 import { useRouter } from "next/router";
-import { viewWorkOrder } from "../../../redux/actions/hires";
+import {
+  viewWorkOrder,
+  finishJob,
+  cancelJob,
+} from "../../../redux/actions/hires";
 import { Button } from "@material-ui/core";
 const WorkOrder = () => {
   const router = useRouter();
@@ -18,6 +22,24 @@ const WorkOrder = () => {
     };
     getData();
   }, [id]);
+
+  const finish = async () => {
+    try {
+      await finishJob(id);
+      router.push("/poster/requests/pending");
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
+  const cancel = async () => {
+    try {
+      await cancelJob(id);
+      router.push("/poster/requests/pending");
+    } catch (error) {
+      alert(error.message);
+    }
+  };
   return (
     <Layout>
       <div className="flex p-3 flex-col md:flex-row">
@@ -32,34 +54,39 @@ const WorkOrder = () => {
               ₦{workDetails.price}
             </h5>
           </div>
+          <h5 className="text-sm font-semibold text-gray-800">
+            Client ID: {workDetails.customerId}
+          </h5>
           <h1 className="font-bold text-lg my-5 text-gray-800">Description</h1>
           {workDetails?.description?.map((text, index) => (
             <p key={index} className="my-3 text-sm">
               {text}
             </p>
           ))}
-          <div className="w-full flex justify-between">
-            <Button
-              type="submit"
-              variant="contained"
-              color="secondary"
-              margin="normal"
-              // onClick={handleClose}
-              // className={classes.btn}
-            >
-              Cancel
-            </Button>
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              margin="normal"
-              // className={classes.btn}
-              // onClick={handleDeletePoster}
-            >
-              Finished
-            </Button>
-          </div>
+          {!workDetails.done && (
+            <div className="w-full flex justify-between">
+              <Button
+                type="submit"
+                variant="contained"
+                color="secondary"
+                margin="normal"
+                // onClick={handleClose}
+                className={cancel}
+              >
+                Cancel
+              </Button>
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                margin="normal"
+                // className={classes.btn}
+                onClick={finish}
+              >
+                Finish
+              </Button>
+            </div>
+          )}
         </div>
       </div>
     </Layout>

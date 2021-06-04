@@ -7,8 +7,8 @@ export const hireMe = (data) => {
       title: data.title,
       description: data.description,
       price: data.price,
-      approvedStatus: null,
       done: false,
+      cancelled: false,
       userId: data.userId,
       customerId: data.customerId,
       posterId: data.posterId,
@@ -27,7 +27,8 @@ export const listPendingHires = (id) => {
   return firestore
     .collection("hires")
     .where("userId", "==", id)
-    .where("approvedStatus", "==", null)
+    .where("done", "==", false)
+    .where("cancelled", "==", false)
     .get()
     .then((querySnapShot) => {
       querySnapShot.forEach((doc) => {
@@ -42,35 +43,35 @@ export const listPendingHires = (id) => {
     });
 };
 
-export const acceptHire = (id) => {
-  return firestore
-    .collection("hires")
-    .doc(id)
-    .update({
-      approvedStatus: true,
-    })
-    .then(() => {
-      alert("You have approved this job");
-    })
-    .catch((e) => {
-      throw new Error(e.message);
-    });
-};
+// export const acceptHire = (id) => {
+//   return firestore
+//     .collection("hires")
+//     .doc(id)
+//     .update({
+//       approvedStatus: true,
+//     })
+//     .then(() => {
+//       alert("You have approved this job");
+//     })
+//     .catch((e) => {
+//       throw new Error(e.message);
+//     });
+// };
 
-export const rejectHire = (id) => {
-  return firestore
-    .collection("hires")
-    .doc(id)
-    .update({
-      approvedStatus: false,
-    })
-    .then(() => {
-      alert("You have rejected this job");
-    })
-    .catch((e) => {
-      throw new Error(e.message);
-    });
-};
+// export const rejectHire = (id) => {
+//   return firestore
+//     .collection("hires")
+//     .doc(id)
+//     .update({
+//       approvedStatus: false,
+//     })
+//     .then(() => {
+//       alert("You have rejected this job");
+//     })
+//     .catch((e) => {
+//       throw new Error(e.message);
+//     });
+// };
 
 export const viewWorkOrder = (id) => {
   return firestore
@@ -99,4 +100,36 @@ export const isWorkOrderActive = (customerId, userId, posterId) => {
       });
     return unsubscribe;
   };
+};
+
+export const finishJob = (id) => {
+  return firestore
+    .collection("hires")
+    .doc(id)
+    .update({
+      done: true,
+      cancelled: false
+    })
+    .then(() => {
+      alert("You have finished this Job");
+    })
+    .catch((e) => {
+      throw new Error(e.message);
+    });
+};
+
+export const cancelJob = (id) => {
+  return firestore
+    .collection("hires")
+    .doc(id)
+    .update({
+      done: false,
+      cancelled: true
+    })
+    .then(() => {
+      alert("You have rejected this job");
+    })
+    .catch((e) => {
+      throw new Error(e.message);
+    });
 };

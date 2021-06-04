@@ -39,52 +39,53 @@ const PendingHire = () => {
     getData();
   }, [userId]);
 
-//   const accept = async (id) => {
-//     try {
-//       await acceptHire(id);
-//     } catch (error) {
-//       alert(error.message);
-//     }
-//   };
+  //   const accept = async (id) => {
+  //     try {
+  //       await acceptHire(id);
+  //     } catch (error) {
+  //       alert(error.message);
+  //     }
+  //   };
 
-//   const reject = async (id) => {
-//     try {
-//       await rejectHire(id);
-//     } catch (error) {
-//       alert(error.message);
-//     }
-//   };
+  //   const reject = async (id) => {
+  //     try {
+  //       await rejectHire(id);
+  //     } catch (error) {
+  //       alert(error.message);
+  //     }
+  //   };
 
   return (
     <Layout>
       <div className="w-full min-h-screen p-4">
         <h1 className="text-3xl font-semibold text-gray-700">
-          Pending Hire Requests
+          Pending Work Requests
         </h1>
-        <div className="my-4 mx-auto max-w-2xl">
-          <TableContainer /* className={style.table}*/ component={Paper}>
-            <Table aria-label="simple table">
-              <TableHead>
-                <TableRow>
-                  <TableCell align="left">Title</TableCell>
-                  <TableCell align="right">Price</TableCell>
-                  <TableCell align="right">View</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {requests?.map((request) => (
-                  <TableRow key={request.id}>
-                    <TableCell component="th" scope="row">
-                      {request.title}
-                    </TableCell>
-                    <TableCell align="right">₦{request.price}</TableCell>
-                    <TableCell align="right">
-                      <Link href={`/poster/requests/${request.id}`}>
-                        <IconButton>
-                          <VisibilityIcon />
-                        </IconButton>
-                      </Link>
-                      {/* <div className="flex justify-end">
+        <div className="my-4 mx-auto max-w-2xl text-center">
+          {requests.length > 0 ? (
+            <TableContainer /* className={style.table}*/ component={Paper}>
+              <Table aria-label="simple table">
+                <TableHead>
+                  <TableRow>
+                    <TableCell align="left">Title</TableCell>
+                    <TableCell align="right">Price</TableCell>
+                    <TableCell align="right">View</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {requests?.map((request) => (
+                    <TableRow key={request.id}>
+                      <TableCell component="th" scope="row">
+                        {request.title}
+                      </TableCell>
+                      <TableCell align="right">₦{request.price}</TableCell>
+                      <TableCell align="right">
+                        <Link href={`/poster/requests/${request.id}`}>
+                          <IconButton>
+                            <VisibilityIcon />
+                          </IconButton>
+                        </Link>
+                        {/* <div className="flex justify-end">
                         <IconButton onClick={accept}>
                           <CheckIcon />
                         </IconButton>
@@ -92,12 +93,15 @@ const PendingHire = () => {
                           <CloseIcon />
                         </IconButton>
                       </div> */}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          ) : (
+            "No Pending Work Requests"
+          )}
         </div>
       </div>
     </Layout>
