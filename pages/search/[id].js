@@ -13,7 +13,7 @@ const Profile = ({ poster }) => {
   const router = useRouter();
   const { id } = router.query;
   const uid = useSelector((state) => state.auth.uid);
-  const isActive = useSelector((state) => state.hire.isWorkOrderActive)
+  const isActive = useSelector((state) => state.hire.isWorkOrderActive);
   const dispatch = useDispatch();
   const [buttonState, setButtonState] = useState(false);
   const [open, setOpen] = useState(false);
@@ -43,7 +43,7 @@ const Profile = ({ poster }) => {
   };
 
   useEffect(() => {
-    if ((uid && id)) {
+    if (uid && id) {
       dispatch(isWorkOrderActive(uid, poster.userId, id));
     }
   }, [uid]);
@@ -163,17 +163,18 @@ export const getStaticPaths = async () => {
   }));
   return {
     paths,
-    fallback: false,
+    fallback: 'blocking'
   };
 };
 
 export const getStaticProps = async ({ params }) => {
   let poster = await fetchPostersbyId(params.id);
   poster = JSON.parse(poster);
+  if (!poster) return { notFound: true };
   return {
     props: {
       poster,
     },
-    revalidate: 10,
+    revalidate: 1,
   };
 };
