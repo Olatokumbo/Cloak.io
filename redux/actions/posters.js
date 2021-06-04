@@ -52,14 +52,17 @@ export const fetchPostersbyId = (documentId) => {
     .doc(documentId)
     .get()
     .then((doc) => {
-      poster = doc.data();
-      poster.id = doc.id;
-      promises.push(
-        poster.authorRef.get().then((res) => {
-          poster.authorData = res.data();
-        })
-      );
-      return Promise.all(promises);
+      if (doc.exists) {
+        poster = doc.data();
+        poster.id = doc.id;
+        promises.push(
+          poster.authorRef.get().then((res) => {
+            poster.authorData = res.data();
+          })
+        );
+        return Promise.all(promises);
+      }
+      else return {}
     })
     .then(() => {
       return JSON.stringify(poster);

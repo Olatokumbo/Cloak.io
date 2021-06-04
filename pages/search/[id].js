@@ -169,8 +169,8 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async ({ params }) => {
   let poster = await fetchPostersbyId(params.id);
-  poster = JSON.parse(poster);
   if (!poster) return { notFound: true };
+  poster = JSON.parse(poster);
   return {
     props: {
       poster,
