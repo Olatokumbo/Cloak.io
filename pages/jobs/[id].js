@@ -1,10 +1,11 @@
 import Layout from "../../components/Layout";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import {
   fetchJobById,
   getAllJobsId,
   applyJob,
   withdrawJob,
+  isJobApplied,
 } from "../../redux/actions/jobs";
 import Link from "next/link";
 import { useState, useEffect } from "react";
@@ -17,26 +18,27 @@ import {
   TableCell,
   Paper,
 } from "@material-ui/core";
+import { useRouter } from "next/router";
 import AppliedUser from "../../components/AppliedUser";
 const JobInfo = ({ job }) => {
+  const router = useRouter();
+  const { id } = router.query;
   const { isAuth, uid } = useSelector((state) => state.auth);
-  const [appliedState, setAppliedState] = useState(false);
-  const [buffer, setBuffer] = useState(true);
+  const appliedState = useSelector((state) => state.job.jobApplied);
+  // const [appliedState, setAppliedState] = useState(false);
+  // const [buffer, setBuffer] = useState(true);
+  const dispatch = useDispatch();
   useEffect(() => {
-    if (localStorage.getItem(job.id) !== null) {
-      setAppliedState(true);
-    } else {
-      setAppliedState(false);
+    if (uid && id) {
+      dispatch(isJobApplied(id, uid));
     }
-    if (job.applied.filter((a) => a === uid).length > 0) setAppliedState(true);
-  }, [buffer, uid]);
-
+  }, [uid, id]);
   const apply = async () => {
     if (isAuth) {
       try {
         await applyJob(job.id, uid);
-        localStorage.setItem(job.id, uid);
-        setBuffer((prevState) => !prevState);
+        // localStorage.setItem(job.id, uid);
+        // setBuffer((prevState) => !prevState);
       } catch (error) {
         alert(error.message);
       }
@@ -48,10 +50,10 @@ const JobInfo = ({ job }) => {
   const withdraw = async () => {
     try {
       await withdrawJob(job.id, uid);
-      setBuffer((prevState) => !prevState);
-      console.log("remove");
-      localStorage.removeItem(job.id);
-      setAppliedState(false);
+      // setBuffer((prevState) => !prevState);
+      // console.log("remove");
+      // localStorage.removeItem(job.id);
+      // setAppliedState(false);
     } catch (error) {
       alert(error.message);
     }

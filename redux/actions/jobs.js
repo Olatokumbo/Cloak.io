@@ -1,5 +1,5 @@
 import firebase, { firestore } from "../../firebase/firebase";
-
+import * as actionTypes from "../../redux/actions/actionTypes";
 export const fetchJobById = (documentId) => {
   let promises = [];
   let job;
@@ -53,7 +53,7 @@ export const addJob = (job) => {
     })
     .then(() => alert("Posted Your Job"))
     .catch((e) => {
-       throw new Error(e.message);
+      throw new Error(e.message);
     });
 };
 
@@ -114,6 +114,23 @@ export const deleteJob = (id) => {
     .catch((e) => {
       return new Error(e.message);
     });
+};
+
+export const isJobApplied = (docId, consumerId) => {
+  return (dispatch) => {
+    const unsubscribe = firestore
+      .collection("jobs")
+      .doc(docId)
+      .onSnapshot((doc) => {
+        if (!doc.empty) {
+          console.log(doc.data().applied.includes(consumerId));
+          if (!doc.data().applied.includes(consumerId))
+            dispatch({ type: actionTypes.NOT_APPLIED });
+          else dispatch({ type: actionTypes.APPLIED });
+        }
+      });
+    return unsubscribe;
+  };
 };
 
 export const applyJob = (jobId, userId) => {
