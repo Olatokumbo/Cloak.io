@@ -1,4 +1,6 @@
+import { useRouter } from "next/router";
 const SignupBanner = () => {
+  const router = useRouter();
   return (
     <div className="w-full relative overflow-hidden">
       <div className="opacity-30 absolute left-0 right-0 top-0 bottom-0 rounded"></div>
@@ -7,7 +9,10 @@ const SignupBanner = () => {
           <h1 className="text-white text-5xl font-semibold">
             Take your business to a new level
           </h1>
-          <button className="my-5 mr-5 bg-black focus:outline-none text-white px-3 py-2 md:px-4 rounded-md hover:bg-gray-900">
+          <button
+            onClick={() => router.push("/signup")}
+            className="my-5 mr-5 bg-black focus:outline-none text-white px-3 py-2 md:px-4 rounded-md hover:bg-gray-900"
+          >
             Sign Up Now
           </button>
         </div>

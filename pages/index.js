@@ -7,8 +7,10 @@ import SignupBanner from "../sections/SignupBanner";
 import Guides from "../sections/Guides";
 import Layout from "../components/Layout";
 import PublicRoute from "../hoc/PublicRoute";
+import { useRouter } from "next/router";
 
 const Home = () => {
+  const router = useRouter();
   return (
     <div className="min-h-screen">
       <Head>
@@ -46,22 +48,25 @@ const Home = () => {
             </div>
             <div className="flex flex-col items-center">
               <h5 className="text-center max-w-md text-sm px-3 md:max-w-2xl">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat.
+                Cloak.io is a Nigerian-based platform herein various freelancer or
+                entrepreneurs can advertise their skills, businesses, and ideas to
+                others. Here at cloak.io we aim efficiently connect business to
+                consumers. Join us and be amazed by our community
               </h5>
               <div className="flex mx-auto mt-16">
-                <button className="mx-5 bg-black focus:outline-none text-white px-3 py-2 md:px-4 rounded-md hover:bg-gray-900">
-                  Find Freelancers
+                <button
+                  onClick={() => router.push("/signin")}
+                  className="mx-5 bg-black focus:outline-none text-white px-3 py-2 md:px-4 rounded-md hover:bg-gray-900"
+                >
+                  Get Started
                 </button>
-                <button className="mx-5 focus:outline-none px-2 py-2 sm:px-4 sm:py-2 md:px-4 border-black border-solid border-4 rounded-md hover:bg-gray-200">
+                {/* <button className="mx-5 focus:outline-none px-2 py-2 sm:px-4 sm:py-2 md:px-4 border-black border-solid border-4 rounded-md hover:bg-gray-200">
                   Join the Force
-                </button>
+                </button> */}
               </div>
-              <h6 className="my-3 text-gray-700 text-xs">
+              {/* <h6 className="my-3 text-gray-700 text-xs">
                 Lorem ipsum dolor sit amet, consectetur
-              </h6>
+              </h6> */}
             </div>
           </div>
           <Explore />

@@ -1,8 +1,8 @@
 import Image from "next/image";
-const InfoCard = () => {
+const InfoCard = ({title, subtitle}) => {
   return (
-    <div className="flex flex-col h- h-72">
-      <div className="flex-1 relative -z-1">
+    <div className="flex flex-col h-72">
+      <div className="flex-1 relative -z-1 max-h-52">
         <Image
           src="/code.jpg"
           className="object-cover rounded-md"
@@ -11,11 +11,10 @@ const InfoCard = () => {
       </div>
       <div className="">
         <h1 className="text-lg font-bold text-gray-800">
-          Lorem ipsum dolor sit amet, consectetur adipiscing
+          {title}
         </h1>
         <h5 className="text-gray-500">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-          tempor incididunt
+          {subtitle}
         </h5>
       </div>
     </div>
