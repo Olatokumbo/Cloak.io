@@ -1,4 +1,5 @@
 import firebase, { firestore, storage } from "../../firebase/firebase";
+import * as actionTypes from "../../redux/actions/actionTypes";
 
 export const getAllPostersId = () => {
   let posters = [];
@@ -61,8 +62,7 @@ export const fetchPostersbyId = (documentId) => {
           })
         );
         return Promise.all(promises);
-      }
-      else return {}
+      } else return {};
     })
     .then(() => {
       return JSON.stringify(poster);
@@ -111,6 +111,25 @@ export const fetchPostersByUserId = (userId) => {
     .then(() => {
       return JSON.stringify(posters);
     });
+};
+
+export const fetchPostersByUserId2 = (userId) => {
+  return (dispatch) => {
+    const unsubscribe = firestore
+      .collection("posters")
+      .where("userId", "==", userId)
+      .onSnapshot((querySnapshot) => {
+        let posters = [];
+        querySnapshot.forEach((doc) => {
+          posters.push({ id: doc.id, ...doc.data() });
+        });
+        dispatch({
+          type: actionTypes.FETCH_MY_POSTERS,
+          posters: posters,
+        });
+      });
+    return unsubscribe;
+  };
 };
 export const uploadPoster = (poster) => {
   firestore

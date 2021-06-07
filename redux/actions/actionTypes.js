@@ -12,3 +12,6 @@ export const NOT_ACTIVE = "NOT_ACTIVE";
 // Job
 export const APPLIED = "APPLIED";
 export const NOT_APPLIED = "NOT_APPLIED";
+
+// Posters
+export const FETCH_MY_POSTERS = "FETCH_MY_POSTERS";

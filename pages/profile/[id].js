@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Layout from "../../components/Layout";
 import CategoryList from "../../sections/CategoryList";
+import { useRouter } from "next/router";
 import {
   Avatar,
   makeStyles,
@@ -12,9 +13,9 @@ import {
 } from "@material-ui/core";
 import { LocationMarkerIcon } from "@heroicons/react/solid";
 import { fetchUser, getAllProfileId } from "../../redux/actions/profile";
-import { fetchPostersByUserId } from "../../redux/actions/posters";
+import { fetchPostersByUserId2 } from "../../redux/actions/posters";
 import MyPosterCard from "../../components/MyPosterCard";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { format } from "date-fns";
 import Link from "next/link";
 import { updateProfileDescription } from "../../redux/actions/profile";
@@ -46,11 +47,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Profile = ({ user, posters }) => {
+const Profile = ({ user }) => {
+  const router = useRouter();
+  const { id } = router.query;
   const [open, setOpen] = useState(false);
   const [description, setDescription] = useState(user.description);
   const classes = useStyles();
   const uid = useSelector((state) => state.auth.uid);
+  const posters = useSelector((state) => state.poster.myPosters);
+  const dispatch = useDispatch();
 
   const handleOpen = () => {
     setOpen(true);
@@ -68,6 +73,16 @@ const Profile = ({ user, posters }) => {
     }
   };
 
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        await dispatch(fetchPostersByUserId2(id));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getData();
+  }, []);
   return (
     <Layout>
       <CategoryList />
@@ -204,14 +219,14 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async (context) => {
   let user = await fetchUser(context.params.id);
-  let posters = await fetchPostersByUserId(context.params.id);
+  // let posters = await fetchPostersByUserId(context.params.id);
   user = JSON.parse(user);
-  posters = JSON.parse(posters);
+  // posters = JSON.parse(posters);
 
   return {
     props: {
       user,
-      posters,
+      // posters,
     },
     revalidate: 1,
   };
