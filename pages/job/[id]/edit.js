@@ -9,6 +9,7 @@ import Layout from "../../../components/Layout";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { updateJob, fetchJobById } from "../../../redux/actions/jobs";
+import PrivateRoute from "../../../hoc/PrivateRoute";
 import DeleteJobModal from "../../../components/DeleteJobModal";
 
 const useStyles = makeStyles((theme) => ({
@@ -140,7 +141,7 @@ const EditJob = ({ job }) => {
   );
 };
 
-export default EditJob;
+export default PrivateRoute(EditJob);
 
 export const getServerSideProps = async ({ params }) => {
   let job;

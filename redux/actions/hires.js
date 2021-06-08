@@ -43,6 +43,27 @@ export const listPendingHires = (id) => {
     });
 };
 
+export const listFinishedHires = (id) => {
+  const hireList = [];
+  return firestore
+    .collection("hires")
+    .where("userId", "==", id)
+    .where("done", "==", true)
+    .where("cancelled", "==", false)
+    .get()
+    .then((querySnapShot) => {
+      querySnapShot.forEach((doc) => {
+        hireList.push({ ...doc.data(), id: doc.id });
+      });
+    })
+    .then(() => {
+      return hireList;
+    })
+    .catch((e) => {
+      throw new Error(e.message);
+    });
+};
+
 // export const acceptHire = (id) => {
 //   return firestore
 //     .collection("hires")

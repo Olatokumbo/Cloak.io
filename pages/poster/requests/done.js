@@ -17,19 +17,16 @@ import VisibilityIcon from "@material-ui/icons/Visibility";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import PrivateRoute from "../../../hoc/PrivateRoute";
-import {
-  // acceptHire,
-  // rejectHire,
-  listPendingHires,
-} from "../../../redux/actions/hires";
-const PendingHire = () => {
+import { listFinishedHires } from "../../../redux/actions/hires";
+
+const FinshedWork = () => {
   const userId = useSelector((state) => state.auth.uid);
   const [requests, setRequests] = useState([]);
   useEffect(() => {
     const getData = async () => {
       if (userId) {
         try {
-          const list = await listPendingHires(userId);
+          const list = await listFinishedHires(userId);
           setRequests(list);
         } catch (error) {
           console.log(error);
@@ -39,27 +36,11 @@ const PendingHire = () => {
     getData();
   }, [userId]);
 
-  //   const accept = async (id) => {
-  //     try {
-  //       await acceptHire(id);
-  //     } catch (error) {
-  //       alert(error.message);
-  //     }
-  //   };
-
-  //   const reject = async (id) => {
-  //     try {
-  //       await rejectHire(id);
-  //     } catch (error) {
-  //       alert(error.message);
-  //     }
-  //   };
-
   return (
     <Layout>
       <div className="w-full min-h-screen p-4">
         <h1 className="text-3xl font-semibold text-gray-700">
-          Pending Work Requests
+          Your Finished Work
         </h1>
         <div className="my-4 mx-auto max-w-2xl text-center">
           {requests.length > 0 ? (
@@ -85,14 +66,6 @@ const PendingHire = () => {
                             <VisibilityIcon />
                           </IconButton>
                         </Link>
-                        {/* <div className="flex justify-end">
-                        <IconButton onClick={accept}>
-                          <CheckIcon />
-                        </IconButton>
-                        <IconButton onClick={reject}>
-                          <CloseIcon />
-                        </IconButton>
-                      </div> */}
                       </TableCell>
                     </TableRow>
                   ))}
@@ -100,7 +73,7 @@ const PendingHire = () => {
               </Table>
             </TableContainer>
           ) : (
-            "No Pending Work Requests"
+            "No Finshed Work"
           )}
         </div>
       </div>
@@ -108,4 +81,4 @@ const PendingHire = () => {
   );
 };
 
-export default PrivateRoute(PendingHire);
+export default FinshedWork;

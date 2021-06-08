@@ -7,6 +7,7 @@ import {
   cancelJob,
 } from "../../../redux/actions/hires";
 import { Button } from "@material-ui/core";
+import PrivateRoute from "../../../hoc/PrivateRoute";
 const WorkOrder = () => {
   const router = useRouter();
   const { id } = router.query;
@@ -93,4 +94,4 @@ const WorkOrder = () => {
   );
 };
 
-export default WorkOrder;
+export default PrivateRoute(WorkOrder);

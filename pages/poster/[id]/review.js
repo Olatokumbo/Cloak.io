@@ -3,13 +3,16 @@ import Layout from "../../../components/Layout";
 import { TextField, Button } from "@material-ui/core";
 import { Rating } from "@material-ui/lab";
 import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
 import { viewWorkOrder } from "../../../redux/actions/hires";
+import PrivateRoute from "../../../hoc/PrivateRoute";
 const Review = () => {
   const router = useRouter();
   const { id } = router.query;
   const [value, setValue] = useState(2);
   const [description, setDescription] = useState("");
   const [workDetails, setWorkDetails] = useState({});
+  const userId = useSelector((state) => state.auth.uid);
   useEffect(() => {
     const getData = async () => {
       try {
@@ -23,7 +26,8 @@ const Review = () => {
     };
     getData();
   }, [id]);
-  if (workDetails.done === false) return <Layout>Can't write a review</Layout>;
+  if (workDetails.done === false && workDetails.customerId !== userId)
+    return <Layout>Can't write a review</Layout>;
   return (
     <Layout>
       <div className="w-full min-h-screen p-4 flex flex-col-reverse md:flex-row">
@@ -85,4 +89,4 @@ const Review = () => {
   );
 };
 
-export default Review;
+export default PrivateRoute(Review);

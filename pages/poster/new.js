@@ -186,7 +186,7 @@ const NewPoster = ({ categories }) => {
   );
 };
 
-export default NewPoster;
+export default PrivateRoute(NewPoster);
 
 export const getStaticProps = async () => {
   const filePath = path.join(process.cwd(), "utils", "category.json");
