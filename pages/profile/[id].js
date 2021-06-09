@@ -180,7 +180,7 @@ const Profile = ({ user }) => {
                     Add Poster
                   </button>
                 </Link>
-                <Link href="/poster/requests/pending">
+                <Link href="/poster/requests/all">
                   <button className="mx-5 focus:outline-none px-2 py-2 sm:px-4 sm:py-2 md:px-4 border-black border-solid border-2 rounded-md hover:bg-gray-200">
                     My Work
                   </button>
