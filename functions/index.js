@@ -6,6 +6,7 @@ exports.newUser = require("./src/user");
 exports.onPosterCreated = posters.onPosterCreated;
 exports.onPosterDeleted = posters.onPosterDeleted;
 exports.onPosterUpdate = posters.onPosterUpdate;
+exports.onPosterHire = posters.onPosterHire;
 
 exports.onJobCreated = jobs.onJobCreated;
 exports.onJobUpdated = jobs.onJobUpdated;

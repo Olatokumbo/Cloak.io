@@ -1,7 +1,8 @@
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
-const {ALGOLIA_ADMIN_KEY, ALGOLIA_ID} = require("../config");
+const { ALGOLIA_ADMIN_KEY, ALGOLIA_ID } = require("../config");
 const algoliasearch = require("algoliasearch").default;
+const addNotification = require("../helper/notification");
 // const ALGOLIA_SEARCH_KEY = functions.config().algolia.search_key;
 
 const ALGOLIA_INDEX_NAME = "posters";
@@ -87,5 +88,16 @@ const deletePoster = (posterId, userId) => {
     });
 };
 
+const onPosterHire = functions.firestore
+  .document("/hires/{hireId}")
+  .onCreate((snapshot, _context) => {
+    const userId = snapshot.data().userId;
+    return addNotification({ userId, message: "New Hire Request" });
+  });
 
-module.exports = {onPosterCreated, onPosterUpdate, onPosterDeleted} 
+module.exports = {
+  onPosterCreated,
+  onPosterUpdate,
+  onPosterDeleted,
+  onPosterHire,
+};
