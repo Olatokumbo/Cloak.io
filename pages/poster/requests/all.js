@@ -1,5 +1,6 @@
 import Layout from "../../../components/Layout";
 import MenuCard from "../../../components/MenuCard";
+import PrivateRoute from "../../../hoc/PrivateRoute";
 
 const AllRequests = () => {
   return (
@@ -14,4 +15,4 @@ const AllRequests = () => {
   );
 };
 
-export default AllRequests;
+export default PrivateRoute(AllRequests);

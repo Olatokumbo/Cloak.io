@@ -1,4 +1,5 @@
 import { firestore } from "../../firebase/firebase";
+import * as actionTypes from "../../redux/actions/actionTypes";
 
 export const getAllProfileId = () => {
   const users = [];
@@ -39,6 +40,23 @@ export const updateProfileDescription = (profile) => {
       alert("Successfully Updated Your Description");
     })
     .catch((e) => {
-      return new Error(e.message);
+      throw new Error(e.message);
     });
+};
+
+export const getProfileDetails = (id) => {
+  console.log(id);
+  return (dispatch) => {
+    const unsubscribe = firestore
+      .collection("users")
+      .doc(id)
+      .onSnapshot((doc) => {
+        console.log(doc)
+        dispatch({
+          type: actionTypes.FETCH_PROFILE,
+          user: { id: doc.id, ...doc.data() },
+        });
+      });
+    return unsubscribe;
+  };
 };

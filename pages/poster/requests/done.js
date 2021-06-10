@@ -81,4 +81,4 @@ const FinshedWork = () => {
   );
 };
 
-export default FinshedWork;
+export default PrivateRoute(FinshedWork);

@@ -12,7 +12,11 @@ import {
   Fade,
 } from "@material-ui/core";
 import { LocationMarkerIcon } from "@heroicons/react/solid";
-import { fetchUser, getAllProfileId } from "../../redux/actions/profile";
+import {
+  fetchUser,
+  getAllProfileId,
+  getProfileDetails,
+} from "../../redux/actions/profile";
 import { fetchPostersByUserId2 } from "../../redux/actions/posters";
 import MyPosterCard from "../../components/MyPosterCard";
 import { useSelector, useDispatch } from "react-redux";
@@ -47,14 +51,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Profile = ({ user }) => {
+const Profile = () => {
   const router = useRouter();
   const { id } = router.query;
   const [open, setOpen] = useState(false);
-  const [description, setDescription] = useState(user.description);
   const classes = useStyles();
   const uid = useSelector((state) => state.auth.uid);
   const posters = useSelector((state) => state.poster.myPosters);
+  const user = useSelector((state) => state.profile.user)
+  const [description, setDescription] = useState("");
   const dispatch = useDispatch();
 
   const handleOpen = () => {
@@ -65,7 +70,8 @@ const Profile = ({ user }) => {
     setOpen(false);
   };
 
-  const updateDescriptionHandler = async () => {
+  const updateDescriptionHandler = async (e) => {
+    e.preventDefault();
     try {
       updateProfileDescription({ id: uid, description });
     } catch (error) {
@@ -75,14 +81,18 @@ const Profile = ({ user }) => {
 
   useEffect(() => {
     const getData = async () => {
-      try {
+      if(id){
+        try {
+        await dispatch(getProfileDetails(id));
         await dispatch(fetchPostersByUserId2(id));
+        setDescription(user.description)
       } catch (error) {
         console.log(error);
       }
+      }
     };
     getData();
-  }, []);
+  }, [id]);
   return (
     <Layout>
       <CategoryList />
@@ -105,7 +115,7 @@ const Profile = ({ user }) => {
             )} */}
             <h5 className="text-xs text-gray-500">
               Member Since{" "}
-              {format(new Date(user.joined.seconds * 1000), "MMMM yyyy")}
+              {user.joined && format(new Date(user?.joined?.seconds * 1000), "MMMM yyyy")}
             </h5>
           </div>
           <div className="flex flex-col p-5 w-full border-solid border-gray-300 border-2 mt-5">
@@ -205,29 +215,29 @@ const Profile = ({ user }) => {
 
 export default Profile;
 
-export const getStaticPaths = async () => {
-  const res = await getAllProfileId();
-  const data = JSON.parse(res);
+// export const getStaticPaths = async () => {
+//   const res = await getAllProfileId();
+//   const data = JSON.parse(res);
 
-  const paths = data.map((id) => ({ params: { id } }));
+//   const paths = data.map((id) => ({ params: { id } }));
 
-  return {
-    paths,
-    fallback: "blocking",
-  };
-};
+//   return {
+//     paths,
+//     fallback: "blocking",
+//   };
+// };
 
-export const getStaticProps = async (context) => {
-  let user = await fetchUser(context.params.id);
-  // let posters = await fetchPostersByUserId(context.params.id);
-  user = JSON.parse(user);
-  // posters = JSON.parse(posters);
+// export const getStaticProps = async (context) => {
+//   let user = await fetchUser(context.params.id);
+//   // let posters = await fetchPostersByUserId(context.params.id);
+//   user = JSON.parse(user);
+//   // posters = JSON.parse(posters);
 
-  return {
-    props: {
-      user,
-      // posters,
-    },
-    revalidate: 1,
-  };
-};
+//   return {
+//     props: {
+//       user,
+//       // posters,
+//     },
+//     revalidate: 1,
+//   };
+// };

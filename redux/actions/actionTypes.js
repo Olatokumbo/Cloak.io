@@ -15,3 +15,7 @@ export const NOT_APPLIED = "NOT_APPLIED";
 
 // Posters
 export const FETCH_MY_POSTERS = "FETCH_MY_POSTERS";
+
+// Profile
+
+export const FETCH_PROFILE = "FETCH_PROFILE";
