@@ -63,6 +63,7 @@ const Profile = () => {
   const dispatch = useDispatch();
 
   const handleOpen = () => {
+    setDescription(user.description)
     setOpen(true);
   };
 
@@ -85,7 +86,6 @@ const Profile = () => {
         try {
         await dispatch(getProfileDetails(id));
         await dispatch(fetchPostersByUserId2(id));
-        setDescription(user.description)
       } catch (error) {
         console.log(error);
       }

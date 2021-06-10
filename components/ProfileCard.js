@@ -7,7 +7,7 @@ const ProfileCard = ({ data, searched }) => {
     <div className="h-full flex flex-col border-2 border-solid border-gray-300 shadow-xl hover:shadow-2xl cursor-pointer rounded">
       <div className="h-40 relative -z-1">
         <Image
-          src={data.works[0]}
+          src={data.works[0] || "/wallpaper.png"}
           className="object-cover"
           layout="fill"
           loading="eager"
