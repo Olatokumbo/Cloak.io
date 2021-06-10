@@ -5,17 +5,23 @@ const PrivateRoute = (WrappedComponent) => {
   return (props) => {
     if (typeof window !== "undefined") {
       const router = useRouter();
-      const isAuthenicated = useSelector((state) => state.auth.isAuth);
+      const { isAuth, loading } = useSelector((state) => state.auth);
       useEffect(() => {
-        console.log(isAuthenicated)
-        if (!isAuthenicated) {
+        if (!isAuth && loading === false) {
           router.replace("/");
           return null;
         }
         // return <WrappedComponent {...props} />;
-      }, [isAuthenicated]);
+      }, [isAuth, loading]);
+      if (isAuth && loading === false) {
+        return <WrappedComponent {...props} />;
+      }
     }
-    return <WrappedComponent {...props} />;
+    return (
+      <>
+        <h1>Loading...</h1>
+      </>
+    );
   };
 };
 

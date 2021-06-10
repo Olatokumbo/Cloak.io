@@ -27,6 +27,7 @@ const Category = ({ category, posters }) => {
             className="object-cover"
             layout="fill"
             loading="eager"
+            priority
           />
         </div>
       </div>

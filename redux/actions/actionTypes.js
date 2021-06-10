@@ -4,6 +4,7 @@ export const SIGNIN_FAILED = "SIGNIN_FAILED";
 export const SIGNUP_SUCCESS = "SIGNUP_SUCCESS";
 export const SIGNUP_FAILED = "SIGNUP_FAILED";
 export const SIGNOUT = "SIGNOUT";
+export const LOGGED_OUT = "LOGGED_OUT";
 
 // Hire
 export const IS_ACTIVE = "IS_ACTIVE";

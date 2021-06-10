@@ -14,8 +14,7 @@ const Auth = (props) => {
           uid: user.uid,
           photoURL: user.photoURL,
         });
-        console.log("Logged In");
-      } else console.log("Logged Out");
+      } else dispatch({ type: actionTypes.LOGGED_OUT });
     });
     return () => unsubscribe();
   }, []);
