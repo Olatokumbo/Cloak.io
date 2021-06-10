@@ -121,14 +121,14 @@ const Jobs = ({ jobs }) => {
                             href={`/jobs/${job.objectID}`}
                             key={job.objectID}
                           >
-                            <a target="_blank">
+                            <a /*target="_blank"*/>
                               <JobCard data={job} />
                             </a>
                           </Link>
                         ))
                       : jobs.map((job) => (
                           <Link href={`/jobs/${job.id}`} key={job.id}>
-                            <a target="_blank">
+                            <a /*target="_blank" */>
                               <JobCard data={job} />
                             </a>
                           </Link>

@@ -8,5 +8,5 @@ exports.onPosterDeleted = posters.onPosterDeleted;
 exports.onPosterUpdate = posters.onPosterUpdate;
 
 exports.onJobCreated = jobs.onJobCreated;
-exports.onJobCreated = jobs.onJobUpdated;
+exports.onJobUpdated = jobs.onJobUpdated;
 exports.onJobDeleted = jobs.onJobDeleted;

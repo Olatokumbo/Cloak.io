@@ -115,6 +115,7 @@ export const isWorkOrderActive = (customerId, userId, posterId) => {
       .where("userId", "==", userId)
       .where("posterId", "==", posterId)
       .where("done", "==", false)
+      .where("cancelled", "==", true)
       .onSnapshot((doc) => {
         if (doc.empty) dispatch({ type: actionTypes.IS_ACTIVE });
         else dispatch({ type: actionTypes.NOT_ACTIVE });
@@ -129,7 +130,7 @@ export const finishJob = (id) => {
     .doc(id)
     .update({
       done: true,
-      cancelled: false
+      cancelled: false,
     })
     .then(() => {
       alert("You have finished this Job");
@@ -145,7 +146,7 @@ export const cancelJob = (id) => {
     .doc(id)
     .update({
       done: false,
-      cancelled: true
+      cancelled: true,
     })
     .then(() => {
       alert("You have rejected this job");
