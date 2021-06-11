@@ -3,9 +3,10 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 // import Image from "next/image";
 import { Avatar, Menu, MenuItem, makeStyles } from "@material-ui/core";
-import { BellIcon, MenuAlt3Icon, SearchIcon } from "@heroicons/react/outline";
+import { MenuAlt3Icon, SearchIcon } from "@heroicons/react/outline";
 import { useDispatch } from "react-redux";
 import * as actionCreator from "../redux/actions/auth";
+import Notification from "./Notification";
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
@@ -108,7 +109,7 @@ const Navbar = ({ auth }) => {
               </li>
               <li className="sm:my-0 my-1">
                 {/* <Link href="/signin"> */}
-                <BellIcon className="h-6 w-6 text-gray-600 mx-5 cursor-pointer hover:text-gray-900" />
+                <Notification />
                 {/* </Link> */}
               </li>
               <li className="sm:my-0 my-1">
@@ -135,9 +136,15 @@ const Navbar = ({ auth }) => {
                   transformOrigin={{ vertical: "top", horizontal: "center" }}
                   getContentAnchorEl={null}
                 >
-                  <MenuItem onClick={()=>router.push(`/profile/${auth.uid}`)}>Profile</MenuItem>
-                  <MenuItem onClick={()=>router.push(`/job/all`)}>My Jobs</MenuItem>
-                  <MenuItem onClick={()=>router.push(`/poster/requests/all`)}>My Work</MenuItem>
+                  <MenuItem onClick={() => router.push(`/profile/${auth.uid}`)}>
+                    Profile
+                  </MenuItem>
+                  <MenuItem onClick={() => router.push(`/job/all`)}>
+                    My Jobs
+                  </MenuItem>
+                  <MenuItem onClick={() => router.push(`/poster/requests/all`)}>
+                    My Work
+                  </MenuItem>
                   <MenuItem onClick={signedOut}>Logout</MenuItem>
                 </Menu>
               </li>

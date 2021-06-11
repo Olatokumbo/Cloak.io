@@ -8,6 +8,7 @@ const addNotification = (data) => {
       message: data.message,
       userId: data.userId,
       date: admin.firestore.FieldValue.serverTimestamp(),
+      read: false,
     })
     .then(() => functions.logger.info("New Notifcation has been Added"))
     .catch((err) => Error(err.message));

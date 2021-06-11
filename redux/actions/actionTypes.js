@@ -18,5 +18,7 @@ export const NOT_APPLIED = "NOT_APPLIED";
 export const FETCH_MY_POSTERS = "FETCH_MY_POSTERS";
 
 // Profile
-
 export const FETCH_PROFILE = "FETCH_PROFILE";
+
+// Notifications
+export const GET_NOTIFICATIONS = "GET_NOTIFICATIONS";
