@@ -38,9 +38,9 @@ const Notification = () => {
         transformOrigin={{ vertical: "top", horizontal: "right" }}
         getContentAnchorEl={null}
       >
-        {notifications.map((notif) => (
+        {notifications.length > 0 ? notifications.map((notif) => (
           <NotificationItem key={notif.id} data={notif} />
-        ))}
+        )) : <MenuItem disabled>No Notifications</MenuItem>}
       </Menu>
     </>
   );

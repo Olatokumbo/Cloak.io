@@ -90,9 +90,11 @@ const deletePoster = (posterId, userId) => {
 
 const onPosterHire = functions.firestore
   .document("/hires/{hireId}")
-  .onCreate((snapshot, _context) => {
+  .onCreate((snapshot, context) => {
     const userId = snapshot.data().userId;
-    return addNotification({ userId, message: "New Hire Request" });
+    const { hireId } = context.params;
+    const url = `/poster/requests/${hireId}`;
+    return addNotification({ userId, message: "New Hire Request", url });
   });
 
 module.exports = {

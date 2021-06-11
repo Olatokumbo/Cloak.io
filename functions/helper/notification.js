@@ -1,6 +1,6 @@
 const admin = require("firebase-admin");
 
-const addNotification = (data) => {
+const addNotification = (data, url) => {
   return admin
     .firestore()
     .collection("notifications")
@@ -8,6 +8,7 @@ const addNotification = (data) => {
       message: data.message,
       userId: data.userId,
       date: admin.firestore.FieldValue.serverTimestamp(),
+      url: data.url,
       read: false,
     })
     .then(() => functions.logger.info("New Notifcation has been Added"))
