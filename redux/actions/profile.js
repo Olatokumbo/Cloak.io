@@ -45,18 +45,23 @@ export const updateProfileDescription = (profile) => {
 };
 
 export const getProfileDetails = (id) => {
-  console.log(id);
   return (dispatch) => {
     const unsubscribe = firestore
       .collection("users")
       .doc(id)
       .onSnapshot((doc) => {
-        console.log(doc)
+        console.log(doc);
         dispatch({
           type: actionTypes.FETCH_PROFILE,
           user: { id: doc.id, ...doc.data() },
         });
       });
     return unsubscribe;
+  };
+};
+
+export const resetProfile = () => {
+  return (dispatch) => {
+    dispatch({ type: actionTypes.RESET_PROFILE });
   };
 };

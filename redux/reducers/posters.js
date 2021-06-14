@@ -9,6 +9,11 @@ const posterReducer = (state = initialState, action) => {
       return {
         myPosters: action.posters,
       };
+    case actionTypes.RESET_POSTERS:
+      return {
+        ...state,
+        myPosters: [],
+      };
     default:
       return state;
   }

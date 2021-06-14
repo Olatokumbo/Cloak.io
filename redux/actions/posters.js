@@ -221,3 +221,9 @@ export const deletePoster = (id) => {
       throw new Error(e.message);
     });
 };
+
+export const resetPosters = () => {
+  return (dispatch) => {
+    dispatch({ type: actionTypes.RESET_POSTERS });
+  };
+};

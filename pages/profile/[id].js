@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Layout from "../../components/Layout";
 import CategoryList from "../../sections/CategoryList";
 import { useRouter } from "next/router";
@@ -12,17 +12,12 @@ import {
   Fade,
 } from "@material-ui/core";
 import { LocationMarkerIcon } from "@heroicons/react/solid";
-import {
-  fetchUser,
-  getAllProfileId,
-  getProfileDetails,
-} from "../../redux/actions/profile";
-import { fetchPostersByUserId2 } from "../../redux/actions/posters";
 import MyPosterCard from "../../components/MyPosterCard";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { format } from "date-fns";
 import Link from "next/link";
 import { updateProfileDescription } from "../../redux/actions/profile";
+import useProfile from "../../hooks/useProfile";
 const useStyles = makeStyles((theme) => ({
   avatar: {
     marginLeft: theme.spacing(5),
@@ -57,13 +52,11 @@ const Profile = () => {
   const [open, setOpen] = useState(false);
   const classes = useStyles();
   const uid = useSelector((state) => state.auth.uid);
-  const posters = useSelector((state) => state.poster.myPosters);
-  const user = useSelector((state) => state.profile.user)
   const [description, setDescription] = useState("");
-  const dispatch = useDispatch();
-
+  const { user, posters, notFound } = useProfile(id);
+  console.log("Not Found", notFound);
   const handleOpen = () => {
-    setDescription(user.description)
+    setDescription(user.description);
     setOpen(true);
   };
 
@@ -79,20 +72,6 @@ const Profile = () => {
       console.log(error.message);
     }
   };
-
-  useEffect(() => {
-    const getData = async () => {
-      if(id){
-        try {
-        await dispatch(getProfileDetails(id));
-        await dispatch(fetchPostersByUserId2(id));
-      } catch (error) {
-        console.log(error);
-      }
-      }
-    };
-    getData();
-  }, [id]);
   return (
     <Layout>
       <CategoryList />
@@ -115,7 +94,8 @@ const Profile = () => {
             )} */}
             <h5 className="text-xs text-gray-500">
               Member Since{" "}
-              {user.joined && format(new Date(user?.joined?.seconds * 1000), "MMMM yyyy")}
+              {user.joined &&
+                format(new Date(user?.joined?.seconds * 1000), "MMMM yyyy")}
             </h5>
           </div>
           <div className="flex flex-col p-5 w-full border-solid border-gray-300 border-2 mt-5">

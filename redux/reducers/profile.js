@@ -9,6 +9,11 @@ const profileReducer = (state = initialState, action) => {
       return {
         user: action.user,
       };
+    case actionTypes.FETCH_PROFILE:
+      return {
+        ...state,
+        user: {},
+      };
     default:
       return state;
   }

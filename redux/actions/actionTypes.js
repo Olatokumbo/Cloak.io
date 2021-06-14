@@ -16,9 +16,11 @@ export const NOT_APPLIED = "NOT_APPLIED";
 
 // Posters
 export const FETCH_MY_POSTERS = "FETCH_MY_POSTERS";
+export const RESET_POSTERS = "RESET_POSTERS";
 
 // Profile
 export const FETCH_PROFILE = "FETCH_PROFILE";
+export const RESET_PROFILE = "RESET_PROFILE";
 
 // Notifications
 export const GET_NOTIFICATIONS = "GET_NOTIFICATIONS";
