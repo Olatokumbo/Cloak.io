@@ -14,7 +14,7 @@ const useProfile = (id) => {
         try {
           await dispatch(getProfileDetails(id));
         //   if (!_.isEmpty(user)) {
-            setNotFound(false);
+            // setNotFound(false);
             await dispatch(fetchPostersByUserId2(id));
         //   } else setNotFound(true);
         } catch (error) {
