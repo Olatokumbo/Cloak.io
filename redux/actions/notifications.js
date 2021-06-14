@@ -21,3 +21,9 @@ export const getNotifications = (userId) => {
     return unsubscribe;
   };
 };
+
+export const resetNotifications = () => {
+  return (dispatch) => {
+    dispatch({ type: actionTypes.RESET_NOTIFICATIONS });
+  };
+};

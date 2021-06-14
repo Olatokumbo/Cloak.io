@@ -49,6 +49,7 @@ export const signout = () => {
       .then(() => {
         console.log("Logged Out");
         dispatch({ type: actionTypes.SIGNOUT });
+        dispatch({ type: actionTypes.RESET_NOTIFICATIONS });
       })
       .catch((err) => {
         console.log(err);

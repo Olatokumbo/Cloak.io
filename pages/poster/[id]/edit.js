@@ -54,7 +54,7 @@ const EditPoster = ({ categories, poster }) => {
         location,
         phoneNumber,
       });
-      router.replace("/job/all");
+      router.replace("/poster/requests/all");
     } catch (error) {
       setButtonState(false);
       alert(error.message);

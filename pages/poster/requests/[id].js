@@ -8,10 +8,12 @@ import {
 } from "../../../redux/actions/hires";
 import { Button } from "@material-ui/core";
 import PrivateRoute from "../../../hoc/PrivateRoute";
+import { useSelector } from "react-redux";
 const WorkOrder = () => {
   const router = useRouter();
   const { id } = router.query;
   const [workDetails, setWorkDetails] = useState({});
+  const userId = useSelector((state) => state.auth.uid);
   useEffect(() => {
     const getData = async () => {
       try {
@@ -41,6 +43,12 @@ const WorkOrder = () => {
       alert(error.message);
     }
   };
+  if (userId !== workDetails.userId)
+    return (
+      <Layout>
+        <h1>Unauthorized</h1>
+      </Layout>
+    );
   return (
     <Layout>
       <div className="flex p-3 flex-col md:flex-row">

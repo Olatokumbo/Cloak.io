@@ -24,3 +24,4 @@ export const RESET_PROFILE = "RESET_PROFILE";
 
 // Notifications
 export const GET_NOTIFICATIONS = "GET_NOTIFICATIONS";
+export const RESET_NOTIFICATIONS = "RESET_NOTIFICATIONS";

@@ -9,6 +9,10 @@ const notifReducer = (state = initialState, action) => {
       return {
         notifications: action.notifications,
       };
+    case actionTypes.RESET_NOTIFICATIONS:
+      return {
+        notifications: [],
+      };
     default:
       return state;
   }

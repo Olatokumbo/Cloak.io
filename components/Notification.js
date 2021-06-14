@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
 import { BellIcon } from "@heroicons/react/outline";
 import { Menu, MenuItem } from "@material-ui/core";
-import { getNotifications } from "../redux/actions/notifications";
+import {
+  getNotifications,
+  resetNotifications,
+} from "../redux/actions/notifications";
 import { useDispatch, useSelector } from "react-redux";
 import NotificationItem from "./NotificationItem";
 const Notification = () => {
@@ -21,6 +24,9 @@ const Notification = () => {
     if (userId) {
       dispatch(getNotifications(userId));
     }
+    return () => {
+      dispatch(resetNotifications());
+    };
   }, [userId]);
   return (
     <>
@@ -38,9 +44,13 @@ const Notification = () => {
         transformOrigin={{ vertical: "top", horizontal: "right" }}
         getContentAnchorEl={null}
       >
-        {notifications.length > 0 ? notifications.map((notif) => (
-          <NotificationItem key={notif.id} data={notif} />
-        )) : <MenuItem disabled>No Notifications</MenuItem>}
+        {notifications.length > 0 ? (
+          notifications.map((notif) => (
+            <NotificationItem key={notif.id} data={notif} />
+          ))
+        ) : (
+          <MenuItem disabled>No Notifications</MenuItem>
+        )}
       </Menu>
     </>
   );
