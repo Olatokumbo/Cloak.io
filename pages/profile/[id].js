@@ -53,8 +53,7 @@ const Profile = () => {
   const classes = useStyles();
   const uid = useSelector((state) => state.auth.uid);
   const [description, setDescription] = useState("");
-  const { user, posters, notFound } = useProfile(id);
-  console.log("Not Found", notFound);
+  const { user, posters } = useProfile(id);
   const handleOpen = () => {
     setDescription(user.description);
     setOpen(true);

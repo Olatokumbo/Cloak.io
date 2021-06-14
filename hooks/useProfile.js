@@ -24,7 +24,7 @@ const useProfile = (id) => {
     };
     getData();
     return () => {
-      setNotFound(null);
+    //   setNotFound(null);
       dispatch(resetProfile());
       dispatch(resetPosters());
     };
