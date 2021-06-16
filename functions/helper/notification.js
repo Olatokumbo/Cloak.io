@@ -1,6 +1,6 @@
 const admin = require("firebase-admin");
 
-const addNotification = (data, url) => {
+const addNotification = (data) => {
   return admin
     .firestore()
     .collection("notifications")
