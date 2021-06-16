@@ -9,6 +9,7 @@ import Link from "next/link";
 import { useSelector, useDispatch } from "react-redux";
 import { isWorkOrderActive } from "../../redux/actions/hires";
 import { useRouter } from "next/router";
+import ReviewCard from "../../components/ReviewCard";
 const Profile = ({ poster }) => {
   const router = useRouter();
   const { id } = router.query;
@@ -120,15 +121,21 @@ const Profile = ({ poster }) => {
               {text}
             </p>
           ))}
-          <div className="mt-20">
-            <h1 className="font-bold text-lg text-gray-800 mb-5">Reviews</h1>
-            <div className="my-5">
+          <div className="mt-10 pt-2 border-t-2 border-gray-300 border-solid">
+            <h1 className="font-bold text-lg text-gray-800 mb-1">Reviews</h1>
+            <div className="my-2">
               {poster.reviews ? (
                 poster.reviews?.map((review) => (
                   <ProfileComment review={review} />
                 ))
               ) : (
-                <h5 className="text-center text-xl">No Reviews Yet</h5>
+                // <h5 className="text-center text-xl">No Reviews Yet</h5>
+                <div>
+                  <ReviewCard />
+                  <ReviewCard />
+                  <ReviewCard />
+                  <ReviewCard />
+                </div>
               )}
             </div>
             {/* <button className="mx-auto focus:outline-none px-2 py-2 sm:px-4 sm:py-2 md:px-4 border-gray-800 border-solid border-4 rounded-md hover:bg-gray-200">
@@ -163,7 +170,7 @@ export const getStaticPaths = async () => {
   }));
   return {
     paths,
-    fallback: 'blocking'
+    fallback: "blocking",
   };
 };
 

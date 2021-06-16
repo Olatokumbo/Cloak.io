@@ -29,7 +29,7 @@ const WorkOrder = () => {
   const finish = async () => {
     try {
       await finishJob(id);
-      router.push("/poster/requests/pending");
+      router.push("/poster/requests/done");
     } catch (error) {
       alert(error.message);
     }

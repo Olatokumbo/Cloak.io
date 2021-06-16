@@ -54,7 +54,7 @@ const EditPoster = ({ categories, poster }) => {
         location,
         phoneNumber,
       });
-      router.replace("/poster/requests/all");
+      router.replace(`/profile/${userId}`);
     } catch (error) {
       setButtonState(false);
       alert(error.message);
@@ -147,13 +147,8 @@ const EditPoster = ({ categories, poster }) => {
             color="primary"
             margin="normal"
             disabled={
-              !(
-                title &&
-                description &&
-                phoneNumber &&
-                location &&
-                price > 0
-              ) || buttonState
+              !(title && description && phoneNumber && location && price > 0) ||
+              buttonState
             }
           >
             Save
