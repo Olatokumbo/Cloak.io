@@ -4,13 +4,13 @@ import { TextField, Button } from "@material-ui/core";
 import { Rating } from "@material-ui/lab";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
-import { viewWorkOrder } from "../../../redux/actions/hires";
+import { addReview, viewWorkOrder } from "../../../redux/actions/hires";
 import PrivateRoute from "../../../hoc/PrivateRoute";
 const Review = () => {
   const router = useRouter();
   const { id } = router.query;
   const [value, setValue] = useState(2);
-  const [description, setDescription] = useState("");
+  const [message, setMessage] = useState("");
   const [workDetails, setWorkDetails] = useState({});
   const userId = useSelector((state) => state.auth.uid);
   useEffect(() => {
@@ -26,6 +26,20 @@ const Review = () => {
     };
     getData();
   }, [id]);
+  const submitReview = async (e) => {
+    e.preventDefault();
+    try {
+      await addReview({
+        message,
+        rating: value,
+        posterId: workDetails.posterId,
+        userId: workDetails.customerId,
+      });
+      alert("Done");
+    } catch (error) {
+      console.log(error);
+    }
+  };
   if (workDetails.done === false && workDetails.customerId !== userId)
     return <Layout>Can't write a review</Layout>;
   return (
@@ -33,7 +47,7 @@ const Review = () => {
       <div className="w-full min-h-screen p-4 flex flex-col-reverse md:flex-row">
         <div className="flex-1 p-4">
           <h1 className="text-lg font-semibold">User Feedback</h1>
-          <form className="max-w-96 sm:w-96 m-auto">
+          <form className="max-w-96 sm:w-96 m-auto" onSubmit={submitReview}>
             <Rating
               name="simple-controlled"
               value={value}
@@ -42,19 +56,20 @@ const Review = () => {
               }}
             />
             <TextField
-              label="Description"
+              label="Message"
               multiline
               rows={5}
               fullWidth
               variant="outlined"
-              value={description}
+              value={message}
               margin="normal"
-              onChange={(e) => setDescription(e.target.value)}
+              onChange={(e) => setMessage(e.target.value)}
             />
             <Button
+              type="submit"
               variant="contained"
               color="primary"
-              disabled={!(value && description)}
+              disabled={!(value && message)}
             >
               Submit Review
             </Button>

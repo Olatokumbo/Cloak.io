@@ -10,6 +10,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { isWorkOrderActive } from "../../redux/actions/hires";
 import { useRouter } from "next/router";
 import ReviewCard from "../../components/ReviewCard";
+import { fetchReviews } from "../../redux/actions/reviews";
 const Profile = ({ poster }) => {
   const router = useRouter();
   const { id } = router.query;
@@ -18,6 +19,7 @@ const Profile = ({ poster }) => {
   const dispatch = useDispatch();
   const [buttonState, setButtonState] = useState(false);
   const [open, setOpen] = useState(false);
+  const [reviews, setReviews] = useState([]);
   const handleOpen = () => {
     setOpen(true);
   };
@@ -48,6 +50,13 @@ const Profile = ({ poster }) => {
       dispatch(isWorkOrderActive(uid, poster.userId, id));
     }
   }, [uid]);
+  useEffect(() => {
+    const getData = async () => {
+      let data = await fetchReviews(id);
+      setReviews(data);
+    };
+    getData();
+  }, [id]);
   return (
     <Layout>
       <CategoryList />
@@ -131,10 +140,9 @@ const Profile = ({ poster }) => {
               ) : (
                 // <h5 className="text-center text-xl">No Reviews Yet</h5>
                 <div>
-                  <ReviewCard />
-                  <ReviewCard />
-                  <ReviewCard />
-                  <ReviewCard />
+                  {reviews.map((review) => (
+                    <ReviewCard key={review.id} review={review} />
+                  ))}
                 </div>
               )}
             </div>

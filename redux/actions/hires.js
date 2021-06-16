@@ -155,3 +155,13 @@ export const cancelJob = (id) => {
       throw new Error(e.message);
     });
 };
+
+export const addReview = (data) => {
+  return firestore.collection("reviews").add({
+    rating: data.rating,
+    message: data.message,
+    posterId: data.posterId,
+    userId: data.userId,
+    date: firebase.firestore.FieldValue.serverTimestamp(),
+  });
+};
