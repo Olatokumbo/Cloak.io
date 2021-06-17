@@ -10,6 +10,7 @@ const Review = () => {
   const router = useRouter();
   const { id } = router.query;
   const [value, setValue] = useState(2);
+  const [title, setTitle] = useState("");
   const [message, setMessage] = useState("");
   const [workDetails, setWorkDetails] = useState({});
   const userId = useSelector((state) => state.auth.uid);
@@ -30,7 +31,8 @@ const Review = () => {
     e.preventDefault();
     try {
       await addReview({
-        message,
+        title,
+        message: message.split("/n"),
         rating: value,
         posterId: workDetails.posterId,
         userId: workDetails.customerId,
@@ -54,6 +56,16 @@ const Review = () => {
               onChange={(event, newValue) => {
                 setValue(newValue);
               }}
+            />
+            <TextField
+              label="Title"
+              fullWidth
+              variant="outlined"
+              size="small"
+              value={title}
+              margin="normal"
+              inputProps={{ maxLength: 40 }}
+              onChange={(e) => setTitle(e.target.value)}
             />
             <TextField
               label="Message"

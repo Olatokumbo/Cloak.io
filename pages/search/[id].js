@@ -10,7 +10,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { isWorkOrderActive } from "../../redux/actions/hires";
 import { useRouter } from "next/router";
 import ReviewCard from "../../components/ReviewCard";
-import { fetchReviews } from "../../redux/actions/reviews";
+// import { fetchReviews } from "../../redux/actions/reviews";
+import useReviews from "../../hooks/useReviews";
 const Profile = ({ poster }) => {
   const router = useRouter();
   const { id } = router.query;
@@ -19,7 +20,8 @@ const Profile = ({ poster }) => {
   const dispatch = useDispatch();
   const [buttonState, setButtonState] = useState(false);
   const [open, setOpen] = useState(false);
-  const [reviews, setReviews] = useState([]);
+  // const [reviews, setReviews] = useState([]);
+  const { reviews, notFound, loading } = useReviews(id);
   const handleOpen = () => {
     setOpen(true);
   };
@@ -50,13 +52,13 @@ const Profile = ({ poster }) => {
       dispatch(isWorkOrderActive(uid, poster.userId, id));
     }
   }, [uid]);
-  useEffect(() => {
-    const getData = async () => {
-      let data = await fetchReviews(id);
-      setReviews(data);
-    };
-    getData();
-  }, [id]);
+  // useEffect(() => {
+  //   const getData = async () => {
+  //     let data = await fetchReviews(id);
+  //     setReviews(data);
+  //   };
+  //   getData();
+  // }, [id]);
   return (
     <Layout>
       <CategoryList />
@@ -130,21 +132,18 @@ const Profile = ({ poster }) => {
               {text}
             </p>
           ))}
-          <div className="mt-10 pt-2 border-t-2 border-gray-300 border-solid">
+          <div className="mt-10 py-5 border-t-2 border-gray-100 border-solid">
             <h1 className="font-bold text-lg text-gray-800 mb-1">Reviews</h1>
             <div className="my-2">
-              {poster.reviews ? (
-                poster.reviews?.map((review) => (
-                  <ProfileComment review={review} />
-                ))
-              ) : (
-                // <h5 className="text-center text-xl">No Reviews Yet</h5>
-                <div>
-                  {reviews.map((review) => (
-                    <ReviewCard key={review.id} review={review} />
-                  ))}
-                </div>
-              )}
+              <div>
+                {reviews.map((review) => (
+                  <ReviewCard key={review.id} review={review} />
+                ))}
+                {notFound && (
+                  <h5 className="text-center text-xl">No Reviews Yet</h5>
+                )}
+                {loading && <h5 className="text-center text-xl">Loading...</h5>}
+              </div>
             </div>
             {/* <button className="mx-auto focus:outline-none px-2 py-2 sm:px-4 sm:py-2 md:px-4 border-gray-800 border-solid border-4 rounded-md hover:bg-gray-200">
               Load More

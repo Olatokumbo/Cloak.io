@@ -159,6 +159,7 @@ export const cancelJob = (id) => {
 export const addReview = (data) => {
   return firestore.collection("reviews").add({
     rating: data.rating,
+    title: data.title,
     message: data.message,
     posterId: data.posterId,
     userId: data.userId,
