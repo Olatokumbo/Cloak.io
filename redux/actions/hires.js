@@ -12,6 +12,7 @@ export const hireMe = (data) => {
       userId: data.userId,
       customerId: data.customerId,
       posterId: data.posterId,
+      reviewId: null,
       date: firebase.firestore.FieldValue.serverTimestamp(),
     })
     .then(() => {
@@ -158,6 +159,7 @@ export const cancelJob = (id) => {
 
 export const addReview = (data) => {
   return firestore.collection("reviews").add({
+    hireId: data.id,
     rating: data.rating,
     title: data.title,
     message: data.message,

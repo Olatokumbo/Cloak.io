@@ -6,6 +6,11 @@ import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { addReview, viewWorkOrder } from "../../../redux/actions/hires";
 import PrivateRoute from "../../../hoc/PrivateRoute";
+import {
+  fetchReviewById,
+  isHireReviewed,
+} from "../../../redux/actions/reviews";
+import ReviewCard from "../../../components/ReviewCard";
 const Review = () => {
   const router = useRouter();
   const { id } = router.query;
@@ -13,13 +18,15 @@ const Review = () => {
   const [title, setTitle] = useState("");
   const [message, setMessage] = useState("");
   const [workDetails, setWorkDetails] = useState({});
+  const [isReviewed, setReviewed] = useState(null);
+  const [review, setReview] = useState("");
   const userId = useSelector((state) => state.auth.uid);
   useEffect(() => {
     const getData = async () => {
       try {
         if (id) {
-          const data = await viewWorkOrder(id);
-          setWorkDetails(data);
+          setWorkDetails(await viewWorkOrder(id));
+          setReviewed(await isHireReviewed(id));
         }
       } catch (error) {
         console.log(error);
@@ -27,17 +34,32 @@ const Review = () => {
     };
     getData();
   }, [id]);
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        if (isReviewed === true && workDetails.reviewId) {
+          setReview(await fetchReviewById(workDetails.reviewId));
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getData();
+  }, [isReviewed]);
   const submitReview = async (e) => {
     e.preventDefault();
     try {
       await addReview({
+        id,
         title,
-        message: message.split("/n"),
+        message: message.split("\n"),
         rating: value,
         posterId: workDetails.posterId,
         userId: workDetails.customerId,
       });
       alert("Done");
+      router.push(`/search/${workDetails.posterId}`)
     } catch (error) {
       console.log(error);
     }
@@ -46,48 +68,56 @@ const Review = () => {
     return <Layout>Can't write a review</Layout>;
   return (
     <Layout>
-      <div className="w-full min-h-screen p-4 flex flex-col-reverse md:flex-row">
+      <div className="w-full min-h-screen p-4 flex flex-col lg:flex-row">
         <div className="flex-1 p-4">
-          <h1 className="text-lg font-semibold">User Feedback</h1>
-          <form className="max-w-96 sm:w-96 m-auto" onSubmit={submitReview}>
-            <Rating
-              name="simple-controlled"
-              value={value}
-              onChange={(event, newValue) => {
-                setValue(newValue);
-              }}
-            />
-            <TextField
-              label="Title"
-              fullWidth
-              variant="outlined"
-              size="small"
-              value={title}
-              margin="normal"
-              inputProps={{ maxLength: 40 }}
-              onChange={(e) => setTitle(e.target.value)}
-            />
-            <TextField
-              label="Message"
-              multiline
-              rows={5}
-              fullWidth
-              variant="outlined"
-              value={message}
-              margin="normal"
-              onChange={(e) => setMessage(e.target.value)}
-            />
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              disabled={!(value && message)}
-            >
-              Submit Review
-            </Button>
-          </form>
+          {isReviewed === false ? (
+            <div>
+              <h1 className="text-lg font-semibold">User Feedback</h1>
+              <form className="max-w-96 sm:w-96 m-auto" onSubmit={submitReview}>
+                <Rating
+                  name="simple-controlled"
+                  value={value}
+                  onChange={(event, newValue) => {
+                    setValue(newValue);
+                  }}
+                />
+                <TextField
+                  label="Title"
+                  fullWidth
+                  variant="outlined"
+                  size="small"
+                  value={title}
+                  margin="normal"
+                  inputProps={{ maxLength: 40 }}
+                  onChange={(e) => setTitle(e.target.value)}
+                />
+                <TextField
+                  label="Message"
+                  multiline
+                  rows={5}
+                  fullWidth
+                  variant="outlined"
+                  value={message}
+                  margin="normal"
+                  onChange={(e) => setMessage(e.target.value)}
+                />
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  disabled={!(value && message && workDetails)}
+                >
+                  Submit Review
+                </Button>
+              </form>
+            </div>
+          ) : (
+            <div>
+              {review && <ReviewCard key={review.id} review={review} />}
+            </div>
+          )}
         </div>
-        <div className="flex-3 p-4">
+        <div className="flex-2 p-4">
           <div className="flex-1 md:flex-2 lg:flex-3 min-h-screen w-full p-5 border-solid border-gray-100 border-2">
             <h1 className="text-2xl font-bold my-1 text-center">Work Order</h1>
             <div className="flex justify-between items-center flex-col md:flex-row">

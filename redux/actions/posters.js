@@ -136,7 +136,7 @@ export const uploadPoster = (poster) => {
     .collection("posters")
     .add({
       title: poster.title,
-      description: [poster.description],
+      description: poster.description,
       category: poster.category,
       works: [],
       userId: poster.userId,

@@ -1,6 +1,7 @@
 const posters = require("./src/poster");
 const jobs = require("./src/job");
 const hires = require("./src/hire");
+const reviews = require("./src/review");
 
 exports.newUser = require("./src/user");
 
@@ -14,3 +15,5 @@ exports.onJobUpdated = jobs.onJobUpdated;
 exports.onJobDeleted = jobs.onJobDeleted;
 
 exports.onFinishHire = hires.onFinishHire;
+
+exports.onAddReview = reviews.onAddReview;

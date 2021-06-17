@@ -38,7 +38,7 @@ const NewPoster = ({ categories }) => {
     try {
       uploadPoster({
         title,
-        description,
+        description: description.split("\n"),
         location,
         phoneNumber,
         price,

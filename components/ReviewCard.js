@@ -1,8 +1,6 @@
-// import { useState } from "react";
 import { Rating } from "@material-ui/lab";
-import { formatRelative, subDays, format } from "date-fns";
+import { format } from "date-fns";
 const ReviewCard = ({ review }) => {
-  // const [value, setValue] = useState(2);
   return (
     <div className="mb-5 border-b-2 py-5 border-gray-100 border-solid">
       <div className="flex flex-col sm:flex-row">
@@ -18,8 +16,10 @@ const ReviewCard = ({ review }) => {
         </h1>
       </div>
       <div className="my-1">
-        {review.message.map((message) => (
-          <h5 className="text-sm mb-1">{message}</h5>
+        {review.message.map((message, index) => (
+          <h5 className="text-sm mb-1" key={index}>
+            {message}
+          </h5>
         ))}
       </div>
     </div>
