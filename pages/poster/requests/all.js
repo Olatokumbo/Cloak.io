@@ -5,10 +5,26 @@ import PrivateRoute from "../../../hoc/PrivateRoute";
 const AllRequests = () => {
   return (
     <Layout>
-      <div className="p-5 m-24">
-        <div className="grid gap-3 grid-cols-1 lg:grid-cols-2">
-          <MenuCard title="Pending Work Order" url="/poster/requests/pending" />
-          <MenuCard title="Finished Works" url="/poster/requests/done" />
+      <div className="w-full min-h-screen p-4">
+        <h1 className="text-3xl font-semibold text-gray-700">My Work Orders</h1>
+        <div className="py-2 px-1 m-4 sm:px-5 sm:m-24">
+          <div className="flex flex-wrap justify-center items-center">
+            <MenuCard
+              title="Pending"
+              url="/poster/requests/pending"
+              photo="/icons/clock.svg"
+            />
+            <MenuCard
+              title="Finished"
+              url="/poster/requests/done"
+              photo="/icons/checked.svg"
+            />
+            <MenuCard
+              title="Cancelled"
+              url="/poster/requests/cancelled"
+              photo="/icons/clock.svg"
+            />
+          </div>
         </div>
       </div>
     </Layout>
