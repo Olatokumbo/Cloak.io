@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Layout from "../../../components/Layout";
 import { useRouter } from "next/router";
+import Link from "next/link";
 import {
   viewWorkOrder,
   finishJob,
@@ -63,9 +64,14 @@ const WorkOrder = () => {
               ₦{workDetails.price}
             </h5>
           </div>
-          <h5 className="text-sm font-semibold text-gray-800">
-            Client ID: {workDetails.customerId}
-          </h5>
+          <div className="flex items-center">
+            <h5 className="text-sm font-semibold text-gray-800">Client:</h5>
+            <Link href={`/profile/${workDetails.customerId}`}>
+            <h5 className="text-sm font-bold text-gray-800 cursor-pointer hover:underline">
+                  {workDetails.customerId}
+                </h5>
+            </Link>
+          </div>
           <h1 className="font-bold text-lg my-5 text-gray-800">Description</h1>
           {workDetails?.description?.map((text, index) => (
             <p key={index} className="my-3 text-sm">

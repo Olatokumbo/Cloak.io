@@ -66,7 +66,7 @@ const Profile = () => {
   const updateDescriptionHandler = async (e) => {
     e.preventDefault();
     try {
-      updateProfileDescription({ id: uid, description });
+      updateProfileDescription({ id: uid, description: description.split("\n") });
     } catch (error) {
       console.log(error.message);
     }
