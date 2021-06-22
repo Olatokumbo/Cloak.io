@@ -1,13 +1,18 @@
-import { useRef } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { signinGoogle, signinFacebook } from "../redux/actions/auth";
+import { signinGoogle, signinFacebook, signupEaP } from "../redux/actions/auth";
 import PublicRoute from "../hoc/PublicRoute";
 const Signup = () => {
-  const firstName = useRef();
-  const lastName = useRef();
-  const email = useRef();
-  const password = useRef();
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName ]  = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const signup = (e) =>{
+    e.preventDefault();
+    signupEaP(email, password);
+  } 
   return (
     <div className="w-full flex flex-row-reverse min-h-screen">
       <div className="flex-1 relative hidden sm:block">
@@ -48,7 +53,8 @@ const Signup = () => {
             <img className="h-5 mx-3" src="/facebook.svg" /> Continue with
             Facebook
           </button>
-          {/* <h5 className="text-gray-500 my-3">or</h5>
+          <h5 className="text-gray-500 my-3">or</h5>
+          <form onSubmit={signup} >
           <div className="flex">
             <div className="w-full mb-2 mr-2">
               <label htmlFor="firstName" className="text-gray-700 text-sm">
@@ -57,10 +63,11 @@ const Signup = () => {
               <input
                 type="text"
                 id="firstName"
-                ref={firstName}
+                onChange={(e)=>setFirstName(e.target.value)}
                 className="rounded-sm border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                 name="firstName"
                 placeholder="First Name"
+                value={firstName}
               />
             </div>
             <div className="w-full mb-2">
@@ -70,10 +77,11 @@ const Signup = () => {
               <input
                 type="text"
                 id="lastName"
-                ref={lastName}
+                onChange={(e)=>setLastName(e.target.value)}
                 className="rounded-sm border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                 name="lastName"
                 placeholder="Last Name"
+                value={lastName}
               />
             </div>
           </div>
@@ -84,10 +92,11 @@ const Signup = () => {
             <input
               type="text"
               id="email"
-              ref={email}
+              onChange={(e)=>setEmail(e.target.value)}
               className="rounded-sm border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
               name="email"
               placeholder="Email"
+              value={email}
             />
           </div>
           <div className="w-full mb-2">
@@ -97,15 +106,17 @@ const Signup = () => {
             <input
               type="password"
               id="password"
-              ref={password}
+              onChange={(e)=>setPassword(e.target.value)}
               className=" rounded-sm border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
               name="password"
               placeholder="Password"
+              value={password}
             />
           </div>
-          <button className="my-5 w-full bg-gradient-to-r from-blue-500 to-indigo-800 hover:bg-gradient-to-r hover:from-blue-600 hover:to-indigo-900  text-white rounded-md py-4 focus:outline-none">
+          {(firstName && lastName && email && password) && <button type="submit" className="my-5 w-full bg-gradient-to-r from-blue-500 to-indigo-800 hover:bg-gradient-to-r hover:from-blue-600 hover:to-indigo-900  text-white rounded-md py-4 focus:outline-none">
             Create an Account
-          </button> */}
+          </button>}
+          </form>
         </div>
       </div>
     </div>

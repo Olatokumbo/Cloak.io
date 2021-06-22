@@ -1,11 +1,15 @@
-import { useRef } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { signinFacebook, signinGoogle } from "../redux/actions/auth";
+import { signinEaP, signinFacebook, signinGoogle } from "../redux/actions/auth";
 import PublicRoute from "../hoc/PublicRoute";
 const Signin = () => {
-  const email = useRef();
-  const password = useRef();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const signin = (e) =>{
+    e.preventDefault();
+    signinEaP(email, password)
+  };
   return (
     <div className="w-full flex min-h-screen">
       <div className="flex-1 relative hidden sm:block">
@@ -46,7 +50,8 @@ const Signin = () => {
             <img className="h-5 mx-3" src="/facebook.svg" /> Continue with
             Facebook
           </button>
-          {/* <h5 className="text-gray-500 my-3">or</h5>
+          <h5 className="text-gray-500 my-3">or</h5>
+          <form onSubmit={signin} className="w-full">
           <div className="w-full mb-2">
             <label htmlFor="email" className="text-gray-700 text-sm">
               Email
@@ -54,10 +59,11 @@ const Signin = () => {
             <input
               type="text"
               id="email"
-              ref={email}
+              onChange={(e)=>setEmail(e.target.value)}
               className="rounded-sm border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
               name="email"
               placeholder="Email"
+              value={email}
             />
           </div>
           <div className="w-full mb-2">
@@ -67,15 +73,20 @@ const Signin = () => {
             <input
               type="password"
               id="password"
-              ref={password}
+              onChange={(e)=>setPassword(e.target.value)}
               className=" rounded-sm border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
               name="password"
               placeholder="Password"
+              value={password}
             />
           </div>
-          <button className="my-5 w-full bg-gradient-to-r from-blue-500 to-indigo-800 hover:bg-gradient-to-r hover:from-blue-600 hover:to-indigo-900  text-white rounded-md py-4 focus:outline-none">
-            Sign in
-          </button> */}
+{
+  (email && password) 
+  && <button type="submit" className="my-5 w-full bg-gradient-to-r from-blue-500 to-indigo-800 hover:bg-gradient-to-r hover:from-blue-600 hover:to-indigo-900  text-white rounded-md py-4 focus:outline-none">
+  Sign in
+  </button>
+}
+          </form>
         </div>
       </div>
     </div>

@@ -6,19 +6,33 @@ import {
 } from "../../firebase/firebase";
 import * as actionTypes from "../actions/actionTypes";
 
-export const signinEaP = (cred) => {
-  return (dispatch) => {
+export const signinEaP = (email, password) => {
+  // return (dispatch) => {
+    console.log(email, password)
     auth
-      .signInWithEmailAndPassword(cred.email, cred.password)
-      .then((data) => {});
-  };
+      .signInWithEmailAndPassword(email, password)
+      .catch((error) => {
+        alert(error.message)
+      });
+  // };
 };
+
+export const signupEaP = (email, password) =>{
+  // return (dispatch) => {
+    auth.createUserWithEmailAndPassword(email, password).then((userCredential)=>{
+      auth.currentUser.updateProfile({
+        displayName: userCredential.user.email.split("@")[0],
+      })
+    }).catch((error) => {
+      alert(error.message)
+    });
+  // }
+}
 
 export const signinGoogle = () => {
   auth
     .signInWithPopup(googleProvider)
     .then((result) => {
-      console.log("Signin", result);
       auth.currentUser.updateProfile({
         displayName: result.user.email.split("@")[0],
       });
@@ -32,7 +46,6 @@ export const signinFacebook = () => {
   auth
     .signInWithPopup(facebookProvider)
     .then((result) => {
-      console.log("Signin", result);
       auth.currentUser.updateProfile({
         displayName: result.user.email.split("@")[0],
       });
