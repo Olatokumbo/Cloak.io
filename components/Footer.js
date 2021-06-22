@@ -10,7 +10,14 @@ const Footer = () => {
             </h1>
           </Link>
         </div>
-        <h5 className="text-sm text-gray-600">© Copyright {new Date().getFullYear()}</h5>
+        <Link href="/privacy-policy">
+          <h5 className="text-sm text-gray-600 hover:underline cursor-pointer">
+            Privacy Policy
+          </h5>
+        </Link>
+        <h5 className="text-sm text-gray-600">
+          © Copyright {new Date().getFullYear()}
+        </h5>
       </div>
     </div>
   );
