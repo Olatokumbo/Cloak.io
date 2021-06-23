@@ -123,7 +123,7 @@ const Review = () => {
           </div>
           <div className="flex-2 p-4">
             <div className="flex-1 md:flex-2 lg:flex-3 min-h-screen w-full p-5 border-solid border-gray-100 border-2">
-              <h1 className="text-2xl font-bold my-1 text-center">
+              <h1 className="text-2xl font-bold my-1 text-center text-gray-700">
                 Work Order
               </h1>
               <div className="flex justify-between items-center flex-col md:flex-row">

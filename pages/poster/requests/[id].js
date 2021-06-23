@@ -10,6 +10,7 @@ import {
 import { Button } from "@material-ui/core";
 import PrivateRoute from "../../../hoc/PrivateRoute";
 import { useSelector } from "react-redux";
+import { format } from "date-fns";
 const WorkOrder = () => {
   const router = useRouter();
   const { id } = router.query;
@@ -55,7 +56,7 @@ const WorkOrder = () => {
       <div className="flex p-3 flex-col md:flex-row">
         <div className="flex-1 px-3"></div>
         <div className="flex-1 md:flex-2 lg:flex-3 min-h-screen w-full p-5 border-solid border-gray-100 border-2">
-          <h1 className="text-2xl font-bold my-1 text-center">Work Order</h1>
+          <h1 className="text-2xl font-bold my-1 text-center text-gray-700">Work Order</h1>
           <div className="flex justify-between items-center flex-col md:flex-row">
             <h1 className="text-2xl font-semibold my-1 text-center md:my-5">
               {workDetails.title}
@@ -64,12 +65,24 @@ const WorkOrder = () => {
               ₦{workDetails.price}
             </h5>
           </div>
+          <div>
+            {workDetails.completedDate && (
+              <h5 className="my-3 text-sm font-bold text-gray-800 cursor-pointer hover:underline">
+                Date Completed: {format(new Date(workDetails?.completedDate?.seconds * 1000), "MMMM dd, yyyy")}
+              </h5>
+            )}
+            {workDetails.cancelledDate && (
+              <h5 className="my-3 text-sm font-bold text-gray-800 cursor-pointer hover:underline">
+                Date Cancelled: {format(new Date(workDetails?.cancelledDate?.seconds * 1000), "MMMM dd, yyyy")}
+              </h5>
+            )}
+          </div>
           <div className="flex items-center">
             <h5 className="text-sm font-semibold text-gray-800">Client:</h5>
             <Link href={`/profile/${workDetails.customerId}`}>
-            <h5 className="text-sm font-bold text-gray-800 cursor-pointer hover:underline">
-                  {workDetails.customerId}
-                </h5>
+              <h5 className="text-sm font-bold text-gray-800 cursor-pointer hover:underline">
+                {workDetails.customerId}
+              </h5>
             </Link>
           </div>
           <h1 className="font-bold text-lg my-5 text-gray-800">Description</h1>
@@ -78,7 +91,7 @@ const WorkOrder = () => {
               {text}
             </p>
           ))}
-          {(!workDetails.done && !workDetails.cancelled) && (
+          {!workDetails.done && !workDetails.cancelled && (
             <div className="w-full flex justify-between">
               <Button
                 type="submit"

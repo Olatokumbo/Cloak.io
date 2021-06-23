@@ -2,6 +2,7 @@ import { useState } from "react";
 import Layout from "../../components/Layout";
 import CategoryList from "../../sections/CategoryList";
 import { useRouter } from "next/router";
+import { CogIcon} from "@heroicons/react/solid";
 import {
   Avatar,
   makeStyles,
@@ -10,6 +11,7 @@ import {
   Button,
   Backdrop,
   Fade,
+  IconButton
 } from "@material-ui/core";
 import { LocationMarkerIcon } from "@heroicons/react/solid";
 import MyPosterCard from "../../components/MyPosterCard";
@@ -44,6 +46,9 @@ const useStyles = makeStyles((theme) => ({
       background: "#535e70",
     },
   },
+  btn1:{
+    alignSelf: "flex-end"
+  }
 }));
 
 const Profile = () => {
@@ -76,7 +81,8 @@ const Profile = () => {
       <CategoryList />
       <div className="flex p-3 flex-col md:flex-row">
         <div className="flex-1 px-3">
-          <div className="flex flex-col justify-center items-center p-10 w-full border-solid border-gray-300 border-2">
+          <div className="flex flex-col justify-center items-center py-5 px-10 w-full border-solid border-gray-300 border-2">
+          {(uid===user.id)&&<IconButton className={classes.btn1}><CogIcon className="h-6 w-6 text-gray-500"/></IconButton>}
             <Avatar src={user.photoURL} className={classes.avatar} />
             <h1>{user.displayName}</h1>
             <h5 className="text-xs text-gray-600">{user.email}</h5>

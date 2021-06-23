@@ -14,6 +14,8 @@ export const hireMe = (data) => {
       posterId: data.posterId,
       reviewId: null,
       date: firebase.firestore.FieldValue.serverTimestamp(),
+      cancelledDate: null,
+      completedDate: null,
     })
     .then(() => {
       console.log("Document Updated");
@@ -132,6 +134,7 @@ export const finishJob = (id) => {
     .update({
       done: true,
       cancelled: false,
+      completedDate: firebase.firestore.FieldValue.serverTimestamp()
     })
     .then(() => {
       alert("You have finished this Job");
@@ -148,6 +151,7 @@ export const cancelJob = (id) => {
     .update({
       done: false,
       cancelled: true,
+      cancelledDate: firebase.firestore.FieldValue.serverTimestamp()
     })
     .then(() => {
       alert("You have rejected this job");
