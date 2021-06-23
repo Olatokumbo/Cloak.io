@@ -22,7 +22,7 @@ const AllRequests = () => {
             <MenuCard
               title="Cancelled"
               url="/poster/requests/cancelled"
-              photo="/icons/clock.svg"
+              photo="/icons/cancel.svg"
             />
           </div>
         </div>

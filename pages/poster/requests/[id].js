@@ -78,7 +78,7 @@ const WorkOrder = () => {
               {text}
             </p>
           ))}
-          {!workDetails.done && (
+          {(!workDetails.done && !workDetails.cancelled) && (
             <div className="w-full flex justify-between">
               <Button
                 type="submit"

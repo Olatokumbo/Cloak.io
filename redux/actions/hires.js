@@ -157,6 +157,22 @@ export const cancelJob = (id) => {
     });
 };
 
+export const listCancelledHires = (userId) => {
+  let cancelledHires = [];
+    return firestore
+      .collection("hires")
+      .where("userId", "==", userId)
+      .where("cancelled", "==", true)
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          cancelledHires.push({ id: doc.id, ...doc.data() });
+        });
+      }).then(()=>{
+        return cancelledHires
+      });
+};
+
 export const addReview = (data) => {
   return firestore.collection("reviews").add({
     hireId: data.id,

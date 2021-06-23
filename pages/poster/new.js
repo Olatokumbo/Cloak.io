@@ -16,7 +16,9 @@ import fs from "fs";
 import path from "path";
 import useDisplayPhoto from "../../hooks/useDisplayPhoto";
 import ImageCard from "../../components/ImageCard";
+import { useRouter } from "next/router";
 const NewPoster = ({ categories }) => {
+  const router = useRouter();
   const userId = useSelector((state) => state.auth.uid);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -36,7 +38,7 @@ const NewPoster = ({ categories }) => {
   const addPoster = async (e) => {
     e.preventDefault();
     try {
-      uploadPoster({
+      await uploadPoster({
         title,
         description: description.split("\n"),
         location,
@@ -46,6 +48,7 @@ const NewPoster = ({ categories }) => {
         userId,
         category: selectedCategory,
       });
+      router.replace(`/profile/${userId}`);
     } catch (error) {
       console.log(error);
       alert(error.message);
