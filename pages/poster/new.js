@@ -6,6 +6,7 @@ import {
   Select,
   MenuItem,
   InputLabel,
+  CircularProgress,
 } from "@material-ui/core";
 import { UploadIcon } from "@heroicons/react/solid";
 import Layout from "../../components/Layout";
@@ -17,6 +18,8 @@ import path from "path";
 import useDisplayPhoto from "../../hooks/useDisplayPhoto";
 import ImageCard from "../../components/ImageCard";
 import { useRouter } from "next/router";
+import useLocation from "../../hooks/useLocation";
+
 const NewPoster = ({ categories }) => {
   const router = useRouter();
   const userId = useSelector((state) => state.auth.uid);
@@ -29,6 +32,8 @@ const NewPoster = ({ categories }) => {
   const [selectedCategory, setSelectedCategory] = useState(
     "graphics-and-design"
   );
+  const [buttonState, setButtonState] = useState(false);
+  const cities = useLocation();
   const display = useDisplayPhoto(photos);
   const handleUpload = (e) => {
     const files = Array.from(e.target.files);
@@ -37,6 +42,7 @@ const NewPoster = ({ categories }) => {
   };
   const addPoster = async (e) => {
     e.preventDefault();
+    setButtonState(true);
     try {
       await uploadPoster({
         title,
@@ -51,8 +57,10 @@ const NewPoster = ({ categories }) => {
       router.replace(`/profile/${userId}`);
     } catch (error) {
       console.log(error);
+      setButtonState(false);
       alert(error.message);
     }
+    setButtonState(false);
   };
 
   const changeCategory = (e) => {
@@ -93,17 +101,20 @@ const NewPoster = ({ categories }) => {
             value={description}
             required
           />
-          <TextField
-            name="location"
-            size="small"
-            label="Location"
-            variant="outlined"
-            fullWidth={true}
-            margin="normal"
-            onChange={(e) => setLocation(e.target.value)}
-            value={location}
-            required
-          />
+          <FormControl fullWidth={true}>
+            <InputLabel>Location</InputLabel>
+            <Select
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+              InputLabelProps={{ shrink: true }}
+            >
+              {cities.map((name, i) => (
+                <MenuItem key={i} value={name}>
+                  {name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
           <TextField
             type="text"
             name="phoneNumber"
@@ -179,10 +190,20 @@ const NewPoster = ({ categories }) => {
             fullWidth
             size="large"
             color="primary"
-            disabled={!(title && description && phoneNumber && location && price>0 && photos.length>0)}
+            disabled={
+              !(
+                title &&
+                description &&
+                phoneNumber &&
+                location &&
+                price > 0 &&
+                photos.length > 0
+              ) || buttonState
+            }
           >
             Done
           </Button>
+          {buttonState && <CircularProgress />}
         </form>
       </div>
     </Layout>

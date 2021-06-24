@@ -13,11 +13,13 @@ import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { fetchPostersbyId } from "../../../redux/actions/posters";
 import { updatePoster } from "../../../redux/actions/posters";
+import useLocation from "../../../hooks/useLocation";
 
 import fs from "fs";
 import path from "path";
 const EditPoster = ({ categories, poster }) => {
   const router = useRouter();
+  const cities = useLocation();
   const userId = useSelector((state) => state.auth.uid);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -90,16 +92,20 @@ const EditPoster = ({ categories, poster }) => {
             onChange={(e) => setDescription(e.target.value)}
             value={description}
           />
-          <TextField
-            name="location"
-            size="small"
-            label="Location"
-            variant="outlined"
-            fullWidth={true}
-            margin="normal"
-            onChange={(e) => setLocation(e.target.value)}
-            value={location}
-          />
+          <FormControl fullWidth={true}>
+            <InputLabel>Location</InputLabel>
+            <Select
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+              InputLabelProps={{ shrink: true }}
+            >
+              {cities.map((name, i) => (
+                <MenuItem key={i} value={name}>
+                  {name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
           <TextField
             type="text"
             name="phoneNumber"

@@ -45,7 +45,7 @@ const Socials = ({ userId, twitter, facebook, instagram }) => {
             <a target="_blank">
               <div className="flex items-center">
                 <Twitter className={classes.icon} />
-                <h5 className="text-sm text-gray-600 overflow-ellipsis w-56 whitespace-nowrap overflow-hidden">
+                <h5 className="text-sm text-gray-600 overflow-ellipsis w-full sm:w-56 whitespace-nowrap overflow-hidden">
                   {twitter}
                 </h5>
               </div>
@@ -57,7 +57,7 @@ const Socials = ({ userId, twitter, facebook, instagram }) => {
             <a target="_blank">
               <div className="flex items-center">
                 <Facebook className={classes.icon} />
-                <h5 className="text-sm text-gray-600 overflow-ellipsis w-56 whitespace-nowrap overflow-hidden">
+                <h5 className="text-sm text-gray-600 overflow-ellipsis w-full sm:w-56 whitespace-nowrap overflow-hidden">
                   {facebook}
                 </h5>
               </div>
@@ -69,7 +69,7 @@ const Socials = ({ userId, twitter, facebook, instagram }) => {
             <a target="_blank">
               <div className="flex items-center">
                 <Instagram className={classes.icon} />
-                <h5 className="text-sm text-gray-600 overflow-ellipsis w-56 whitespace-nowrap overflow-hidden">
+                <h5 className="text-sm text-gray-600 overflow-ellipsis w-full sm:w-56 whitespace-nowrap overflow-hidden">
                   {instagram}
                 </h5>
               </div>

@@ -189,14 +189,14 @@ const Profile = () => {
               My Posters
             </h1>
             {uid === user.id && (
-              <div>
+              <div className="flex flex-wrap  justify-center sm:justify-end">
                 <Link href="/poster/new">
-                  <button className="bg-black focus:outline-none text-white px-3 py-2 md:px-4 rounded-md hover:bg-gray-900">
+                  <button className="my-2 mx-2 bg-black focus:outline-none text-white px-3 py-2 md:px-4 rounded-md hover:bg-gray-900">
                     Add Poster
                   </button>
                 </Link>
                 <Link href="/poster/requests/all">
-                  <button className="mx-5 focus:outline-none px-2 py-2 sm:px-4 sm:py-2 md:px-4 border-black border-solid border-2 rounded-md hover:bg-gray-200">
+                  <button className="my-2 mx-2 focus:outline-none px-2 py-2 sm:px-4 sm:py-2 md:px-4 border-black border-solid border-2 rounded-md hover:bg-gray-200">
                     My Work
                   </button>
                 </Link>
