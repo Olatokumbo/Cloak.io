@@ -44,6 +44,24 @@ export const updateProfileDescription = (profile) => {
     });
 };
 
+export const updateProfileSocialLink = (twitterUrl, facebookUrl, instagramUrl, userId) => {
+  console.log("RUNNING")
+  return firestore
+    .collection("users")
+    .doc(userId)
+    .update({
+      twitterUrl,
+      facebookUrl,
+      instagramUrl,
+    })
+    .then(() => {
+      alert("Successfully Updated");
+    })
+    .catch((e) => {
+      throw new Error(e.message);
+    });
+};
+
 export const getProfileDetails = (id) => {
   return (dispatch) => {
     const unsubscribe = firestore

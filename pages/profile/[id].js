@@ -176,7 +176,12 @@ const Profile = () => {
             </Modal>
           </div>
           {/* Social Links */}
-            <Socials userId={user.id}/>
+          <Socials
+            userId={user.id}
+            twitter={user.twitterUrl}
+            facebook={user.facebookUrl}
+            instagram={user.instagramUrl}
+          />
         </div>
         <div className="flex-1 md:flex-2 lg:flex-3 min-h-screen w-full p-5 border-solid border-gray-100 border-2">
           <div className="flex flex-col w-full justify-between items-center sm:flex-row">

@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core";
 import { Twitter, Facebook, Instagram } from "@material-ui/icons";
 import SocialLinkModal from "../components/SocialLinkModal";
 import { useSelector } from "react-redux";
+import Link from "next/link";
 
 const useStyles = makeStyles(() => ({
   icon: {
@@ -13,7 +14,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Socials = ({userId}) => {
+const Socials = ({ userId, twitter, facebook, instagram }) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const uid = useSelector((state) => state.auth.uid);
@@ -39,19 +40,50 @@ const Socials = ({userId}) => {
         )}
       </div>
       <div className="flex flex-col">
-        <div className="flex items-center">
-          <Twitter className={classes.icon} />
-          <h5 className="text-sm text-gray-600">faithodesola</h5>
-        </div>
-        <div className="flex items-center">
-          <Facebook className={classes.icon} />
-          <h5 className="text-sm text-gray-600">faithodesola</h5>
-        </div>
-        <div className="flex items-center">
-          <Instagram className={classes.icon} />
-          <h5 className="text-sm text-gray-600">faithodesola</h5>
-        </div>
-        <SocialLinkModal open={open} handleClose={handleClose} />
+        {twitter && (
+          <Link href={twitter}>
+            <a target="_blank">
+              <div className="flex items-center">
+                <Twitter className={classes.icon} />
+                <h5 className="text-sm text-gray-600 overflow-ellipsis w-56 whitespace-nowrap overflow-hidden">
+                  {twitter}
+                </h5>
+              </div>
+            </a>
+          </Link>
+        )}
+        {facebook && (
+          <Link href={facebook}>
+            <a target="_blank">
+              <div className="flex items-center">
+                <Facebook className={classes.icon} />
+                <h5 className="text-sm text-gray-600 overflow-ellipsis w-56 whitespace-nowrap overflow-hidden">
+                  {facebook}
+                </h5>
+              </div>
+            </a>
+          </Link>
+        )}
+        {instagram && (
+          <Link href={instagram}>
+            <a target="_blank">
+              <div className="flex items-center">
+                <Instagram className={classes.icon} />
+                <h5 className="text-sm text-gray-600 overflow-ellipsis w-56 whitespace-nowrap overflow-hidden">
+                  {instagram}
+                </h5>
+              </div>
+            </a>
+          </Link>
+        )}
+        <SocialLinkModal
+          open={open}
+          handleClose={handleClose}
+          facebook={facebook}
+          twitter={twitter}
+          instagram={instagram}
+          userId={uid}
+        />
       </div>
     </div>
   );

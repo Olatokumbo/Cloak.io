@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import {
   Modal,
   Fade,
@@ -6,6 +7,7 @@ import {
   makeStyles,
   TextField,
 } from "@material-ui/core";
+import { updateProfileSocialLink } from "../redux/actions/profile";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -28,12 +30,49 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-const SocialLinkModal = ({ open, handleClose }) => {
+const SocialLinkModal = ({
+  open,
+  handleClose,
+  facebook,
+  instagram,
+  twitter,
+  userId,
+}) => {
   const classes = useStyles();
+  const [twitterUrl, setTwitterUrl] = useState("");
+  const [facebookUrl, setFacebookUrl] = useState("");
+  const [instagramUrl, setInstagramUrl] = useState("");
 
-  //   const handleDeletePoster = () => {
-  //     handleClose();
-  //   };
+  const updateSocials = async (e) => {
+    e.preventDefault();
+    console.log("SUBMIT");
+    try {
+      await updateProfileSocialLink(
+        twitterUrl,
+        facebookUrl,
+        instagramUrl,
+        userId
+      );
+      handleClose();
+    } catch (error) {}
+  };
+
+//   useEffect(() => {
+//     twitter && setTwitterUrl(twitter);
+//     facebook && setFacebookUrl(facebook);
+//     instagram && setInstagramUrl(instagram);
+//   }, [facebook, twitter, instagram]);
+  useEffect(() => {
+    if (open === false) {
+      setTwitterUrl("");
+      setFacebookUrl("");
+      setInstagramUrl("");
+    } else {
+      twitter && setTwitterUrl(twitter);
+      facebook && setFacebookUrl(facebook);
+      instagram && setInstagramUrl(instagram);
+    }
+  }, [open]);
   return (
     <Modal
       aria-labelledby="transition-modal-title"
@@ -52,12 +91,14 @@ const SocialLinkModal = ({ open, handleClose }) => {
           <h5 className="text-gray-700 font-light my-2">
             Enter your Social Media Profile Links
           </h5>
-          <form className="flex flex-col w-full">
+          <form className="flex flex-col w-full" onSubmit={updateSocials}>
             <TextField
               label="Twitter Url"
               variant="outlined"
               margin="dense"
               size="small"
+              onChange={(e) => setTwitterUrl(e.target.value)}
+              value={twitterUrl}
               inputProps={{
                 maxLength: 430,
               }}
@@ -67,6 +108,8 @@ const SocialLinkModal = ({ open, handleClose }) => {
               variant="outlined"
               margin="dense"
               size="small"
+              onChange={(e) => setFacebookUrl(e.target.value)}
+              value={facebookUrl}
               inputProps={{
                 maxLength: 430,
               }}
@@ -76,6 +119,8 @@ const SocialLinkModal = ({ open, handleClose }) => {
               variant="outlined"
               margin="dense"
               size="small"
+              onChange={(e) => setInstagramUrl(e.target.value)}
+              value={instagramUrl}
               inputProps={{
                 maxLength: 430,
               }}
