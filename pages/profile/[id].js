@@ -2,7 +2,6 @@ import { useState } from "react";
 import Layout from "../../components/Layout";
 import CategoryList from "../../sections/CategoryList";
 import { useRouter } from "next/router";
-import { CogIcon} from "@heroicons/react/solid";
 import {
   Avatar,
   makeStyles,
@@ -11,15 +10,16 @@ import {
   Button,
   Backdrop,
   Fade,
-  IconButton
+  IconButton,
 } from "@material-ui/core";
-import { LocationMarkerIcon } from "@heroicons/react/solid";
+import { LocationMarkerIcon, CogIcon } from "@heroicons/react/solid";
 import MyPosterCard from "../../components/MyPosterCard";
 import { useSelector } from "react-redux";
 import { format } from "date-fns";
 import Link from "next/link";
 import { updateProfileDescription } from "../../redux/actions/profile";
 import useProfile from "../../hooks/useProfile";
+import Socials from "../../sections/Socials";
 const useStyles = makeStyles((theme) => ({
   avatar: {
     marginLeft: theme.spacing(5),
@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     // position: "absolute",
-    transform: `translate(0%, 80%)`,
+    transform: `translate(0%, 30%)`,
     minWidth: 180,
     maxWidth: 400,
     backgroundColor: theme.palette.background.paper,
@@ -46,9 +46,15 @@ const useStyles = makeStyles((theme) => ({
       background: "#535e70",
     },
   },
-  btn1:{
-    alignSelf: "flex-end"
-  }
+  btn1: {
+    alignSelf: "flex-end",
+  },
+  icon: {
+    width: 25,
+    height: 25,
+    margin: 2,
+    color: "#4b5563",
+  },
 }));
 
 const Profile = () => {
@@ -71,7 +77,10 @@ const Profile = () => {
   const updateDescriptionHandler = async (e) => {
     e.preventDefault();
     try {
-      updateProfileDescription({ id: uid, description: description.split("\n") });
+      updateProfileDescription({
+        id: uid,
+        description: description.split("\n"),
+      });
     } catch (error) {
       console.log(error.message);
     }
@@ -82,7 +91,11 @@ const Profile = () => {
       <div className="flex p-3 flex-col md:flex-row">
         <div className="flex-1 px-3">
           <div className="flex flex-col justify-center items-center py-5 px-10 w-full border-solid border-gray-300 border-2">
-          {(uid===user.id)&&<IconButton className={classes.btn1}><CogIcon className="h-6 w-6 text-gray-500"/></IconButton>}
+            {uid === user.id && (
+              <IconButton className={classes.btn1}>
+                <CogIcon className="h-6 w-6 text-gray-500" />
+              </IconButton>
+            )}
             <Avatar src={user.photoURL} className={classes.avatar} />
             <h1>{user.displayName}</h1>
             <h5 className="text-xs text-gray-600">{user.email}</h5>
@@ -108,7 +121,7 @@ const Profile = () => {
               <h1 className="font-semibold text-gray-700 mb-3">Description</h1>
               {uid === user.id && (
                 <h1
-                  className="font-normal text-gray-500 mb-3 cursor-pointer underline"
+                  className="font-normal text-gray-500 mb-3 cursor-pointer hover:underline"
                   onClick={handleOpen}
                 >
                   Edit
@@ -162,10 +175,12 @@ const Profile = () => {
               </Fade>
             </Modal>
           </div>
+          {/* Social Links */}
+            <Socials userId={user.id}/>
         </div>
         <div className="flex-1 md:flex-2 lg:flex-3 min-h-screen w-full p-5 border-solid border-gray-100 border-2">
-          <div className="flex w-full justify-between items-center">
-            <h1 className="text-3xl font-bold text-gray-800 ml-2">
+          <div className="flex flex-col w-full justify-between items-center sm:flex-row">
+            <h1 className="text-3xl font-bold text-gray-800 ml-0 mb-5 sm:mb-0 sm:ml-2">
               My Posters
             </h1>
             {uid === user.id && (

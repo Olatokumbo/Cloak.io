@@ -8,26 +8,27 @@ import * as actionTypes from "../actions/actionTypes";
 
 export const signinEaP = (email, password) => {
   // return (dispatch) => {
-    console.log(email, password)
-    auth
-      .signInWithEmailAndPassword(email, password)
-      .catch((error) => {
-        alert(error.message)
-      });
+  console.log(email, password);
+  auth.signInWithEmailAndPassword(email, password).catch((error) => {
+    alert(error.message);
+  });
   // };
 };
 
-export const signupEaP = (email, password) =>{
+export const signupEaP = (email, password) => {
   // return (dispatch) => {
-    auth.createUserWithEmailAndPassword(email, password).then((userCredential)=>{
+  auth
+    .createUserWithEmailAndPassword(email, password)
+    .then((userCredential) => {
       auth.currentUser.updateProfile({
         displayName: userCredential.user.email.split("@")[0],
-      })
-    }).catch((error) => {
-      alert(error.message)
+      });
+    })
+    .catch((error) => {
+      alert(error.message);
     });
   // }
-}
+};
 
 export const signinGoogle = () => {
   auth
@@ -46,8 +47,9 @@ export const signinFacebook = () => {
   auth
     .signInWithPopup(facebookProvider)
     .then((result) => {
+      console.log(result);
       auth.currentUser.updateProfile({
-        displayName: result.user.email.split("@")[0],
+        displayName: result.user.thirdPartyUserData.email.split("@")[0],
       });
     })
     .catch((error) => {
