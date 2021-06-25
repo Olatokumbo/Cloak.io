@@ -16,6 +16,7 @@ import { updateJob, fetchJobById } from "../../../redux/actions/jobs";
 import PrivateRoute from "../../../hoc/PrivateRoute";
 import DeleteJobModal from "../../../components/DeleteJobModal";
 import useLocation from "../../../hooks/useLocation";
+import { errorNotification } from "../../../utils/notifications";
 
 const useStyles = makeStyles((theme) => ({
   btn: {
@@ -59,7 +60,7 @@ const EditJob = ({ job }) => {
       });
       router.replace("/job/all");
     } catch (error) {
-      console.log(error);
+      errorNotification("Error", error.message);
     }
   };
 

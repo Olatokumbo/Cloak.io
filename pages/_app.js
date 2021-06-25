@@ -6,6 +6,8 @@ import { ThemeProvider } from "@material-ui/core/styles";
 import Router from "next/router";
 import NProgress from "nprogress"; //nprogress module
 import "nprogress/nprogress.css"; //styles of nprogress
+import ReactNotification from "react-notifications-component";
+import "react-notifications-component/dist/theme.css";
 import theme from "../utils/theme";
 import Auth from "../auth";
 
@@ -26,6 +28,7 @@ function MyApp({ Component, pageProps }) {
     <ThemeProvider theme={theme}>
       <Provider store={store}>
         <Auth>
+          <ReactNotification />
           <Component {...pageProps} />
         </Auth>
       </Provider>

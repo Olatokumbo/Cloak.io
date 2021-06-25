@@ -1,5 +1,6 @@
 import firebase, { firestore, storage } from "../../firebase/firebase";
 import * as actionTypes from "../../redux/actions/actionTypes";
+import { successNotification } from "../../utils/notifications";
 
 export const getAllPostersId = () => {
   let posters = [];
@@ -181,7 +182,7 @@ export const uploadPoster = (poster) => {
       });
       return Promise.all(promises)
         .then(() => {
-          alert("All files uploaded");
+          successNotification("Success", "Poster Uploaded");
           console.log(urls);
           return urls;
         })
@@ -202,7 +203,7 @@ export const updatePoster = (poster) => {
       phoneNumber: poster.phoneNumber,
     })
     .then(() => {
-      alert("Document Updated");
+      successNotification("Success", "Successfully Updated Poster");
     })
     .catch((e) => {
       return new Error(e.message);
@@ -215,7 +216,7 @@ export const deletePoster = (id) => {
     .doc(id)
     .delete()
     .then(() => {
-      alert("Poster Deleted");
+      successNotification("Success", "Poster Deleted");
     })
     .catch((e) => {
       throw new Error(e.message);

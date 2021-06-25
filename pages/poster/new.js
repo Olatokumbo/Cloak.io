@@ -19,6 +19,7 @@ import useDisplayPhoto from "../../hooks/useDisplayPhoto";
 import ImageCard from "../../components/ImageCard";
 import { useRouter } from "next/router";
 import useLocation from "../../hooks/useLocation";
+import { errorNotification } from "../../utils/notifications";
 
 const NewPoster = ({ categories }) => {
   const router = useRouter();
@@ -56,9 +57,8 @@ const NewPoster = ({ categories }) => {
       });
       router.replace(`/profile/${userId}`);
     } catch (error) {
-      console.log(error);
       setButtonState(false);
-      alert(error.message);
+      errorNotification("Error", error.message);
     }
     setButtonState(false);
   };

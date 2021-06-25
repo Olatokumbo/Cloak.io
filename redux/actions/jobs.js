@@ -1,5 +1,9 @@
 import firebase, { firestore } from "../../firebase/firebase";
 import * as actionTypes from "../../redux/actions/actionTypes";
+import {
+  successNotification,
+  warningNotification,
+} from "../../utils/notifications";
 export const fetchJobById = (documentId) => {
   let promises = [];
   let job;
@@ -51,7 +55,7 @@ export const addJob = (job) => {
       date: firebase.firestore.FieldValue.serverTimestamp(),
       applied: [],
     })
-    .then(() => alert("Posted Your Job"))
+    .then(() => successNotification("Success", "Job Posted"))
     .catch((e) => {
       throw new Error(e.message);
     });
@@ -96,7 +100,7 @@ export const updateJob = (job) => {
       location: job.location,
     })
     .then(() => {
-      alert("Document Updated");
+      successNotification("Success", "Job Updated");
     })
     .catch((e) => {
       return new Error(e.message);
@@ -109,7 +113,7 @@ export const deleteJob = (id) => {
     .doc(id)
     .delete()
     .then(() => {
-      alert("Job Deleted");
+      successNotification("Success", "Job Deleted");
     })
     .catch((e) => {
       return new Error(e.message);
@@ -141,7 +145,7 @@ export const applyJob = (jobId, userId) => {
       applied: firebase.firestore.FieldValue.arrayUnion(userId),
     })
     .then(() => {
-      alert("Success");
+      successNotification("Success", "Job Applied");
     })
     .catch((e) => {
       throw new Error(e.message);
@@ -156,7 +160,7 @@ export const withdrawJob = (jobId, userId) => {
       applied: firebase.firestore.FieldValue.arrayRemove(userId),
     })
     .then(() => {
-      alert("Success");
+      warningNotification("Done", "Job Withdrawn");
     })
     .catch((e) => {
       throw new Error(e.message);

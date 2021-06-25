@@ -17,6 +17,10 @@ import useLocation from "../../../hooks/useLocation";
 
 import fs from "fs";
 import path from "path";
+import {
+  errorNotification,
+  successNotification,
+} from "../../../utils/notifications";
 const EditPoster = ({ categories, poster }) => {
   const router = useRouter();
   const cities = useLocation();
@@ -59,7 +63,7 @@ const EditPoster = ({ categories, poster }) => {
       router.replace(`/profile/${userId}`);
     } catch (error) {
       setButtonState(false);
-      alert(error.message);
+      errorNotification("Error", error.message);
     }
     setButtonState(false);
   };

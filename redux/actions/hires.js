@@ -1,5 +1,10 @@
 import firebase, { firestore } from "../../firebase/firebase";
 import * as actionTypes from "../../redux/actions/actionTypes";
+import {
+  defaultNotification,
+  successNotification,
+  warningNotification,
+} from "../../utils/notifications";
 export const hireMe = (data) => {
   return firestore
     .collection("hires")
@@ -18,7 +23,7 @@ export const hireMe = (data) => {
       completedDate: null,
     })
     .then(() => {
-      console.log("Document Updated");
+      defaultNotification("Hire Request Sent", "Waiting for Hire Approval");
     })
     .catch((e) => {
       throw new Error(e.message);
@@ -134,10 +139,10 @@ export const finishJob = (id) => {
     .update({
       done: true,
       cancelled: false,
-      completedDate: firebase.firestore.FieldValue.serverTimestamp()
+      completedDate: firebase.firestore.FieldValue.serverTimestamp(),
     })
     .then(() => {
-      alert("You have finished this Job");
+      successNotification("Success", "Job Finished");
     })
     .catch((e) => {
       throw new Error(e.message);
@@ -151,10 +156,10 @@ export const cancelJob = (id) => {
     .update({
       done: false,
       cancelled: true,
-      cancelledDate: firebase.firestore.FieldValue.serverTimestamp()
+      cancelledDate: firebase.firestore.FieldValue.serverTimestamp(),
     })
     .then(() => {
-      alert("You have rejected this job");
+      warningNotification("Rejected", "Job Order Rejected");
     })
     .catch((e) => {
       throw new Error(e.message);
@@ -163,18 +168,19 @@ export const cancelJob = (id) => {
 
 export const listCancelledHires = (userId) => {
   let cancelledHires = [];
-    return firestore
-      .collection("hires")
-      .where("userId", "==", userId)
-      .where("cancelled", "==", true)
-      .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          cancelledHires.push({ id: doc.id, ...doc.data() });
-        });
-      }).then(()=>{
-        return cancelledHires
+  return firestore
+    .collection("hires")
+    .where("userId", "==", userId)
+    .where("cancelled", "==", true)
+    .get()
+    .then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        cancelledHires.push({ id: doc.id, ...doc.data() });
       });
+    })
+    .then(() => {
+      return cancelledHires;
+    });
 };
 
 export const addReview = (data) => {

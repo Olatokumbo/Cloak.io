@@ -70,11 +70,11 @@ const Profile = ({ poster }) => {
               {poster.title}
             </h1>
             <h5 className="text-2xl font-semibold text-gray-800">
-              ₦{poster.price}+
+              ₦{poster.price}~
             </h5>
           </div>
-          <div className="flex justify-between mb-7 flex-col xs:flex-row">
-            <div className="flex items-center my-3 md:my-5 mx-auto xs:mx-0">
+          <div className="flex justify-between mb-3 flex-col xs:flex-row">
+            <div className="flex items-center mt-3">
               <img
                 src={poster.authorData.photoURL}
                 alt="me"
@@ -124,7 +124,7 @@ const Profile = ({ poster }) => {
             )}
           </div>
           {/* <h6 className="text-md text-gray-600">Level 2</h6> */}
-          <h1 className="text-lg font-semibold mt-5">My Works</h1>
+          <h1 className="text-lg font-semibold mt-2">My Works</h1>
           <ProfileCarousel images={poster?.works} />
           <h1 className="font-bold text-lg my-5 text-gray-800">Description</h1>
           {poster.description.map((text, index) => (

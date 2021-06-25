@@ -1,5 +1,6 @@
 import { HeartIcon } from "@heroicons/react/outline";
 import { truncate } from "../utils/truncate";
+import { LocationMarkerIcon } from "@heroicons/react/solid";
 // import { format } from "date-fns";
 const JobCard = ({ data }) => {
   return (
@@ -12,7 +13,9 @@ const JobCard = ({ data }) => {
             className="w-10 max-h-10 rounded-full mr-0 xs:mr-4"
           />
           <div className="flex flex-col">
-            <h2 className="font-semibold text-lg text-center xs:text-left">{data?.title}</h2>
+            <h2 className="font-semibold text-lg text-center xs:text-left">
+              {data?.title}
+            </h2>
             <h6 className="text-xs text-gray-400 font-medium text-center xs:text-left">
               {data?.displayName || data?.authorData.displayName}
             </h6>
@@ -28,10 +31,12 @@ const JobCard = ({ data }) => {
       <div className="flex justify-between items-center">
         <HeartIcon className="h-6 w-6" />
         <h5 className="text-sm font-semibold text-gray-400">
-          {/* {format(
-            new Date(data.date._seconds || data.date.seconds * 1000),
-            "MMMM dd yyyy"
-          )} */}
+          <div className="flex self-end">
+            <LocationMarkerIcon className="h-5 w-5 text-gray-500" />
+            <h5 className="text-xs self-end text-gray-500">
+              {data.location || "Unspecified"}
+            </h5>
+          </div>
         </h5>
       </div>
     </div>

@@ -1,5 +1,6 @@
 import { firestore } from "../../firebase/firebase";
 import * as actionTypes from "../../redux/actions/actionTypes";
+import { successNotification } from "../../utils/notifications";
 
 export const getAllProfileId = () => {
   const users = [];
@@ -37,15 +38,19 @@ export const updateProfileDescription = (profile) => {
       description: profile.description,
     })
     .then(() => {
-      alert("Successfully Updated Your Description");
+      successNotification("Success", "Successfully Updated Your Description");
     })
     .catch((e) => {
       throw new Error(e.message);
     });
 };
 
-export const updateProfileSocialLink = (twitterUrl, facebookUrl, instagramUrl, userId) => {
-  console.log("RUNNING")
+export const updateProfileSocialLink = (
+  twitterUrl,
+  facebookUrl,
+  instagramUrl,
+  userId
+) => {
   return firestore
     .collection("users")
     .doc(userId)
@@ -55,7 +60,7 @@ export const updateProfileSocialLink = (twitterUrl, facebookUrl, instagramUrl, u
       instagramUrl,
     })
     .then(() => {
-      alert("Successfully Updated");
+      successNotification("Success", "Updated");
     })
     .catch((e) => {
       throw new Error(e.message);

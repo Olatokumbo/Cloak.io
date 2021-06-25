@@ -14,6 +14,7 @@ import PrivateRoute from "../../hoc/PrivateRoute";
 import { useRouter } from "next/router";
 import { addJob } from "../../redux/actions/jobs";
 import useLocation from "../../hooks/useLocation";
+import { errorNotification } from "../../utils/notifications";
 const NewJob = () => {
   const router = useRouter();
   const userId = useSelector((state) => state.auth.uid);
@@ -31,8 +32,7 @@ const NewJob = () => {
       await addJob({ title, description, location, price, userId });
       router.replace("/job/all");
     } catch (error) {
-      console.log("ERROR");
-      alert(error.message);
+      errorNotification("Error", error.message);
       setButtonState(false);
     }
   };
