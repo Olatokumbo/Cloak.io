@@ -15,6 +15,7 @@ import { useRouter } from "next/router";
 import { updateJob, fetchJobById } from "../../../redux/actions/jobs";
 import PrivateRoute from "../../../hoc/PrivateRoute";
 import DeleteJobModal from "../../../components/DeleteJobModal";
+import useLocation from "../../../hooks/useLocation";
 
 const useStyles = makeStyles((theme) => ({
   btn: {
@@ -25,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
 const EditJob = ({ job }) => {
   const router = useRouter();
   const classes = useStyles();
+  const cities = useLocation();
   const userId = useSelector((state) => state.auth.uid);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
