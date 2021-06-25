@@ -4,6 +4,10 @@ import {
   Button,
   makeStyles,
   CircularProgress,
+  FormControl,
+  MenuItem,
+  InputLabel,
+  Select,
 } from "@material-ui/core";
 import Layout from "../../../components/Layout";
 import { useSelector } from "react-redux";
@@ -85,16 +89,20 @@ const EditJob = ({ job }) => {
             onChange={(e) => setDescription(e.target.value)}
             value={description}
           />
-          <TextField
-            name="location"
-            size="small"
-            label="Location"
-            variant="outlined"
-            fullWidth={true}
-            margin="normal"
-            onChange={(e) => setLocation(e.target.value)}
-            value={location}
-          />
+          <FormControl fullWidth={true}>
+            <InputLabel>Location</InputLabel>
+            <Select
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+              InputLabelProps={{ shrink: true }}
+            >
+              {cities.map((name, i) => (
+                <MenuItem key={i} value={name}>
+                  {name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
           <TextField
             type="number"
             name="price"

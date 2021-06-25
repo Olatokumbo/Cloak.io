@@ -2,12 +2,12 @@ import Layout from "../components/Layout";
 const PrivacyPolicy = () => {
   return (
 <Layout>
-<div className="py-5 px-16">
+<div className="py-5 sm:px-16 px-6">
       <div className="my-3">
         <h1 className="text-3xl font-bold my-2">Privacy Policy</h1>
         <p>Last updated: June 20, 2021</p>
       </div>
-      <p>
+      <p className="my-3">
         This Privacy Policy describes Our policies and procedures on the
         collection, use and disclosure of Your information when You use the
         Service and tells You about Your privacy rights and how the law protects
@@ -225,7 +225,7 @@ const PrivacyPolicy = () => {
             rel="external nofollow noopener"
             target="_blank"
           >
-            https://helpx.adobe.com/flash-player/kb/disable-local-shared-objects-flash.html#main_Where_can_I_change_the_settings_for_disabling__or_deleting_local_shared_objects_
+            HERE
           </a>
         </li>
         <li className="my-5">

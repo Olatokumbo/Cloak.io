@@ -1,10 +1,19 @@
 import { useState } from "react";
-import { TextField, Button, CircularProgress } from "@material-ui/core";
+import {
+  TextField,
+  Button,
+  CircularProgress,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+} from "@material-ui/core";
 import Layout from "../../components/Layout";
 import { useSelector } from "react-redux";
 import PrivateRoute from "../../hoc/PrivateRoute";
 import { useRouter } from "next/router";
 import { addJob } from "../../redux/actions/jobs";
+import useLocation from "../../hooks/useLocation";
 const NewJob = () => {
   const router = useRouter();
   const userId = useSelector((state) => state.auth.uid);
@@ -13,6 +22,7 @@ const NewJob = () => {
   const [location, setLocation] = useState("");
   const [price, setPrice] = useState(0);
   const [buttonState, setButtonState] = useState(false);
+  const cities = useLocation();
 
   const addJobHandler = async (e) => {
     e.preventDefault();
@@ -23,7 +33,7 @@ const NewJob = () => {
     } catch (error) {
       console.log("ERROR");
       alert(error.message);
-      setButtonState(false)
+      setButtonState(false);
     }
   };
   return (
@@ -53,16 +63,20 @@ const NewJob = () => {
             onChange={(e) => setDescription(e.target.value)}
             value={description}
           />
-          <TextField
-            name="location"
-            size="small"
-            label="Location"
-            variant="outlined"
-            fullWidth={true}
-            margin="normal"
-            onChange={(e) => setLocation(e.target.value)}
-            value={location}
-          />
+          <FormControl fullWidth={true}>
+            <InputLabel>Location</InputLabel>
+            <Select
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+              InputLabelProps={{ shrink: true }}
+            >
+              {cities.map((name, i) => (
+                <MenuItem key={i} value={name}>
+                  {name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
           <TextField
             type="number"
             name="price"
@@ -93,4 +107,4 @@ const NewJob = () => {
   );
 };
 
-export default NewJob;
+export default PrivateRoute(NewJob);
