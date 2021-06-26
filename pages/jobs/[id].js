@@ -20,6 +20,10 @@ import {
 } from "@material-ui/core";
 import { useRouter } from "next/router";
 import AppliedUser from "../../components/AppliedUser";
+import {
+  errorNotification,
+  warningNotification,
+} from "../../utils/notifications";
 const JobInfo = ({ job }) => {
   const router = useRouter();
   const { id } = router.query;
@@ -43,7 +47,7 @@ const JobInfo = ({ job }) => {
         alert(error.message);
       }
     } else {
-      alert("Please Signin your Account");
+      warningNotification("Warning", "Please Sign in");
     }
   };
 
@@ -55,7 +59,7 @@ const JobInfo = ({ job }) => {
       // localStorage.removeItem(job.id);
       // setAppliedState(false);
     } catch (error) {
-      alert(error.message);
+      errorNotification("Error", error.message);
     }
   };
   return (

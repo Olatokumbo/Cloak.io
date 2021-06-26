@@ -4,9 +4,9 @@ import { LocationMarkerIcon } from "@heroicons/react/solid";
 // import { format } from "date-fns";
 const JobCard = ({ data }) => {
   return (
-    <div className="rounded-md my-2 p-6 shadow-lg bg-white cursor-pointer hover:shadow-xl min-h-48 flex flex-col">
+    <div className="rounded-md my-2 p-6 shadow-lg bg-white cursor-pointer hover:shadow-xl min-h-48 flex flex-col h-56">
       <div className="flex justify-between items-center flex-col xs:flex-row">
-        <div className="flex items-center mr-0 flex-col xs:flex-row md:mr-4">
+        <div className="flex items-center mr-0 flex-col xs:flex-row md:mr-4 flex-1">
           <img
             src={data?.photoURL || data?.authorData.photoURL}
             alt="me"

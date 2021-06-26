@@ -6,11 +6,13 @@ import { SearchIcon, ChevronDownIcon } from "@heroicons/react/outline";
 import algoliasearch from "algoliasearch";
 import { useSelector } from "react-redux";
 import { fetchJobs } from "../../redux/actions/jobs";
+import useLocation from "../../hooks/useLocation";
 
 const Jobs = ({ jobs }) => {
   const isAuth = useSelector((state) => state.auth.isAuth);
   const [searchResults, setSearchResults] = useState([]);
   const [keyword, setKeyWord] = useState("");
+  const cities = useLocation();
   var client = algoliasearch(
     process.env.NEXT_PUBLIC__ALGOLIA_APP_ID,
     process.env.NEXT_PUBLIC__ALGOLIA_SEARCH_KEY
@@ -18,7 +20,6 @@ const Jobs = ({ jobs }) => {
   var index = client.initIndex("jobs");
   useEffect(() => {
     const jobSearch = async () => {
-      console.log("Searching...");
       await index
         .search(keyword)
         .then((responses) => {
@@ -38,7 +39,7 @@ const Jobs = ({ jobs }) => {
           <h3 className="text-white text-3xl font-medium">Jobs</h3>
         </div>
         <div className="flex min-h-screen">
-          <div className="flex-3 p-5 flex-col">
+          <div className="flex-3 p-3 flex-col">
             <div className="flex items-start flex-col-reverse md:flex-row">
               <div className="py-1 pr-0  w-full md:w-min md:py-6 md:pr-5 flex flex-col">
                 <h5 className="text-sm font-semibold text-gray-600">
@@ -48,14 +49,15 @@ const Jobs = ({ jobs }) => {
                   {/* Location Dropdown menu */}
                   <div className="relative inline-flex m-1">
                     <ChevronDownIcon className="w-3 h-3 absolute top-0 right-0 m-4 pointer-events-none" />
-                    <select disabled className="border border-gray-300 rounded-md text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none">
+                    <select className="border border-gray-300 rounded-md text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none">
                       <option defaultValue>
-                        Choose Location &nbsp; &nbsp;
+                        Choose Location &nbsp;
                       </option>
-                      <option>Lagos</option>
-                      <option>Kaduna</option>
-                      <option>Abuja</option>
-                      <option>Gbagada</option>
+                      {cities.map((name, i) => (
+                        <option key={i} value={name}>
+                          {name}
+                        </option>
+                      ))}
                     </select>
                   </div>
                   {/* Job type Dropdown menu */}

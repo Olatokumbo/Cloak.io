@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 import ReviewCard from "../../components/ReviewCard";
 // import { fetchReviews } from "../../redux/actions/reviews";
 import useReviews from "../../hooks/useReviews";
+import { warningNotification } from "../../utils/notifications";
 const Profile = ({ poster }) => {
   const router = useRouter();
   const { id } = router.query;
@@ -38,13 +39,16 @@ const Profile = ({ poster }) => {
     );
   const contactMe = () => {
     if (uid) setButtonState(true);
-    else alert("Please Signin First");
+    else warningNotification("Warning", "Please Sign in");
   };
   const hireMe = () => {
     if (uid && isActive === true) handleOpen();
     else if (uid && isActive === false)
-      alert("You have an active work order with this Service");
-    else alert("Please Signin First");
+      warningNotification(
+        "Warning",
+        "You have an active work order with this Service"
+      );
+    else warningNotification("Warning", "Please Sign in");
   };
 
   useEffect(() => {
