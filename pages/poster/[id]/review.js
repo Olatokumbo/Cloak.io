@@ -12,6 +12,10 @@ import {
   isHireReviewed,
 } from "../../../redux/actions/reviews";
 import ReviewCard from "../../../components/ReviewCard";
+import {
+  errorNotification,
+  successNotification,
+} from "../../../utils/notifications";
 const Review = () => {
   const router = useRouter();
   const { id } = router.query;
@@ -30,7 +34,7 @@ const Review = () => {
           setReviewed(await isHireReviewed(id));
         }
       } catch (error) {
-        console.log(error);
+        errorNotification("Error", error.message);
       }
     };
     getData();
@@ -43,7 +47,7 @@ const Review = () => {
           setReview(await fetchReviewById(workDetails.reviewId));
         }
       } catch (error) {
-        console.log(error);
+        errorNotification("Error", error.message);
       }
     };
     getData();
@@ -59,10 +63,10 @@ const Review = () => {
         posterId: workDetails.posterId,
         userId: workDetails.customerId,
       });
-      alert("Done");
+      successNotification("Success", "Review Added");
       router.push(`/search/${workDetails.posterId}`);
     } catch (error) {
-      console.log(error);
+      errorNotification("Error", error.message);
     }
   };
   // if (workDetails.done === false && workDetails.customerId !== userId)

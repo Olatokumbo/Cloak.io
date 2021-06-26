@@ -140,6 +140,7 @@ export const uploadPoster = (poster) => {
       description: poster.description,
       category: poster.category,
       works: [],
+      ratings: [],
       userId: poster.userId,
       authorRef: firestore.doc(`/users/${poster.userId}`),
       price: parseInt(poster.price),
@@ -170,7 +171,6 @@ export const uploadPoster = (poster) => {
           async () => {
             const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
             // do something with the url
-            console.log(downloadURL);
             firestore
               .collection("posters")
               .doc(docRef.id)
