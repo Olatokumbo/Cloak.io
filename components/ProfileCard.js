@@ -1,7 +1,8 @@
 import { truncate } from "../utils/truncate";
 import Image from "next/image";
 import { LocationMarkerIcon } from "@heroicons/react/solid";
-import { HeartIcon } from "@heroicons/react/outline";
+import { StarIcon } from "@heroicons/react/solid";
+import { getReview } from "../utils/reviews";
 const ProfileCard = ({ data, searched }) => {
   return (
     <div className="h-full flex flex-col border-2 border-solid border-gray-300 shadow-xl hover:shadow-2xl cursor-pointer rounded">
@@ -48,7 +49,17 @@ const ProfileCard = ({ data, searched }) => {
         </div>
         <hr />
         <div className="flex justify-between items-center">
-          <HeartIcon className="h-6 w-6 text-gray-800" />
+          {/* {data.ratings.length > 0 && ( */}
+          <div className="flex">
+            <StarIcon className="h-6 w-6 text-yellow-400" />
+            <h1 className="text-yellow-400 font-bold">
+              {getReview(data.ratings)}
+            </h1>
+            <h5 className="mx-1 font-medium text-gray-400">
+              ({data.ratings.length})
+            </h5>
+          </div>
+          {/* )} */}
           <div className="flex items-center">
             <h5 className="text-gray-800 mr-1">Starting at</h5>
             <h5 className="text-xl font-semibold text-gray-800">

@@ -88,6 +88,7 @@ const Review = () => {
                     onChange={(event, newValue) => {
                       setValue(newValue);
                     }}
+                    precision={0.5}
                   />
                   <TextField
                     label="Title"

@@ -13,6 +13,9 @@ import ReviewCard from "../../components/ReviewCard";
 // import { fetchReviews } from "../../redux/actions/reviews";
 import useReviews from "../../hooks/useReviews";
 import { warningNotification } from "../../utils/notifications";
+import { StarIcon } from "@heroicons/react/solid";
+import { Rating } from "@material-ui/lab";
+import { getReview } from "../../utils/reviews";
 const Profile = ({ poster }) => {
   const router = useRouter();
   const { id } = router.query;
@@ -69,16 +72,32 @@ const Profile = ({ poster }) => {
       <div className="flex">
         <div className="flex-none lg:flex-1 bg-gray-200"></div>
         <div className="flex-3 bg-white py-5 px-5 md:px-10">
-          <div className="flex justify-between items-center flex-col md:flex-row">
-            <h1 className="text-2xl font-semibold my-1 text-center md:my-5">
-              {poster.title}
-            </h1>
-            <h5 className="text-2xl font-semibold text-gray-800">
-              ₦{poster.price}~
-            </h5>
+          <div>
+            <div className="flex justify-between items-center flex-col md:flex-row">
+              <h1 className="text-2xl font-semibold my-1 text-center md:my-5">
+                {poster.title}
+              </h1>
+              <h5 className="text-2xl font-semibold text-gray-800">
+                ₦{poster.price}~
+              </h5>
+            </div>
+            <div className="flex justify-center md:justify-start">
+              <Rating
+                name="simple-controlled"
+                value={getReview(poster.ratings)}
+                precision={0.5}
+                readOnly
+              />
+              <h1 className="text-yellow-400 font-bold">
+                {getReview(poster.ratings)}
+              </h1>
+              <h5 className="mx-1 font-medium text-gray-400">
+                ({poster.ratings.length})
+              </h5>
+            </div>
           </div>
           <div className="flex justify-between mb-3 flex-col xs:flex-row">
-            <div className="flex items-center mt-3">
+            <div className="flex items-center my-3">
               <img
                 src={poster.authorData.photoURL}
                 alt="me"
