@@ -24,6 +24,7 @@ export const fetchPostersbyCategory = (category) => {
   return firestore
     .collection("posters")
     .where("category", "==", category)
+    .orderBy("ratingsCount", "desc")
     .get()
     .then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
@@ -43,7 +44,7 @@ export const fetchPostersbyCategory = (category) => {
     .then(() => {
       return JSON.stringify(posters);
     })
-    .catch((err) => err.message);
+    .catch((err) => new Error(err.message));
 };
 
 export const fetchPostersbyId = (documentId) => {
@@ -75,6 +76,7 @@ export const fetchPosters = () => {
   let promises = [];
   return firestore
     .collection("posters")
+    .orderBy("ratingsCount", "desc")
     .limit(10)
     .get()
     .then((querySnapshot) => {
@@ -95,7 +97,7 @@ export const fetchPosters = () => {
     .then(() => {
       return JSON.stringify(posters);
     })
-    .catch((err) => err.message);
+    .catch((err) => new Error(err.message));
 };
 
 export const fetchPostersByUserId = (userId) => {
@@ -103,6 +105,7 @@ export const fetchPostersByUserId = (userId) => {
   return firestore
     .collection("posters")
     .where("userId", "==", userId)
+    .orderBy("date", "desc")
     .get()
     .then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
@@ -119,6 +122,7 @@ export const fetchPostersByUserId2 = (userId) => {
     const unsubscribe = firestore
       .collection("posters")
       .where("userId", "==", userId)
+      .orderBy("date", "desc")
       .onSnapshot((querySnapshot) => {
         let posters = [];
         querySnapshot.forEach((doc) => {
