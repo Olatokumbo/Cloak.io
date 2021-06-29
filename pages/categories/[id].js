@@ -5,9 +5,23 @@ import Link from "next/link";
 import Layout from "../../components/Layout";
 import fs from "fs";
 import path from "path";
-import { fetchPostersbyCategory } from "../../redux/actions/posters";
+import {
+  fetchPostersbyCategory,
+  fetchNextPostersbyCategory,
+} from "../../redux/actions/posters";
+import { useRouter } from "next/router";
+import usePagination from "../../hooks/usePagination";
+import { CircularProgress, Button } from "@material-ui/core";
 
 const Category = ({ category, posters }) => {
+  const router = useRouter();
+  const { id } = router.query;
+
+  const { items, loading, loadMore, hasMore } = usePagination(
+    fetchPostersbyCategory,
+    fetchNextPostersbyCategory,
+    id
+  );
   return (
     <Layout>
       <CategoryList />
@@ -31,14 +45,30 @@ const Category = ({ category, posters }) => {
           />
         </div>
       </div>
-      <div className="mb-5 w-full px-2 grid gap-x-2 gap-y-4 grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-5">
-        {posters?.map((poster) => (
-          <Link key={poster.id}href={`/search/${poster.id}`}>
-            <a>
-              <ProfileCard data={poster} />
-            </a>
-          </Link>
-        ))}
+      <div className="flex justify-center flex-col items-center  mx-0 my-2 sm:my-5">
+        <div className="mb-5 w-full px-2 grid gap-x-2 gap-y-4 grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-5">
+          {items?.map((poster) => (
+            <Link key={poster.id} href={`/search/${poster.id}`}>
+              <a>
+                <ProfileCard data={poster} />
+              </a>
+            </Link>
+          ))}
+        </div>
+        {loading && <CircularProgress />}
+        {items.length > 0 && (
+          <div className="w-full flex justify-center py-2 my-2">
+            <Button
+              variant="outlined"
+              color="primary"
+              size="large"
+              disabled={!hasMore}
+              onClick={loadMore}
+            >
+              Load more
+            </Button>
+          </div>
+        )}
       </div>
     </Layout>
   );
@@ -64,13 +94,13 @@ export const getStaticProps = async ({ params }) => {
   let fileData = fs.readFileSync(filePath);
   fileData = JSON.parse(fileData);
   const category = fileData.filter((data) => data.id === params.id)[0];
-  let posters = await fetchPostersbyCategory(params.id);
-  posters = JSON.parse(posters);
+  // let posters = await fetchPostersbyCategory(params.id);
+  // posters = JSON.parse(posters);
   return {
     props: {
       category,
-      posters
+      // posters,
     },
-    revalidate: 30
+    // revalidate: 30,
   };
 };

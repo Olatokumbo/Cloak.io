@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const usePagination = (query, nextQuery) => {
+const usePagination = (query, nextQuery, id) => {
   const [loading, setLoading] = useState(false);
   const [lastItem, setLastItem] = useState(null);
   const [items, setItems] = useState([]);
@@ -9,7 +9,10 @@ const usePagination = (query, nextQuery) => {
   useEffect(() => {
     const getData = async () => {
       setLoading(true);
-      const data = await query();
+      let data;
+      if (id) {
+        data = await query(id);
+      } else data = await query();
       setItems(data.posters);
       setLastItem(data.lastVisible);
       setHasMore(true);
@@ -21,8 +24,11 @@ const usePagination = (query, nextQuery) => {
   const loadMore = async () => {
     console.log("Load More");
     setLoading(true);
+    let nextItems;
     if (lastItem) {
-      const nextItems = await nextQuery(lastItem);
+      if (id) {
+        nextItems = await nextQuery(id, lastItem);
+      } else nextItems = await nextQuery(lastItem);
       setLoading(false);
       setItems((prevItem) => [...prevItem, ...nextItems.posters]);
       if (nextItems.lastVisible) setLastItem(nextItems.lastVisible);

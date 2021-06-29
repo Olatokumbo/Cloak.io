@@ -21,6 +21,7 @@ export const getAllPostersId = () => {
 export const fetchPostersbyCategory = (category) => {
   let posters = [];
   let promises = [];
+  let lastVisible;
   return firestore
     .collection("posters")
     .where("category", "==", category)
@@ -28,6 +29,8 @@ export const fetchPostersbyCategory = (category) => {
     .limit(5)
     .get()
     .then((querySnapshot) => {
+      console.log(querySnapshot);
+      lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
       querySnapshot.forEach((doc) => {
         let posterData = doc.data();
         posterData.id = doc.id;
@@ -43,18 +46,21 @@ export const fetchPostersbyCategory = (category) => {
       return Promise.all(promises);
     })
     .then(() => {
-      return JSON.stringify(posters);
+      // return JSON.stringify(posters);
+      return { posters, lastVisible };
     })
     .catch((err) => new Error(err.message));
 };
 
-export const fetchNextPostersbyCategory = (category) => {
+export const fetchNextPostersbyCategory = (category, last) => {
   let posters = [];
   let promises = [];
+  let lastVisible;
   return firestore
     .collection("posters")
     .where("category", "==", category)
     .orderBy("ratingsCount", "desc")
+    .startAfter(last)
     .limit(5)
     .get()
     .then((querySnapshot) => {

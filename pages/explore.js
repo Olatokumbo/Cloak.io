@@ -29,7 +29,9 @@ const Explores = () => {
             <div className="opacity-30 absolute left-0 right-0 top-0 bottom-0 rounded"></div>
             <div className="absolute p-10 flex h-full w-full">
               <div className="flex-1 flex flex-col justify-center items-start">
-                <h1 className="text-white text-4xl xs:text-5xl font-semibold">Explore</h1>
+                <h1 className="text-white text-4xl xs:text-5xl font-semibold">
+                  Explore
+                </h1>
               </div>
               <div className="flex-none md:flex-1"></div>
             </div>
@@ -57,17 +59,19 @@ const Explores = () => {
           ))}
         </div>
         {loading && <CircularProgress />}
-        <div className="w-full flex justify-center py-2 my-2">
-          <Button
-            variant="outlined"
-            color="primary"
-            size="large"
-            disabled={!hasMore}
-            onClick={loadMore}
-          >
-            Load more
-          </Button>
-        </div>
+        {items.length>0 && (
+          <div className="w-full flex justify-center py-2 my-2">
+            <Button
+              variant="outlined"
+              color="primary"
+              size="large"
+              disabled={!hasMore}
+              onClick={loadMore}
+            >
+              Load more
+            </Button>
+          </div>
+        )}
       </div>
     </Layout>
   );
