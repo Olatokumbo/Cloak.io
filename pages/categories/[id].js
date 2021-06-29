@@ -12,7 +12,7 @@ const Category = ({ category, posters }) => {
     <Layout>
       <CategoryList />
       <div className="w-full relative overflow-hidden mb-9">
-        <div className="opacity-50 bg-gray-900 absolute left-0 right-0 top-0 bottom-0"></div>
+        <div className="opacity-50 bg-gray-900 absolute left-0 right-0 top-0 bottom-0 rounded"></div>
         <div className="absolute p-10 flex h-full w-full">
           <div className="flex-1 flex flex-col justify-center items-start">
             <h1 className="text-white text-3xl font-semibold">

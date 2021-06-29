@@ -6,9 +6,9 @@ import ProfileCard from "../components/ProfileCard";
 import { fetchPosters, fetchNextPosters } from "../redux/actions/posters";
 import PrivateRoute from "../hoc/PrivateRoute";
 import usePagination from "../hooks/usePagination";
-import { Button } from "@material-ui/core";
+import { Button, CircularProgress } from "@material-ui/core";
 const Explores = () => {
-  const { items, loadMore, _loading, hasMore } = usePagination(
+  const { items, loadMore, loading, hasMore } = usePagination(
     fetchPosters,
     fetchNextPosters
   );
@@ -29,7 +29,7 @@ const Explores = () => {
             <div className="opacity-30 absolute left-0 right-0 top-0 bottom-0 rounded"></div>
             <div className="absolute p-10 flex h-full w-full">
               <div className="flex-1 flex flex-col justify-center items-start">
-                <h1 className="text-white text-5xl font-semibold">Explore</h1>
+                <h1 className="text-white text-4xl xs:text-5xl font-semibold">Explore</h1>
               </div>
               <div className="flex-none md:flex-1"></div>
             </div>
@@ -43,9 +43,11 @@ const Explores = () => {
         </div>
       </div>
       {/* <Explore /> */}
-      <h1 className="text-3xl font-bold text-gray-800 ml-5">Popular Posters</h1>
-      <div className="flex justify-center flex-col items-center mx-5 my-5">
-        <div className="my-5 w-full px-2 grid gap-x-2 gap-y-4 grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-5">
+      <h1 className="text-2xl sm:text-3xl font-bold text-gray-800 ml-2 mt-3 md:ml-4 md:mt-0">
+        Popular Posters
+      </h1>
+      <div className="flex justify-center flex-col items-center  mx-0 my-2 sm:my-5">
+        <div className="my-2 w-full px-2 grid gap-x-2 gap-y-4 grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-5">
           {items?.map((poster) => (
             <Link key={poster.id} href={`/search/${poster.id}`}>
               <a>
@@ -54,15 +56,18 @@ const Explores = () => {
             </Link>
           ))}
         </div>
-        <Button
-          variant="outlined"
-          color="primary"
-          size="large"
-          disabled={!hasMore}
-          onClick={loadMore}
-        >
-          Load more
-        </Button>
+        {loading && <CircularProgress />}
+        <div className="w-full flex justify-center py-2 my-2">
+          <Button
+            variant="outlined"
+            color="primary"
+            size="large"
+            disabled={!hasMore}
+            onClick={loadMore}
+          >
+            Load more
+          </Button>
+        </div>
       </div>
     </Layout>
   );
