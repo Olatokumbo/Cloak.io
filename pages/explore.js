@@ -1,11 +1,17 @@
 import Layout from "../components/Layout";
 import CategoryList from "../sections/CategoryList";
-import Explore from "../sections/Explore";
+// import Explore from "../sections/Explore";
 import Link from "next/link";
 import ProfileCard from "../components/ProfileCard";
-import { fetchPosters } from "../redux/actions/posters";
+import { fetchPosters, fetchNextPosters } from "../redux/actions/posters";
 import PrivateRoute from "../hoc/PrivateRoute";
-const Explores = ({ posters }) => {
+import usePagination from "../hooks/usePagination";
+import { Button } from "@material-ui/core";
+const Explores = () => {
+  const { items, loadMore, _loading, hasMore } = usePagination(
+    fetchPosters,
+    fetchNextPosters
+  );
   return (
     <Layout>
       <CategoryList />
@@ -37,15 +43,26 @@ const Explores = ({ posters }) => {
         </div>
       </div>
       {/* <Explore /> */}
-      <h1 className="text-3xl font-bold text-gray-800 ml-2">Popular Posters</h1>
-      <div className="my-5 w-full px-2 grid gap-x-2 gap-y-4 grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-5">
-        {posters?.map((poster) => (
-          <Link key={poster.id} href={`/search/${poster.id}`}>
-            <a>
-              <ProfileCard data={poster} />
-            </a>
-          </Link>
-        ))}
+      <h1 className="text-3xl font-bold text-gray-800 ml-5">Popular Posters</h1>
+      <div className="flex justify-center flex-col items-center mx-5 my-5">
+        <div className="my-5 w-full px-2 grid gap-x-2 gap-y-4 grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-5">
+          {items?.map((poster) => (
+            <Link key={poster.id} href={`/search/${poster.id}`}>
+              <a>
+                <ProfileCard data={poster} />
+              </a>
+            </Link>
+          ))}
+        </div>
+        <Button
+          variant="outlined"
+          color="primary"
+          size="large"
+          disabled={!hasMore}
+          onClick={loadMore}
+        >
+          Load more
+        </Button>
       </div>
     </Layout>
   );
@@ -53,13 +70,13 @@ const Explores = ({ posters }) => {
 
 export default PrivateRoute(Explores);
 
-export const getStaticProps = async () => {
-  const res = await fetchPosters();
-  const posters = JSON.parse(res);
-  return {
-    props: {
-      posters,
-    },
-    revalidate: 1
-  };
-};
+// export const getStaticProps = async () => {
+//   const res = await fetchPosters();
+//   const posters = JSON.parse(res);
+//   return {
+//     props: {
+//       posters,
+//     },
+//     revalidate: 1
+//   };
+// };

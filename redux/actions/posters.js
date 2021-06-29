@@ -25,6 +25,7 @@ export const fetchPostersbyCategory = (category) => {
     .collection("posters")
     .where("category", "==", category)
     .orderBy("ratingsCount", "desc")
+    .limit(5)
     .get()
     .then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
@@ -43,6 +44,39 @@ export const fetchPostersbyCategory = (category) => {
     })
     .then(() => {
       return JSON.stringify(posters);
+    })
+    .catch((err) => new Error(err.message));
+};
+
+export const fetchNextPostersbyCategory = (category) => {
+  let posters = [];
+  let promises = [];
+  return firestore
+    .collection("posters")
+    .where("category", "==", category)
+    .orderBy("ratingsCount", "desc")
+    .limit(5)
+    .get()
+    .then((querySnapshot) => {
+      if (last) lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
+      else lastVisible = null;
+      querySnapshot.forEach((doc) => {
+        let posterData = doc.data();
+        posterData.id = doc.id;
+        if (posterData.authorRef) {
+          promises.push(
+            posterData.authorRef.get().then((res) => {
+              posterData.authorData = res.data();
+            })
+          );
+        }
+        posters.push(posterData);
+      });
+      return Promise.all(promises);
+    })
+    .then(() => {
+      // return JSON.stringify(posters);
+      return { posters, lastVisible };
     })
     .catch((err) => new Error(err.message));
 };
@@ -74,12 +108,14 @@ export const fetchPostersbyId = (documentId) => {
 export const fetchPosters = () => {
   let posters = [];
   let promises = [];
+  let lastVisible;
   return firestore
     .collection("posters")
     .orderBy("ratingsCount", "desc")
-    .limit(10)
+    .limit(5)
     .get()
     .then((querySnapshot) => {
+      lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
       querySnapshot.forEach((doc) => {
         let posterData = doc.data();
         posterData.id = doc.id;
@@ -95,7 +131,43 @@ export const fetchPosters = () => {
       return Promise.all(promises);
     })
     .then(() => {
-      return JSON.stringify(posters);
+      // return JSON.stringify(posters);
+      return { posters, lastVisible };
+    })
+    .catch((err) => new Error(err.message));
+};
+
+export const fetchNextPosters = (last) => {
+  let posters = [];
+  let promises = [];
+  let lastVisible;
+  return firestore
+    .collection("posters")
+    .orderBy("ratingsCount", "desc")
+    .startAfter(last)
+    .limit(5)
+    .get()
+    .then((querySnapshot) => {
+      if (last) lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
+      else lastVisible = null;
+
+      querySnapshot.forEach((doc) => {
+        let posterData = doc.data();
+        posterData.id = doc.id;
+        if (posterData.authorRef) {
+          promises.push(
+            posterData.authorRef.get().then((res) => {
+              posterData.authorData = res.data();
+            })
+          );
+        }
+        posters.push(posterData);
+      });
+      return Promise.all(promises);
+    })
+    .then(() => {
+      // return JSON.stringify(posters);
+      return { posters, lastVisible };
     })
     .catch((err) => new Error(err.message));
 };
