@@ -19,7 +19,7 @@ const usePagination = (query, nextQuery, id) => {
       setLoading(false);
     };
     getData();
-  }, []);
+  }, [id && id]);
 
   const loadMore = async () => {
     console.log("Load More");
