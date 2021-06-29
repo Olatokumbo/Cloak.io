@@ -21,6 +21,7 @@ import {
   errorNotification,
   successNotification,
 } from "../../../utils/notifications";
+import ImageCard from "../../../components/ImageCard";
 const EditPoster = ({ categories, poster }) => {
   const router = useRouter();
   const cities = useLocation();
@@ -33,6 +34,7 @@ const EditPoster = ({ categories, poster }) => {
   const [selectedCategory, setSelectedCategory] = useState(
     "graphics-and-design"
   );
+  const [works, setWorks] = useState([]);
   const [buttonState, setButtonState] = useState(false);
 
   useEffect(() => {
@@ -42,6 +44,7 @@ const EditPoster = ({ categories, poster }) => {
     setPrice(poster.price);
     setPhoneNumber(poster.phoneNumber);
     setSelectedCategory(poster.category);
+    setWorks(poster.works);
   }, []);
   const changeCategory = (e) => {
     setSelectedCategory(e.target.value);
@@ -149,6 +152,13 @@ const EditPoster = ({ categories, poster }) => {
               ))}
             </Select>
           </FormControl>
+          {works &&
+            works.map((work, index) => (
+              <ImageCard
+                key={index}
+                url={work}
+              />
+            ))}
           <Button
             type="submit"
             variant="contained"

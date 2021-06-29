@@ -180,7 +180,6 @@ const NewPoster = ({ categories }) => {
                 url={url}
                 photo={photos[index]}
                 deletePhoto={deletePhoto}
-                alt="Display Photos"
               />
             ))}
           </div>
