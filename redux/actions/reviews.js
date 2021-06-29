@@ -4,6 +4,7 @@ export const fetchReviews = (posterId) => {
   return firestore
     .collection("reviews")
     .where("posterId", "==", posterId)
+    .orderBy("date", "desc")
     .get()
     .then((snapShot) => {
       snapShot.forEach((doc) => {

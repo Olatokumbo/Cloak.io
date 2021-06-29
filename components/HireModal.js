@@ -10,6 +10,7 @@ import {
 // import { deleteJob } from "../redux/actions/jobs";
 import { useRouter } from "next/router";
 import { hireMe } from "../redux/actions/hires";
+import { successNotification } from "../utils/notifications";
 const useStyles = makeStyles((theme) => ({
   paper: {
     // position: "absolute",
@@ -49,7 +50,7 @@ const DeleteModal = ({ open, handleClose, id, data }) => {
         posterId: data.posterId,
       });
       setDescription("");
-      alert("Success");
+      // successNotification("Success", "Work Order Sent")
       //   router.replace("/job/all");
     } catch (error) {
       alert(error.message);

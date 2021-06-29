@@ -1,14 +1,18 @@
 import { useState, useEffect } from "react";
 const useLocation = () => {
-  const url = "https://locationsng-api.herokuapp.com/api/v1/states";
+  let url;
+  if (process.env.NODE_ENV === "production")
+    url = "https://cloak-io.vercel.app/api/states";
+  url = "http://localhost:3000/api/states";
+
   const [cities, setCities] = useState([]);
 
   useEffect(() => {
     const getData = async () => {
       try {
-        let data = await fetch(url);
-        data = await data.json();
-        let modifiedData = data.map((state) => state.name);
+        let states = await fetch(url);
+        states = await states.json();
+        let modifiedData = states.data.map((state) => state.info.officialName);
         // modifiedData = [].concat.apply([], modifiedData).sort();
         setCities(modifiedData);
       } catch (error) {
