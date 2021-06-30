@@ -1,9 +1,21 @@
 import { truncate } from "../utils/truncate";
 import Image from "next/image";
 import { LocationMarkerIcon } from "@heroicons/react/solid";
+import { Avatar, makeStyles } from "@material-ui/core";
 import { StarIcon } from "@heroicons/react/solid";
 import { getReview } from "../utils/reviews";
+
+const useStyles = makeStyles((theme) => ({
+  avatar: {
+    // marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: 25,
+    height: 25,
+  },
+}));
+
 const ProfileCard = ({ data, searched }) => {
+  const classes = useStyles();
   return (
     <div className="h-full flex flex-col border-2 border-solid border-gray-300 shadow-xl hover:shadow-2xl cursor-pointer rounded">
       <div className="h-40 relative -z-1">
@@ -22,16 +34,10 @@ const ProfileCard = ({ data, searched }) => {
         <div className="flex my-1">
           <div className="flex w-full justify-between">
             <div className="flex items-center">
-              <div className="w-7 h-7 mr-3 relative">
-                <Image
-                  src={searched ? data.photoURL : data.authorData.photoURL}
-                  alt="me"
-                  className="rounded-full"
-                  layout="fill"
-                  loading="eager"
-                />
-              </div>
-
+              <Avatar
+                src={searched ? data.photoURL : data.authorData.photoURL}
+                className={classes.avatar}
+              />
               <div className="flex flex-col">
                 <h4 className="text-sm font-semibold">
                   {searched ? data.displayName : data.authorData.displayName}

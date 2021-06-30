@@ -2,13 +2,22 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { signinEaP, signinFacebook, signinGoogle } from "../redux/actions/auth";
+import { CircularProgress } from "@material-ui/core";
 import PublicRoute from "../hoc/PublicRoute";
 const Signin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const signin = (e) =>{
+  const [loading, setLoading] = useState(false);
+  const signin = async (e) => {
     e.preventDefault();
-    signinEaP(email, password)
+    setLoading(true);
+    try {
+      await signinEaP(email, password);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      alert(error.message);
+    }
   };
   return (
     <div className="w-full flex min-h-screen">
@@ -51,41 +60,45 @@ const Signin = () => {
             Facebook
           </button> */}
           <h5 className="text-gray-500 my-3">or</h5>
-          <form onSubmit={signin} className="w-full">
-          <div className="w-full mb-2">
-            <label htmlFor="email" className="text-gray-700 text-sm">
-              Email
-            </label>
-            <input
-              type="text"
-              id="email"
-              onChange={(e)=>setEmail(e.target.value)}
-              className="rounded-sm border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-              name="email"
-              placeholder="Email"
-              value={email}
-            />
-          </div>
-          <div className="w-full mb-2">
-            <label htmlFor="password" className="text-gray-700 text-sm">
-              Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              onChange={(e)=>setPassword(e.target.value)}
-              className=" rounded-sm border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-              name="password"
-              placeholder="Password"
-              value={password}
-            />
-          </div>
-{
-  (email && password) 
-  && <button type="submit" className="my-5 w-full bg-gradient-to-r from-blue-500 to-indigo-800 hover:bg-gradient-to-r hover:from-blue-600 hover:to-indigo-900  text-white rounded-md py-4 focus:outline-none">
-  Sign in
-  </button>
-}
+          <form onSubmit={signin} className="w-full flex flex-col items-center">
+            <div className="w-full mb-2">
+              <label htmlFor="email" className="text-gray-700 text-sm">
+                Email
+              </label>
+              <input
+                type="text"
+                id="email"
+                onChange={(e) => setEmail(e.target.value)}
+                className="rounded-sm border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                name="email"
+                placeholder="Email"
+                value={email}
+              />
+            </div>
+            <div className="w-full mb-2">
+              <label htmlFor="password" className="text-gray-700 text-sm">
+                Password
+              </label>
+              <input
+                type="password"
+                id="password"
+                onChange={(e) => setPassword(e.target.value)}
+                className=" rounded-sm border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                name="password"
+                placeholder="Password"
+                value={password}
+              />
+            </div>
+            {email && password && (
+              <button
+                disabled={loading}
+                type="submit"
+                className="my-5 w-full bg-gradient-to-r from-blue-500 to-indigo-800 hover:bg-gradient-to-r hover:from-blue-600 hover:to-indigo-900  text-white rounded-md py-4 focus:outline-none"
+              >
+                Sign in
+              </button>
+            )}
+            {loading && <CircularProgress />}
           </form>
         </div>
       </div>

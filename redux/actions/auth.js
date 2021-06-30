@@ -8,16 +8,15 @@ import * as actionTypes from "../actions/actionTypes";
 
 export const signinEaP = (email, password) => {
   // return (dispatch) => {
-  console.log(email, password);
-  auth.signInWithEmailAndPassword(email, password).catch((error) => {
-    alert(error.message);
+  return auth.signInWithEmailAndPassword(email, password).catch((error) => {
+    throw new Error(error.message);
   });
   // };
 };
 
 export const signupEaP = (email, password) => {
   // return (dispatch) => {
-  auth
+  return auth
     .createUserWithEmailAndPassword(email, password)
     .then((userCredential) => {
       auth.currentUser.updateProfile({
@@ -25,7 +24,7 @@ export const signupEaP = (email, password) => {
       });
     })
     .catch((error) => {
-      alert(error.message);
+      throw new Error(error.message);
     });
   // }
 };

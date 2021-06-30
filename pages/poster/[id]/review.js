@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Layout from "../../../components/Layout";
-import { TextField, Button } from "@material-ui/core";
+import { TextField, Button, CircularProgress } from "@material-ui/core";
 import { Rating } from "@material-ui/lab";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
@@ -25,6 +25,7 @@ const Review = () => {
   const [workDetails, setWorkDetails] = useState({});
   const [isReviewed, setReviewed] = useState(null);
   const [review, setReview] = useState("");
+  const [loading, setLoading] = useState(false);
   const userId = useSelector((state) => state.auth.uid);
   useEffect(() => {
     const getData = async () => {
@@ -54,6 +55,7 @@ const Review = () => {
   }, [isReviewed]);
   const submitReview = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       await addReview({
         id,
@@ -63,9 +65,11 @@ const Review = () => {
         posterId: workDetails.posterId,
         userId: workDetails.customerId,
       });
+      setLoading(false);
       successNotification("Success", "Review Added");
       router.push(`/search/${workDetails.posterId}`);
     } catch (error) {
+      setLoading(false);
       errorNotification("Error", error.message);
     }
   };
@@ -79,7 +83,7 @@ const Review = () => {
               <div>
                 <h1 className="text-lg font-semibold">User Feedback</h1>
                 <form
-                  className="max-w-96 sm:w-96 m-auto"
+                  className="max-w-96 sm:w-96 m-auto flex flex-col items-center"
                   onSubmit={submitReview}
                 >
                   <Rating
@@ -118,6 +122,7 @@ const Review = () => {
                   >
                     Submit Review
                   </Button>
+                  {loading && <CircularProgress />}
                 </form>
               </div>
             ) : (

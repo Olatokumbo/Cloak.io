@@ -14,12 +14,23 @@ import ReviewCard from "../../components/ReviewCard";
 // import { fetchReviews } from "../../redux/actions/reviews";
 import useReviews from "../../hooks/useReviews";
 import { warningNotification } from "../../utils/notifications";
-import { StarIcon } from "@heroicons/react/solid";
 import { Rating } from "@material-ui/lab";
+import { Avatar, makeStyles } from "@material-ui/core";
 import { getReview } from "../../utils/reviews";
+
+const useStyles = makeStyles((theme) => ({
+  avatar: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: 40,
+    height: 40,
+  },
+}));
+
 const Profile = ({ poster }) => {
   const router = useRouter();
   const { id } = router.query;
+  const classes = useStyles();
   const uid = useSelector((state) => state.auth.uid);
   const isActive = useSelector((state) => state.hire.isWorkOrderActive);
   const dispatch = useDispatch();
@@ -99,15 +110,10 @@ const Profile = ({ poster }) => {
           </div>
           <div className="flex justify-between mb-3 flex-col xs:flex-row">
             <div className="flex items-center my-3">
-              <div className="w-10 h-10 max-w-10 max-h-10 mr-3 relative">
-                <Image
-                  src={poster.authorData.photoURL}
-                  alt="me"
-                  className="rounded-full mr-3"
-                  layout="fill"
-                  loading="eager"
-                />
-              </div>
+              <Avatar
+                src={poster.authorData.photoURL}
+                className={classes.avatar}
+              />
               <div className="flex flex-col">
                 <Link href={`/profile/${poster.userId}`}>
                   <h4 className="text-base font-bold text-gray-800 cursor-pointer hover:underline">
