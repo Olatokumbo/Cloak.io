@@ -84,7 +84,7 @@ export const getProfileDetails = (id) => {
 };
 
 export const uploadProfilePhoto = (userId, file) => {
-  let uploadTask = storage.ref(`${userId}/profile/${userId}`).put(file);
+  let uploadTask = storage.ref(`${userId}/profile/${userId}`).put(file[0]);
   uploadTask.on(
     "state_changed",
     (snapshot) => {
@@ -93,13 +93,18 @@ export const uploadProfilePhoto = (userId, file) => {
     },
     (error) => {
       // Handle unsuccessful uploads
-      console.log(error);
+      throw new Error(error.message);
     },
     () => {
-      uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-        console.log("File available at", downloadURL);
-        updatePhotoUrl(userId, downloadURL);
-      });
+      uploadTask.snapshot.ref
+        .getDownloadURL()
+        .then((downloadURL) => {
+          // console.log("File available at", downloadURL);
+          updatePhotoUrl(userId, downloadURL);
+        })
+        .then(() => {
+          successNotification("Success", "Updated Profile Picture");
+        });
     }
   );
 };

@@ -24,6 +24,11 @@ import {
 import useProfile from "../../hooks/useProfile";
 import Socials from "../../sections/Socials";
 import { PhotoCamera } from "@material-ui/icons";
+import { imageResizer } from "../../utils/imageResizer";
+import {
+  errorNotification,
+  successNotification,
+} from "../../utils/notifications";
 const useStyles = makeStyles((theme) => ({
   avatar: {
     marginLeft: theme.spacing(5),
@@ -75,6 +80,7 @@ const Profile = () => {
   const uid = useSelector((state) => state.auth.uid);
   const [description, setDescription] = useState("");
   const { user, posters } = useProfile(id);
+
   const handleOpen = () => {
     setDescription(user.description);
     setOpen(true);
@@ -96,7 +102,13 @@ const Profile = () => {
     }
   };
   const updateProfilePhoto = async (file) => {
-    await uploadProfilePhoto(uid, file);
+    try {
+      const resizedPhotos = await imageResizer(file);
+      await uploadProfilePhoto(uid, resizedPhotos);
+      // successNotification("Success", "Updated Profile Picture");
+    } catch (error) {
+      errorNotification("Failed", error.message);
+    }
   };
   return (
     <Layout>
@@ -119,7 +131,7 @@ const Profile = () => {
                     style={{ display: "none" }}
                     id="raised-button-file"
                     type="file"
-                    onChange={(e) => updateProfilePhoto(e.target.files[0])}
+                    onChange={(e) => updateProfilePhoto(e.target.files)}
                   />
                   <label
                     htmlFor="raised-button-file"

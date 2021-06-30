@@ -3,6 +3,7 @@ import HireModal from "../../components/HireModal";
 import Layout from "../../components/Layout";
 import ProfileCarousel from "../../components/ProfileCarousel";
 import ProfileComment from "../../components/ProfileComment";
+import Image from "next/image";
 import { getAllPostersId, fetchPostersbyId } from "../../redux/actions/posters";
 import CategoryList from "../../sections/CategoryList";
 import Link from "next/link";
@@ -98,11 +99,15 @@ const Profile = ({ poster }) => {
           </div>
           <div className="flex justify-between mb-3 flex-col xs:flex-row">
             <div className="flex items-center my-3">
-              <img
-                src={poster.authorData.photoURL}
-                alt="me"
-                className="w-10 max-h-10 rounded-full mr-3"
-              />
+              <div className="w-10 h-10 max-w-10 max-h-10 mr-3 relative">
+                <Image
+                  src={poster.authorData.photoURL}
+                  alt="me"
+                  className="rounded-full mr-3"
+                  layout="fill"
+                  loading="eager"
+                />
+              </div>
               <div className="flex flex-col">
                 <Link href={`/profile/${poster.userId}`}>
                   <h4 className="text-base font-bold text-gray-800 cursor-pointer hover:underline">
