@@ -17,9 +17,13 @@ import MyPosterCard from "../../components/MyPosterCard";
 import { useSelector } from "react-redux";
 import { format } from "date-fns";
 import Link from "next/link";
-import { updateProfileDescription } from "../../redux/actions/profile";
+import {
+  updateProfileDescription,
+  uploadProfilePhoto,
+} from "../../redux/actions/profile";
 import useProfile from "../../hooks/useProfile";
 import Socials from "../../sections/Socials";
+import { PhotoCamera } from "@material-ui/icons";
 const useStyles = makeStyles((theme) => ({
   avatar: {
     marginLeft: theme.spacing(5),
@@ -55,6 +59,12 @@ const useStyles = makeStyles((theme) => ({
     margin: 2,
     color: "#4b5563",
   },
+  changeProfileButton: {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: `translate(-50%, -50%)`,
+  },
 }));
 
 const Profile = () => {
@@ -85,18 +95,47 @@ const Profile = () => {
       console.log(error.message);
     }
   };
+  const updateProfilePhoto = async (file) => {
+    await uploadProfilePhoto(uid, file);
+  };
   return (
     <Layout>
       <CategoryList />
       <div className="flex p-3 flex-col md:flex-row">
         <div className="flex-1 px-3">
           <div className="flex flex-col justify-center items-center py-5 px-10 w-full border-solid border-gray-300 border-2">
-            {uid === user.id && (
+            {/* {uid === user.id && (
               <IconButton className={classes.btn1}>
                 <CogIcon className="h-6 w-6 text-gray-500" />
               </IconButton>
-            )}
-            <Avatar src={user.photoURL} className={classes.avatar} />
+            )} */}
+            <div className="relative">
+              <Avatar src={user.photoURL} className={classes.avatar} />
+              {uid === user.id && (
+                <div>
+                  <input
+                    // accept="image/*"
+                    accept=".jpeg, .jpg, .png"
+                    style={{ display: "none" }}
+                    id="raised-button-file"
+                    type="file"
+                    onChange={(e) => updateProfilePhoto(e.target.files[0])}
+                  />
+                  <label
+                    htmlFor="raised-button-file"
+                    style={{ display: "contents" }}
+                  >
+                    <IconButton
+                      className={classes.changeProfileButton}
+                      variant="raised"
+                      component="span"
+                    >
+                      <PhotoCamera />
+                    </IconButton>
+                  </label>
+                </div>
+              )}
+            </div>
             <h1>{user.displayName}</h1>
             <h5 className="text-xs text-gray-600">{user.email}</h5>
             {user.location && (

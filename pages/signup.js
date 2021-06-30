@@ -46,13 +46,13 @@ const Signup = () => {
           >
             <img className="h-5 mx-3" src="/google.svg" /> Continue with Google
           </button>
-          <button
+          {/* <button
             onClick={signinFacebook}
             className="my-1 flex items-center justify-center w-full text-gray-600  text-sm border-2 rounded-md py-3 focus:outline-none hover:bg-gray-100"
           >
             <img className="h-5 mx-3" src="/facebook.svg" /> Continue with
             Facebook
-          </button>
+          </button> */}
           <h5 className="text-gray-500 my-3">or</h5>
           <form onSubmit={signup} >
           <div className="flex">

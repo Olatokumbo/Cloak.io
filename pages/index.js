@@ -48,7 +48,7 @@ const Home = () => {
             </div>
             <div className="flex flex-col items-center">
               <h5 className="text-center max-w-md text-sm px-3 md:max-w-2xl">
-                Cloak.io is a Nigerian-based platform herein various freelancer or
+                Cloak.io is a Nigerian-based platform wherein various freelancer or
                 entrepreneurs can advertise their skills, businesses, and ideas to
                 others. Here at cloak.io we efficiently aim to connect business to
                 consumers. Join us and be amazed by our community
