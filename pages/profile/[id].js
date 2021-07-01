@@ -77,9 +77,9 @@ const Profile = () => {
   const { id } = router.query;
   const [open, setOpen] = useState(false);
   const classes = useStyles();
-  const uid = useSelector((state) => state.auth.uid);
+  const { uid, loading } = useSelector((state) => state.auth);
   const [description, setDescription] = useState("");
-  const { user, posters } = useProfile(id);
+  const { user, posters } = useProfile(id, uid, loading);
 
   const handleOpen = () => {
     setDescription(user.description);
@@ -254,7 +254,7 @@ const Profile = () => {
               </div>
             )}
           </div>
-          <div className="my-5 w-full px-2 grid gap-x-2 gap-y-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
+          <div className="my-5 w-full px-2 grid gap-x-2 gap-y-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
             {posters.map((poster) => (
               <MyPosterCard
                 key={poster.id}

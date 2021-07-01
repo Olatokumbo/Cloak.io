@@ -2,10 +2,18 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { DotsHorizontalIcon } from "@heroicons/react/solid";
-import { IconButton, Menu, MenuItem } from "@material-ui/core";
+import {
+  IconButton,
+  Menu,
+  MenuItem,
+  Switch,
+  FormControlLabel,
+} from "@material-ui/core";
 import DeleteModal from "../components/DeleteModal";
+import { updatePosterVisibility } from "../redux/actions/posters";
 const MyPosterCard = ({ data, editable }) => {
   const [anchorEl, setAnchorEl] = useState(null);
+  const [visibility, setVisibility] = useState(data.visibility);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 
   const handleClick = (event) => {
@@ -16,9 +24,16 @@ const MyPosterCard = ({ data, editable }) => {
     setAnchorEl(null);
   };
 
-  const closeDeleteModal = () =>{
+  const closeDeleteModal = () => {
     setDeleteModalOpen(false);
-  }
+  };
+
+  const updateVisibility = async () => {
+    try {
+      await updatePosterVisibility(data.id, !visibility);
+      setVisibility((prev) => !prev);
+    } catch (error) {}
+  };
 
   return (
     <div className="flex flex-col border-solid border-gray-200 border-2 h-72">
@@ -32,6 +47,18 @@ const MyPosterCard = ({ data, editable }) => {
       </div>
       <div className="p-2 flex-1 flex flex-col justify-between">
         <h1>{data.title}</h1>
+        {editable && (
+          <FormControlLabel
+            control={
+              <Switch
+                checked={visibility}
+                onChange={updateVisibility}
+                color="primary"
+              />
+            }
+            label="Visibility"
+          />
+        )}
         <div className="w-full flex justify-between items-center">
           <IconButton onClick={handleClick} size="small">
             <DotsHorizontalIcon className="h-4 w-4 m-1 text-gray-700 cursor-pointer" />
@@ -55,7 +82,9 @@ const MyPosterCard = ({ data, editable }) => {
                     <MenuItem>Edit</MenuItem>
                   </a>
                 </Link>
-                <MenuItem onClick={()=>setDeleteModalOpen(true)}>Delete</MenuItem>
+                <MenuItem onClick={() => setDeleteModalOpen(true)}>
+                  Delete
+                </MenuItem>
               </>
             )}
           </Menu>
@@ -67,7 +96,11 @@ const MyPosterCard = ({ data, editable }) => {
           </div>
         </div>
       </div>
-      <DeleteModal open={deleteModalOpen} handleClose={closeDeleteModal} id={data.id}/>
+      <DeleteModal
+        open={deleteModalOpen}
+        handleClose={closeDeleteModal}
+        id={data.id}
+      />
     </div>
   );
 };

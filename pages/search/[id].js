@@ -148,12 +148,16 @@ const Profile = ({ poster }) => {
                 >
                   {buttonState ? poster.phoneNumber : "Show Contact"}
                 </button>
-                <button
-                  onClick={hireMe}
-                  className="md:ml-5 focus:outline-none px-3 py-2 sm:px-4 md:px-4 xs:w-full border-black border-solid border-2 rounded-md hover:bg-gray-200"
-                >
-                  Hire Me
-                </button>
+                {poster.visibility ? (
+                  <button
+                    onClick={hireMe}
+                    className="md:ml-5 focus:outline-none px-3 py-2 sm:px-4 md:px-4 xs:w-full border-black border-solid border-2 rounded-md hover:bg-gray-200"
+                  >
+                    Hire Me
+                  </button>
+                ) : (
+                  <h5 className="md:ml-5">Not Available</h5>
+                )}
               </div>
             )}
           </div>

@@ -25,6 +25,7 @@ export const fetchPostersbyCategory = (category) => {
   return firestore
     .collection("posters")
     .where("category", "==", category)
+    .where("visibility", "==", true)
     .orderBy("ratingsCount", "desc")
     .limit(5)
     .get()
@@ -59,6 +60,7 @@ export const fetchNextPostersbyCategory = (category, last) => {
   return firestore
     .collection("posters")
     .where("category", "==", category)
+    .where("visibility", "==", true)
     .orderBy("ratingsCount", "desc")
     .startAfter(last)
     .limit(5)
@@ -117,6 +119,7 @@ export const fetchPosters = () => {
   let lastVisible;
   return firestore
     .collection("posters")
+    .where("visibility", "==", true)
     .orderBy("ratingsCount", "desc")
     .limit(5)
     .get()
@@ -149,6 +152,7 @@ export const fetchNextPosters = (last) => {
   let lastVisible;
   return firestore
     .collection("posters")
+    .where("visibility", "==", true)
     .orderBy("ratingsCount", "desc")
     .startAfter(last)
     .limit(5)
@@ -214,6 +218,27 @@ export const fetchPostersByUserId2 = (userId) => {
     return unsubscribe;
   };
 };
+
+export const fetchPostersByUserId3 = (userId) => {
+  return (dispatch) => {
+    const unsubscribe = firestore
+      .collection("posters")
+      .where("userId", "==", userId)
+      .where("visibility", "==", true)
+      .orderBy("date", "desc")
+      .onSnapshot((querySnapshot) => {
+        let posters = [];
+        querySnapshot.forEach((doc) => {
+          posters.push({ id: doc.id, ...doc.data() });
+        });
+        dispatch({
+          type: actionTypes.FETCH_MY_POSTERS,
+          posters: posters,
+        });
+      });
+    return unsubscribe;
+  };
+};
 export const uploadPoster = (poster) => {
   firestore
     .collection("posters")
@@ -224,6 +249,7 @@ export const uploadPoster = (poster) => {
       works: [],
       ratings: [],
       userId: poster.userId,
+      visibility: true,
       authorRef: firestore.doc(`/users/${poster.userId}`),
       price: parseInt(poster.price),
       location: poster.location,
@@ -283,6 +309,21 @@ export const updatePoster = (poster) => {
       price: parseInt(poster.price),
       location: poster.location,
       phoneNumber: poster.phoneNumber,
+    })
+    .then(() => {
+      successNotification("Success", "Successfully Updated Poster");
+    })
+    .catch((e) => {
+      return new Error(e.message);
+    });
+};
+
+export const updatePosterVisibility = (id, visibility) => {
+  return firestore
+    .collection("posters")
+    .doc(id)
+    .update({
+      visibility,
     })
     .then(() => {
       successNotification("Success", "Successfully Updated Poster");
