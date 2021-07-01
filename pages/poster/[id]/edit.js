@@ -22,6 +22,7 @@ import {
   successNotification,
 } from "../../../utils/notifications";
 import ImageCard from "../../../components/ImageCard";
+import usePhoneValidator from "../../../hooks/usePhoneValidator";
 const EditPoster = ({ categories, poster }) => {
   const router = useRouter();
   const cities = useLocation();
@@ -36,6 +37,7 @@ const EditPoster = ({ categories, poster }) => {
   );
   const [works, setWorks] = useState([]);
   const [buttonState, setButtonState] = useState(false);
+  const { isPhoneNumber, message } = usePhoneValidator(phoneNumber);
 
   useEffect(() => {
     setTitle(poster.title);
@@ -114,10 +116,11 @@ const EditPoster = ({ categories, poster }) => {
             </Select>
           </FormControl>
           <TextField
+            error={!isPhoneNumber}
             type="text"
             name="phoneNumber"
             size="small"
-            label="Phone Number"
+            label={message}
             variant="outlined"
             fullWidth={true}
             margin="normal"
@@ -153,12 +156,7 @@ const EditPoster = ({ categories, poster }) => {
             </Select>
           </FormControl>
           {works &&
-            works.map((work, index) => (
-              <ImageCard
-                key={index}
-                url={work}
-              />
-            ))}
+            works.map((work, index) => <ImageCard key={index} url={work} />)}
           <Button
             type="submit"
             variant="contained"

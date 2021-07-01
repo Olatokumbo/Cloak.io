@@ -20,6 +20,8 @@ import ImageCard from "../../components/ImageCard";
 import { useRouter } from "next/router";
 import useLocation from "../../hooks/useLocation";
 import { errorNotification } from "../../utils/notifications";
+import { validatePhoneNumber } from "../../utils/validator";
+import usePhoneValidator from "../../hooks/usePhoneValidator";
 
 const NewPoster = ({ categories }) => {
   const router = useRouter();
@@ -36,6 +38,7 @@ const NewPoster = ({ categories }) => {
   const [buttonState, setButtonState] = useState(false);
   const cities = useLocation();
   const display = useDisplayPhoto(photos);
+  const { isPhoneNumber, message } = usePhoneValidator(phoneNumber);
   const handleUpload = (e) => {
     const files = Array.from(e.target.files);
     console.log(files);
@@ -72,6 +75,7 @@ const NewPoster = ({ categories }) => {
       prevState.filter((photo) => photo !== removedPhoto)
     );
   };
+
   return (
     <Layout>
       <div className="w-full min-h-screen p-4">
@@ -116,10 +120,11 @@ const NewPoster = ({ categories }) => {
             </Select>
           </FormControl>
           <TextField
+            error={!isPhoneNumber}
             type="text"
             name="phoneNumber"
             size="small"
-            label="Phone Number"
+            label={message}
             variant="outlined"
             fullWidth={true}
             margin="normal"

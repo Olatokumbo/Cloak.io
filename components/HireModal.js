@@ -136,6 +136,7 @@ const DeleteModal = ({ open, handleClose, id, data }) => {
                 Cancel
               </Button>
               <Button
+                disabled={!(title && price && description)}
                 type="submit"
                 variant="contained"
                 color="primary"

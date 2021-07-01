@@ -13,7 +13,7 @@ import { useRouter } from "next/router";
 import usePagination from "../../hooks/usePagination";
 import { CircularProgress, Button } from "@material-ui/core";
 
-const Category = ({ category, posters }) => {
+const Category = ({ category }) => {
   const router = useRouter();
   const { id } = router.query;
 
