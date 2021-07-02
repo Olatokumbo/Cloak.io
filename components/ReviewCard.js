@@ -4,7 +4,12 @@ const ReviewCard = ({ review }) => {
   return (
     <div className="mb-5 border-b-2 py-5 border-gray-100 border-solid">
       <div className="flex flex-col sm:flex-row">
-        <Rating name="simple-controlled" readOnly value={review.rating} />
+        <Rating
+          name="simple-controlled"
+          readOnly
+          value={review.rating}
+          // precision={0.5}
+        />
         <h1 className="font-bold text-lg text-gray-800 ml-0 sm:ml-2">
           {review.title}
         </h1>

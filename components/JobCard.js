@@ -29,7 +29,9 @@ const JobCard = ({ data }) => {
         </h5>
       </div>
       <div className="flex justify-between items-center">
-        <HeartIcon className="h-6 w-6" />
+        <h5 className="text-xs self-end text-gray-500">
+          {data.applied.length} Applied
+        </h5>
         <h5 className="text-sm font-semibold text-gray-400">
           <div className="flex self-end">
             <LocationMarkerIcon className="h-5 w-5 text-gray-500" />

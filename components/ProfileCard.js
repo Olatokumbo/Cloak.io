@@ -67,7 +67,7 @@ const ProfileCard = ({ data, searched }) => {
           </div>
           {/* )} */}
           <div className="flex items-center">
-            <h5 className="text-gray-800 mr-1 text-xs">Starting at</h5>
+            <h5 className="text-gray-800 mr-1 text-xs">Starts at</h5>
             <h5 className="text-xl font-semibold text-gray-800">
               ₦{data.price}
             </h5>

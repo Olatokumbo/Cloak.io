@@ -5,13 +5,18 @@ import Layout from "../../components/Layout";
 import { SearchIcon, ChevronDownIcon } from "@heroicons/react/outline";
 import algoliasearch from "algoliasearch";
 import { useSelector } from "react-redux";
-import { fetchJobs } from "../../redux/actions/jobs";
+import { CircularProgress } from "@material-ui/core";
+// import { fetchJobs } from "../../redux/actions/jobs";
 import useLocation from "../../hooks/useLocation";
+import { errorNotification } from "../../utils/notifications";
 
-const Jobs = ({ jobs }) => {
+const Jobs = () => {
   const isAuth = useSelector((state) => state.auth.isAuth);
   const [searchResults, setSearchResults] = useState([]);
+  const [location, setLocation] = useState("");
   const [keyword, setKeyWord] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const cities = useLocation();
   var client = algoliasearch(
     process.env.NEXT_PUBLIC__ALGOLIA_APP_ID,
@@ -19,19 +24,21 @@ const Jobs = ({ jobs }) => {
   );
   var index = client.initIndex("jobs");
   useEffect(() => {
+    setLoading(true);
     const jobSearch = async () => {
       await index
-        .search(keyword)
+        .search(keyword, location && { filters: `location:${location}` })
         .then((responses) => {
-          console.log(responses);
+          setLoading(false);
           setSearchResults(responses.hits);
         })
         .catch((e) => {
-          console.log(e);
+          setLoading(false);
+          errorNotification("Failed", e.message);
         });
     };
     jobSearch();
-  }, [keyword]);
+  }, [keyword, location]);
   return (
     <Layout>
       <div className="min-h-screen bg-gray-100">
@@ -49,9 +56,12 @@ const Jobs = ({ jobs }) => {
                   {/* Location Dropdown menu */}
                   <div className="relative inline-flex m-1">
                     <ChevronDownIcon className="w-3 h-3 absolute top-0 right-0 m-4 pointer-events-none" />
-                    <select className="border border-gray-300 rounded-md text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none">
-                      <option defaultValue>
-                        Choose Location &nbsp;
+                    <select
+                      onChange={(e) => setLocation(e.target.value)}
+                      className="border border-gray-300 rounded-md text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none"
+                    >
+                      <option defaultValue value="">
+                        All Locations &nbsp;
                       </option>
                       {cities.map((name, i) => (
                         <option key={i} value={name}>
@@ -99,26 +109,12 @@ const Jobs = ({ jobs }) => {
                   <h4 className="font-semibold text-2xl">
                     {keyword && `Results for "${keyword}"`}
                   </h4>
-                  {/* Location Dropdown menu */}
-                  {/* <div className="relative inline-flex my-1">
-                    <ChevronDownIcon className="w-3 h-3 absolute top-0 right-0 m-4 pointer-events-none" />
-                    <select className="border border-gray-300 rounded-md text-gray-600 h-10 pl-5 pr-10 bg-white hover:border-gray-400 focus:outline-none appearance-none">
-                      <option defaultValue>Date Posted</option>
-                      <option>Red</option>
-                      <option>Blue</option>
-                      <option>Yellow</option>
-                      <option>Black</option>
-                      <option>Orange</option>
-                      <option>Purple</option>
-                      <option>Gray</option>
-                      <option>White</option>
-                    </select>
-                  </div> */}
                 </div>
                 <div>
-                  <div className="grid gap-3 grid-cols-1 lg:grid-cols-2">
-                    {keyword.length > 0
-                      ? searchResults.map((job) => (
+                  <div>
+                    {searchResults.length > 0 ? (
+                      <div className="grid gap-3 grid-cols-1 lg:grid-cols-2">
+                        {searchResults.map((job) => (
                           <Link
                             href={`/jobs/${job.objectID}`}
                             key={job.objectID}
@@ -127,14 +123,14 @@ const Jobs = ({ jobs }) => {
                               <JobCard data={job} />
                             </a>
                           </Link>
-                        ))
-                      : jobs.map((job) => (
-                          <Link href={`/jobs/${job.id}`} key={job.id}>
-                            <a /*target="_blank" */>
-                              <JobCard data={job} />
-                            </a>
-                          </Link>
                         ))}
+                      </div>
+                    ) : (
+                      <div className="text-center">
+                        <h1 className="mx-auto my-5 text-2xl">Job(s) Not Found</h1>
+                        {loading && <CircularProgress />}
+                      </div>
+                    )}
                   </div>
                   {/* <button className="mx-auto focus:outline-none px-2 py-2 sm:px-4 sm:py-2 md:px-4 border-gray-800 border-solid border-4 rounded-md hover:bg-gray-200">
                     Load More
@@ -152,13 +148,13 @@ const Jobs = ({ jobs }) => {
 
 export default Jobs;
 
-export const getStaticProps = async () => {
-  const res = await fetchJobs();
-  const jobs = JSON.parse(res);
-  return {
-    props: {
-      jobs,
-    },
-    revalidate: 1,
-  };
-};
+// export const getStaticProps = async () => {
+//   const res = await fetchJobs();
+//   const jobs = JSON.parse(res);
+//   return {
+//     props: {
+//       jobs,
+//     },
+//     revalidate: 1,
+//   };
+// };
