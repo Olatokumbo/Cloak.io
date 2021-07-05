@@ -2,8 +2,10 @@ const posters = require("./src/poster");
 const jobs = require("./src/job");
 const hires = require("./src/hire");
 const reviews = require("./src/review");
+const user = require("./src/user");
 
-exports.newUser = require("./src/user");
+exports.newUser = user.newUser;
+exports.deleteUser = user.deleteUser;
 
 exports.onPosterCreated = posters.onPosterCreated;
 exports.onPosterDeleted = posters.onPosterDeleted;

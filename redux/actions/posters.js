@@ -250,6 +250,7 @@ export const uploadPoster = (poster) => {
       ratings: [],
       userId: poster.userId,
       visibility: true,
+      ratingsCount: 0,
       authorRef: firestore.doc(`/users/${poster.userId}`),
       price: parseInt(poster.price),
       location: poster.location,

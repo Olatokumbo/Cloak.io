@@ -27,4 +27,63 @@ const addUser = (cred) => {
     .catch((err) => Error(err.message));
 };
 
-module.exports = newUser;
+const deleteUser = functions.auth.user().onDelete((user) => {
+  return removeUser(user);
+});
+
+const removeUser = (cred) => {
+  return admin
+    .firestore()
+    .collection("users")
+    .doc(cred.uid)
+    .delete()
+    .then(() => {
+      return deletePostersbyId(cred.uid);
+    })
+    .then(() => {
+      return deleteJobsbyId(cred.uid);
+    });
+};
+
+const deletePostersbyId = (userId) => {
+  var promises = [];
+  var collectionRef = admin
+    .firestore()
+    .collection("posters")
+    .where("userId", "==", userId);
+
+  return collectionRef
+    .get()
+    .then((qs) => {
+      qs.forEach((docSnapshot) => {
+        promises.push(docSnapshot.ref.delete());
+      });
+      return Promise.all(promises);
+    })
+    .then(() => {
+      return functions.logger.info("POSTERS REMOVED");
+    })
+    .then(() => {});
+};
+
+const deleteJobsbyId = (userId) => {
+  var promises = [];
+  var collectionRef = admin
+    .firestore()
+    .collection("jobs")
+    .where("userId", "==", userId);
+
+  return collectionRef
+    .get()
+    .then((qs) => {
+      qs.forEach((docSnapshot) => {
+        promises.push(docSnapshot.ref.delete());
+      });
+      return Promise.all(promises);
+    })
+    .then(() => {
+      functions.logger.info("JOBS REMOVED");
+    });
+};
+
+module.exports = { newUser, deleteUser };

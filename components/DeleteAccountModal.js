@@ -1,5 +1,7 @@
 import { Modal, Fade, Backdrop, Button, makeStyles } from "@material-ui/core";
-// import { deletePoster } from "../redux/actions/posters";
+import { deleteAccount } from "../redux/actions/auth";
+import { useDispatch } from "react-redux";
+import { defaultNotification } from "../utils/notifications";
 const useStyles = makeStyles((theme) => ({
   paper: {
     // position: "absolute",
@@ -23,9 +25,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 const DeleteAccountModal = ({ open, handleClose, id }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
 
-  const handleDeletePoster = () => {
-    // deletePoster(id);
+  const handleDeletePoster = async () => {
+    try {
+      await dispatch(deleteAccount());
+      defaultNotification("Done", "Deleted your Account")
+    } catch (error) {
+      alert(error.message);
+    }
     handleClose();
   };
   return (
@@ -67,7 +75,7 @@ const DeleteAccountModal = ({ open, handleClose, id }) => {
                 color="primary"
                 margin="normal"
                 className={classes.btn}
-                // onClick={handleDeletePoster}
+                onClick={handleDeletePoster}
               >
                 Done
               </Button>

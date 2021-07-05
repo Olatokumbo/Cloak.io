@@ -89,3 +89,23 @@ export const setupAccount = (displayName, phoneNumber, uid) => {
       console.log(e.message);
     });
 };
+
+export const deleteAccount = () => {
+  return (dispatch) => {
+    auth.currentUser
+      .delete()
+      .then(() => {
+        auth
+          .signOut()
+          .then(() => {
+            console.log("Logged Out");
+            dispatch({ type: actionTypes.SIGNOUT });
+            dispatch({ type: actionTypes.RESET_NOTIFICATIONS });
+          })
+          .catch((err) => new Error(err.message));
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
+  };
+};
