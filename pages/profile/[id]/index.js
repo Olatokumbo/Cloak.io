@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Layout from "../../components/Layout";
-import CategoryList from "../../sections/CategoryList";
+import Layout from "../../../components/Layout";
+import CategoryList from "../../../sections/CategoryList";
 import { useRouter } from "next/router";
 import {
   Avatar,
@@ -13,22 +13,22 @@ import {
   IconButton,
 } from "@material-ui/core";
 import { LocationMarkerIcon, CogIcon } from "@heroicons/react/solid";
-import MyPosterCard from "../../components/MyPosterCard";
+import MyPosterCard from "../../../components/MyPosterCard";
 import { useSelector } from "react-redux";
 import { format } from "date-fns";
 import Link from "next/link";
 import {
   updateProfileDescription,
   uploadProfilePhoto,
-} from "../../redux/actions/profile";
-import useProfile from "../../hooks/useProfile";
-import Socials from "../../sections/Socials";
+} from "../../../redux/actions/profile";
+import useProfile from "../../../hooks/useProfile";
+import Socials from "../../../sections/Socials";
 import { PhotoCamera } from "@material-ui/icons";
-import { imageResizer } from "../../utils/imageResizer";
+import { imageResizer } from "../../../utils/imageResizer";
 import {
   errorNotification,
   successNotification,
-} from "../../utils/notifications";
+} from "../../../utils/notifications";
 const useStyles = makeStyles((theme) => ({
   avatar: {
     marginLeft: theme.spacing(5),
@@ -116,11 +116,14 @@ const Profile = () => {
       <div className="flex p-3 flex-col md:flex-row">
         <div className="flex-1 px-3">
           <div className="flex flex-col justify-center items-center py-5 px-10 w-full border-solid border-gray-300 border-2">
-            {/* {uid === user.id && (
-              <IconButton className={classes.btn1}>
+            {uid === user.id && (
+              <IconButton
+                className={classes.btn1}
+                onClick={() => router.push(`/profile/${uid}/edit/account`)}
+              >
                 <CogIcon className="h-6 w-6 text-gray-500" />
               </IconButton>
-            )} */}
+            )}
             <div className="relative">
               <Avatar src={user.photoURL} className={classes.avatar} />
               {uid === user.id && (

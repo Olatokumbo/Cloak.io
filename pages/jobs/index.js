@@ -16,6 +16,7 @@ const Jobs = () => {
   const [location, setLocation] = useState("");
   const [keyword, setKeyWord] = useState("");
   const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
 
   const cities = useLocation();
   var client = algoliasearch(
@@ -30,6 +31,8 @@ const Jobs = () => {
         .search(keyword, location && { filters: `location:${location}` })
         .then((responses) => {
           setLoading(false);
+          if (responses.hits.length === 0) setMessage("Job(s) Not Found");
+          else setMessage("");
           setSearchResults(responses.hits);
         })
         .catch((e) => {
@@ -127,7 +130,7 @@ const Jobs = () => {
                       </div>
                     ) : (
                       <div className="text-center">
-                        <h1 className="mx-auto my-5 text-2xl">Job(s) Not Found</h1>
+                        <h1 className="mx-auto my-5 text-2xl">{message}</h1>
                         {loading && <CircularProgress />}
                       </div>
                     )}
