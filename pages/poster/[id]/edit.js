@@ -41,7 +41,7 @@ const EditPoster = ({ categories, poster }) => {
 
   useEffect(() => {
     setTitle(poster.title);
-    setDescription(poster.description[0]);
+    setDescription(poster.description.join(" "));
     setLocation(poster.location);
     setPrice(poster.price);
     setPhoneNumber(poster.phoneNumber);
@@ -59,7 +59,7 @@ const EditPoster = ({ categories, poster }) => {
       await updatePoster({
         id: poster.id,
         title,
-        description,
+        description: description.split("\n"),
         price,
         category: selectedCategory,
         location,

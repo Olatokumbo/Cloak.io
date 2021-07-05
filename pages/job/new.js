@@ -29,7 +29,13 @@ const NewJob = () => {
     e.preventDefault();
     setButtonState(true);
     try {
-      await addJob({ title, description, location, price, userId });
+      await addJob({
+        title,
+        description: description.split("\n"),
+        location,
+        price,
+        userId,
+      });
       router.replace("/job/all");
     } catch (error) {
       errorNotification("Error", error.message);

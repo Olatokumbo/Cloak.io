@@ -305,7 +305,7 @@ export const updatePoster = (poster) => {
     .doc(poster.id)
     .update({
       title: poster.title,
-      description: [poster.description],
+      description: poster.description,
       category: poster.category,
       price: parseInt(poster.price),
       location: poster.location,

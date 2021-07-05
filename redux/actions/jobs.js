@@ -47,7 +47,7 @@ export const addJob = (job) => {
     .collection("jobs")
     .add({
       title: job.title,
-      description: [job.description],
+      description: job.description,
       price: parseInt(job.price),
       location: job.location,
       userId: job.userId,
@@ -95,7 +95,7 @@ export const updateJob = (job) => {
     .doc(job.id)
     .update({
       title: job.title,
-      description: [job.description],
+      description: job.description,
       price: parseInt(job.price),
       location: job.location,
     })

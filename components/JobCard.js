@@ -1,16 +1,26 @@
 import { HeartIcon } from "@heroicons/react/outline";
 import { truncate } from "../utils/truncate";
 import { LocationMarkerIcon } from "@heroicons/react/solid";
-// import { format } from "date-fns";
+import { Avatar, makeStyles } from "@material-ui/core";
+
+const useStyles = makeStyles((theme) => ({
+  avatar: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: 40,
+    height: 40,
+  },
+}));
+
 const JobCard = ({ data }) => {
+  const classes = useStyles();
   return (
     <div className="rounded-md my-2 p-6 shadow-lg bg-white cursor-pointer hover:shadow-xl min-h-48 flex flex-col h-56">
       <div className="flex justify-between items-center flex-col xs:flex-row">
         <div className="flex items-center mr-0 flex-col xs:flex-row md:mr-4 flex-1">
-          <img
+          <Avatar
             src={data?.photoURL || data?.authorData.photoURL}
-            alt="me"
-            className="w-10 max-h-10 rounded-full mr-0 xs:mr-4"
+            className={classes.avatar}
           />
           <div className="flex flex-col">
             <h2 className="font-semibold text-lg text-center xs:text-left">

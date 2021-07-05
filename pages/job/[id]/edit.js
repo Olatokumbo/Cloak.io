@@ -42,7 +42,7 @@ const EditJob = ({ job }) => {
 
   useEffect(() => {
     setTitle(job.title);
-    setDescription(job.description[0]);
+    setDescription(job.description.join(" "));
     setLocation(job.location);
     setPrice(job.price);
   }, []);
@@ -54,7 +54,7 @@ const EditJob = ({ job }) => {
       await updateJob({
         id: job.id,
         title,
-        description,
+        description: description.split("\n"),
         price,
         location,
       });
