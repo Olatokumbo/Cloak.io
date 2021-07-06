@@ -20,7 +20,7 @@ export const errorNotification = (title, message) => {
   return store.addNotification({
     title,
     message,
-    type: "error",
+    type: "danger",
     insert: "bottom",
     showIcon: true,
     container: "bottom-left",

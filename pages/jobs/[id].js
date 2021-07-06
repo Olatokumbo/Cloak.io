@@ -17,6 +17,8 @@ import {
   TableBody,
   TableCell,
   Paper,
+  Avatar,
+  makeStyles,
 } from "@material-ui/core";
 import { useRouter } from "next/router";
 import AppliedUser from "../../components/AppliedUser";
@@ -24,9 +26,20 @@ import {
   errorNotification,
   warningNotification,
 } from "../../utils/notifications";
+
+const useStyles = makeStyles((theme) => ({
+  avatar: {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: 40,
+    height: 40,
+  },
+}));
+
 const JobInfo = ({ job }) => {
   const router = useRouter();
   const { id } = router.query;
+  const classes = useStyles();
   const { isAuth, uid } = useSelector((state) => state.auth);
   const appliedState = useSelector((state) => state.job.jobApplied);
   // const [appliedState, setAppliedState] = useState(false);
@@ -75,11 +88,7 @@ const JobInfo = ({ job }) => {
           </div>
           <div className="flex justify-between mb-7">
             <div className="flex items-center">
-              <img
-                src={job.authorData.photoURL}
-                alt="me"
-                className="w-10 max-h-10 rounded-full mr-3"
-              />
+              <Avatar src={job.authorData.photoURL} />
               <div className="flex flex-col">
                 <Link href={`/profile/${job.userId}`}>
                   <h4 className="text-base font-bold text-gray-800 cursor-pointer hover:underline">

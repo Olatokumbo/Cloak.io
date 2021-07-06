@@ -22,7 +22,6 @@ const onJobCreated = functions.firestore
       .then((user) => {
         job.photoURL = user.photoURL;
         job.displayName = user.displayName;
-        job.location = user.location;
       })
       .then(() => {
         return index.saveObject(job);
