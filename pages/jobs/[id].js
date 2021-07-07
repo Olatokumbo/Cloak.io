@@ -88,7 +88,7 @@ const JobInfo = ({ job }) => {
           </div>
           <div className="flex justify-between mb-7">
             <div className="flex items-center">
-              <Avatar src={job.authorData.photoURL} />
+              <Avatar src={job.authorData.photoURL} className={classes.avatar} />
               <div className="flex flex-col">
                 <Link href={`/profile/${job.userId}`}>
                   <h4 className="text-base font-bold text-gray-800 cursor-pointer hover:underline">

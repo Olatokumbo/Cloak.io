@@ -79,7 +79,12 @@ const Navbar = ({ auth }) => {
           {!auth.uid ? (
             <ul className="flex items-center">
               <li className="sm:my-0 my-1">
-                <Link href="/jobs">
+                <Link
+                  href={{
+                    pathname: "/jobs",
+                    query: { keyword: "", page: 0, city: "" },
+                  }}
+                >
                   <h1 className="mx-4 hover: cursor-pointer text-lg font-semibold text-gray-700 whitespace-nowrap">
                     Jobs
                   </h1>
@@ -101,7 +106,12 @@ const Navbar = ({ auth }) => {
           ) : (
             <ul className="flex items-center">
               <li className="sm:my-0 my-1">
-                <Link href="/jobs">
+                <Link
+                  href={{
+                    pathname: "/jobs",
+                    query: { keyword: "", page: 0, city: "" },
+                  }}
+                >
                   <h1 className="mx-4 hover: cursor-pointer text-lg font-semibold text-gray-700 whitespace-nowrap">
                     Jobs
                   </h1>
