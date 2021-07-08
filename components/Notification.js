@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import { BellIcon } from "@heroicons/react/outline";
 import { Menu, MenuItem } from "@material-ui/core";
+import { useRouter } from "next/router";
+import PrivateRoute from "../hoc/PrivateRoute";
+
 import {
   getNotifications,
   resetNotifications,
@@ -9,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import NotificationItem from "./NotificationItem";
 const Notification = () => {
   const dispatch = useDispatch();
+  const router = useRouter();
   const userId = useSelector((state) => state.auth.uid);
   const notifications = useSelector((state) => state.notif.notifications);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -52,11 +56,13 @@ const Notification = () => {
           <MenuItem disabled>No Notifications</MenuItem>
         )}
         {notifications.length > 0 && (
-          <MenuItem disabled>View All Notifications</MenuItem>
+          <MenuItem onClick={() => router.push("/notifications")}>
+            <h1 className="font-semibold mx-auto"> View All Notifications</h1>
+          </MenuItem>
         )}
       </Menu>
     </>
   );
 };
 
-export default Notification;
+export default PrivateRoute(Notification);

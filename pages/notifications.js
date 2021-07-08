@@ -1,19 +1,40 @@
 import Layout from "../components/Layout";
 import NotificationCard from "../components/NotificationCard";
 import CategoryList from "../sections/CategoryList";
-import { Button } from "@material-ui/core";
+import { Button, CircularProgress } from "@material-ui/core";
+import usePagination2 from "../hooks/usePagination2";
+import { useSelector } from "react-redux";
+import {
+  fetchNextNotifications,
+  fetchNotifications,
+} from "../redux/actions/notifications";
 const Notifications = () => {
+  const id = useSelector((state) => state.auth.uid);
+  const { items, loadMore, loading, hasMore } = usePagination2(
+    fetchNotifications,
+    fetchNextNotifications,
+    id
+  );
   return (
     <Layout>
       <CategoryList />
       <div className="p-4">
         <h1 className="text-2xl mb-5 font-semibold">Your Notifications</h1>
         <div className="w-full min-h-screen flex flex-col items-center">
-          <NotificationCard data={{ message: "Hello World", url: "/explore" }} />
-          <NotificationCard data={{ message: "Hello World", url: "/explore" }} />
-          <NotificationCard data={{ message: "Hello World", url: "/explore" }} />
-          <div className="w-full flex justify-center py-2 my-2">
-          <Button variant="outlined" color="primary" size="large">Load More</Button>
+          {items?.map((notif) => (
+            <NotificationCard key={notif.id} data={notif} />
+          ))}
+          <div className="w-full flex  flex-col justify-center items-center py-2 my-2">
+            {loading && <CircularProgress />}
+            <Button
+              variant="outlined"
+              color="primary"
+              size="large"
+              disabled={!hasMore}
+              onClick={loadMore}
+            >
+              Load More
+            </Button>
           </div>
         </div>
       </div>

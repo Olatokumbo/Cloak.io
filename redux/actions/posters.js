@@ -30,7 +30,6 @@ export const fetchPostersbyCategory = (category) => {
     .limit(5)
     .get()
     .then((querySnapshot) => {
-      console.log(querySnapshot);
       lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
       querySnapshot.forEach((doc) => {
         let posterData = doc.data();
