@@ -51,6 +51,9 @@ const Notification = () => {
         ) : (
           <MenuItem disabled>No Notifications</MenuItem>
         )}
+        {notifications.length > 0 && (
+          <MenuItem disabled>View All Notifications</MenuItem>
+        )}
       </Menu>
     </>
   );
