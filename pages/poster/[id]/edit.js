@@ -8,7 +8,13 @@ import {
   InputLabel,
   Button,
   CircularProgress,
+  Chip,
+  IconButton,
+  makeStyles,
+  List,
+  ListItem,
 } from "@material-ui/core";
+import { Add } from "@material-ui/icons";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { fetchPostersbyId } from "../../../redux/actions/posters";
@@ -23,8 +29,22 @@ import {
 } from "../../../utils/notifications";
 import ImageCard from "../../../components/ImageCard";
 import usePhoneValidator from "../../../hooks/usePhoneValidator";
+
+const useStyles = makeStyles((theme) => ({
+  btn: {
+    height: "fit-content",
+    width: "auto",
+    marginLeft: 3,
+    marginRight: 3,
+  },
+  listItem: {
+    width: "fit-content",
+  },
+}));
+
 const EditPoster = ({ categories, poster }) => {
   const router = useRouter();
+  const classes = useStyles();
   const cities = useLocation();
   const userId = useSelector((state) => state.auth.uid);
   const [title, setTitle] = useState("");
@@ -32,6 +52,8 @@ const EditPoster = ({ categories, poster }) => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [location, setLocation] = useState("");
   const [price, setPrice] = useState(0);
+  const [keyword, setKeyword] = useState("");
+  const [keywords, setKeywords] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(
     "graphics-and-design"
   );
@@ -45,6 +67,7 @@ const EditPoster = ({ categories, poster }) => {
     setLocation(poster.location);
     setPrice(poster.price);
     setPhoneNumber(poster.phoneNumber);
+    setKeywords(poster.keywords);
     setSelectedCategory(poster.category);
     setWorks(poster.works);
   }, []);
@@ -62,6 +85,7 @@ const EditPoster = ({ categories, poster }) => {
         description: description.split("\n"),
         price,
         category: selectedCategory,
+        keywords,
         location,
         phoneNumber,
       });
@@ -73,11 +97,21 @@ const EditPoster = ({ categories, poster }) => {
     setButtonState(false);
   };
 
+  const addKeyword = (e) => {
+    e.preventDefault();
+    setKeywords((prev) => [...prev, keyword]);
+    setKeyword("");
+  };
+
+  const removeKeywords = (removeWord) => {
+    setKeywords(keywords.filter((keyword) => keyword !== removeWord));
+  };
+
   if (userId !== poster.userId) return <Layout>Unauthorized</Layout>;
   return (
     <Layout>
       <div className="w-full min-h-screen p-4">
-        <form onSubmit={editPosterHandler} className="max-w-96 sm:w-96 m-auto">
+        <div className="max-w-96 sm:w-96 m-auto">
           <h1 className="text-lg font-semibold">Edit Poster</h1>
           <TextField
             name="Title"
@@ -155,24 +189,63 @@ const EditPoster = ({ categories, poster }) => {
               ))}
             </Select>
           </FormControl>
+          <form className="flex items-center" onSubmit={addKeyword}>
+            <TextField
+              type="text"
+              name="keyword"
+              size="small"
+              label="Keyword"
+              variant="outlined"
+              fullWidth={true}
+              margin="normal"
+              onChange={(e) => setKeyword(e.target.value)}
+              value={keyword}
+              required
+            />
+            <IconButton
+              type="submit"
+              color="primary"
+              size="small"
+              className={classes.btn}
+            >
+              <Add />
+            </IconButton>
+          </form>
+          <List className="flex flex-wrap justify-center">
+            {keywords.map((data, index) => (
+              <ListItem key={index} className={classes.listItem}>
+                <Chip
+                  label={data}
+                  onDelete={() => removeKeywords(data)}
+                  color="primary"
+                />
+              </ListItem>
+            ))}
+          </List>
           {works &&
             works.map((work, index) => <ImageCard key={index} url={work} />)}
           <Button
-            type="submit"
+            onClick={editPosterHandler}
             variant="contained"
             fullWidth
             size="large"
             color="primary"
             margin="normal"
             disabled={
-              !(title && description && phoneNumber && location && price > 0) ||
-              buttonState
+              !(
+                title &&
+                description &&
+                phoneNumber &&
+                location &&
+                price > 0 &&
+                keywords.length > 0
+              ) || buttonState
             }
           >
             Save
           </Button>
           {buttonState && <CircularProgress />}
-        </form>
+        </div>
       </div>
     </Layout>
   );

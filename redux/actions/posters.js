@@ -245,6 +245,7 @@ export const uploadPoster = (poster) => {
       title: poster.title,
       description: poster.description,
       category: poster.category,
+      keywords: poster.keywords,
       works: [],
       ratings: [],
       userId: poster.userId,
@@ -309,6 +310,7 @@ export const updatePoster = (poster) => {
       price: parseInt(poster.price),
       location: poster.location,
       phoneNumber: poster.phoneNumber,
+      keywords: poster.keywords
     })
     .then(() => {
       successNotification("Success", "Successfully Updated Poster");

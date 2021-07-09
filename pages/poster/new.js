@@ -7,7 +7,13 @@ import {
   MenuItem,
   InputLabel,
   CircularProgress,
+  Chip,
+  IconButton,
+  makeStyles,
+  List,
+  ListItem,
 } from "@material-ui/core";
+import { Add } from "@material-ui/icons";
 import { UploadIcon } from "@heroicons/react/solid";
 import Layout from "../../components/Layout";
 import { uploadPoster } from "../../redux/actions/posters";
@@ -20,17 +26,31 @@ import ImageCard from "../../components/ImageCard";
 import { useRouter } from "next/router";
 import useLocation from "../../hooks/useLocation";
 import { errorNotification } from "../../utils/notifications";
-import { validatePhoneNumber } from "../../utils/validator";
 import usePhoneValidator from "../../hooks/usePhoneValidator";
+
+const useStyles = makeStyles((theme) => ({
+  btn: {
+    height: "fit-content",
+    width: "auto",
+    marginLeft: 3,
+    marginRight: 3,
+  },
+  listItem: {
+    width: "fit-content",
+  },
+}));
 
 const NewPoster = ({ categories }) => {
   const router = useRouter();
+  const classes = useStyles();
   const userId = useSelector((state) => state.auth.uid);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [location, setLocation] = useState("");
   const [price, setPrice] = useState(0);
+  const [keyword, setKeyword] = useState("");
+  const [keywords, setKeywords] = useState([]);
   const [photos, setPhotos] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(
     "graphics-and-design"
@@ -56,6 +76,7 @@ const NewPoster = ({ categories }) => {
         price,
         photos,
         userId,
+        keywords,
         category: selectedCategory,
       });
       router.replace(`/profile/${userId}`);
@@ -76,10 +97,19 @@ const NewPoster = ({ categories }) => {
     );
   };
 
+  const addKeyword = (e) => {
+    e.preventDefault();
+    setKeywords((prev) => [...prev, keyword]);
+    setKeyword("");
+  };
+
+  const removeKeywords = (removeWord) => {
+    setKeywords(keywords.filter((keyword) => keyword !== removeWord));
+  };
   return (
     <Layout>
       <div className="w-full min-h-screen p-4">
-        <form onSubmit={addPoster} className="max-w-96 sm:w-96 m-auto">
+        <div className="max-w-96 sm:w-96 m-auto">
           <h1 className="text-lg font-semibold">New Poster</h1>
           <TextField
             name="Title"
@@ -160,6 +190,40 @@ const NewPoster = ({ categories }) => {
               ))}
             </Select>
           </FormControl>
+          <form className="flex items-center" onSubmit={addKeyword}>
+            <TextField
+              type="text"
+              name="keyword"
+              size="small"
+              label="Keyword"
+              variant="outlined"
+              fullWidth={true}
+              margin="normal"
+              onChange={(e) => setKeyword(e.target.value)}
+              value={keyword}
+              required
+            />
+            <IconButton
+              type="submit"
+              color="primary"
+              size="small"
+              className={classes.btn}
+            >
+              <Add />
+            </IconButton>
+          </form>
+          <List className="flex flex-wrap justify-center">
+            {keywords.map((data, index) => (
+              <ListItem key={index} className={classes.listItem}>
+                <Chip
+                  label={data}
+                  onDelete={() => removeKeywords(data)}
+                  color="primary"
+                />
+              </ListItem>
+            ))}
+          </List>
+
           <div className="my-5">
             <label htmlFor="photos">
               <div className="flex justify-center">
@@ -189,7 +253,7 @@ const NewPoster = ({ categories }) => {
             ))}
           </div>
           <Button
-            type="submit"
+            onClick={addPoster}
             variant="contained"
             fullWidth
             size="large"
@@ -201,14 +265,15 @@ const NewPoster = ({ categories }) => {
                 phoneNumber &&
                 location &&
                 price > 0 &&
-                photos.length > 0
+                photos.length > 0 &&
+                keywords.length > 0
               ) || buttonState
             }
           >
             Done
           </Button>
           {buttonState && <CircularProgress />}
-        </form>
+        </div>
       </div>
     </Layout>
   );
