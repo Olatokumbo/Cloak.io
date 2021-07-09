@@ -10,8 +10,7 @@ import { useSelector, useDispatch } from "react-redux";
 const useProfile = (id, uid, loading) => {
   const dispatch = useDispatch();
   const posters = useSelector((state) => state.poster.myPosters);
-  const user = useSelector((state) => state.profile.user);
-  //   const [notFound, setNotFound] = useState(null);
+  const { user, notFound } = useSelector((state) => state.profile);
   useEffect(() => {
     const getData = async () => {
       if (id && !loading) {
@@ -34,7 +33,7 @@ const useProfile = (id, uid, loading) => {
       dispatch(resetPosters());
     };
   }, [id, loading]);
-  return { user, posters };
+  return { user, posters, notFound };
 };
 
 export default useProfile;

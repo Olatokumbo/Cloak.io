@@ -73,11 +73,16 @@ export const getProfileDetails = (id) => {
       .collection("users")
       .doc(id)
       .onSnapshot((doc) => {
-        console.log(doc);
-        dispatch({
-          type: actionTypes.FETCH_PROFILE,
-          user: { id: doc.id, ...doc.data() },
-        });
+        if (doc.exists) {
+          dispatch({
+            type: actionTypes.FETCH_PROFILE,
+            user: { id: doc.id, ...doc.data() },
+          });
+        } else {
+          dispatch({
+            type: actionTypes.PROFILE_NOT_FOUND,
+          });
+        }
       });
     return unsubscribe;
   };

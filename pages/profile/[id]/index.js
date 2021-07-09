@@ -79,7 +79,7 @@ const Profile = () => {
   const classes = useStyles();
   const { uid, loading } = useSelector((state) => state.auth);
   const [description, setDescription] = useState("");
-  const { user, posters } = useProfile(id, uid, loading);
+  const { user, posters, notFound } = useProfile(id, uid, loading);
 
   const handleOpen = () => {
     setDescription(user.description);
@@ -239,9 +239,11 @@ const Profile = () => {
         </div>
         <div className="flex-1 md:flex-2 lg:flex-3 min-h-screen w-full p-5 border-solid border-gray-100 border-2">
           <div className="flex flex-col w-full justify-between items-center sm:flex-row">
-            <h1 className="text-3xl font-bold text-gray-800 ml-0 mb-5 sm:mb-0 sm:ml-2">
-              My Posters
-            </h1>
+            {!notFound && (
+              <h1 className="text-3xl font-bold text-gray-800 ml-0 mb-5 sm:mb-0 sm:ml-2">
+                My Posters
+              </h1>
+            )}
             {uid === user.id && (
               <div className="flex flex-wrap  justify-center sm:justify-end">
                 <Link href="/poster/new">
@@ -266,6 +268,11 @@ const Profile = () => {
               />
             ))}
           </div>
+          {notFound && (
+            <h1 className="text-2xl font-semibold text-gray-800 text-center">
+              Profile not Found
+            </h1>
+          )}
         </div>
       </div>
     </Layout>

@@ -20,6 +20,7 @@ export const RESET_POSTERS = "RESET_POSTERS";
 
 // Profile
 export const FETCH_PROFILE = "FETCH_PROFILE";
+export const PROFILE_NOT_FOUND = "PROFILE_NOT_FOUND";
 export const RESET_PROFILE = "RESET_PROFILE";
 
 // Notifications
