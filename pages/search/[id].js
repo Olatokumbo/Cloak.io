@@ -2,8 +2,6 @@ import { useState, useEffect } from "react";
 import HireModal from "../../components/HireModal";
 import Layout from "../../components/Layout";
 import ProfileCarousel from "../../components/ProfileCarousel";
-import ProfileComment from "../../components/ProfileComment";
-import Image from "next/image";
 import { getAllPostersId, fetchPostersbyId } from "../../redux/actions/posters";
 import CategoryList from "../../sections/CategoryList";
 import Link from "next/link";
@@ -11,11 +9,15 @@ import { useSelector, useDispatch } from "react-redux";
 import { isWorkOrderActive } from "../../redux/actions/hires";
 import { useRouter } from "next/router";
 import ReviewCard from "../../components/ReviewCard";
-// import { fetchReviews } from "../../redux/actions/reviews";
 import useReviews from "../../hooks/useReviews";
 import { warningNotification } from "../../utils/notifications";
 import { Rating } from "@material-ui/lab";
-import { Avatar, makeStyles } from "@material-ui/core";
+import {
+  Avatar,
+  makeStyles,
+  Button,
+  CircularProgress,
+} from "@material-ui/core";
 import { getReview } from "../../utils/reviews";
 
 const useStyles = makeStyles((theme) => ({
@@ -37,7 +39,7 @@ const Profile = ({ poster }) => {
   const [buttonState, setButtonState] = useState(false);
   const [open, setOpen] = useState(false);
   // const [reviews, setReviews] = useState([]);
-  const { reviews, notFound, loading } = useReviews(id);
+  const { reviews, notFound, loading, hasMore, loadMore } = useReviews(id);
   const handleOpen = () => {
     setOpen(true);
   };
@@ -180,12 +182,20 @@ const Profile = ({ poster }) => {
                 {notFound && (
                   <h5 className="text-center text-xl">No Reviews Yet</h5>
                 )}
-                {loading && <h5 className="text-center text-xl">Loading...</h5>}
+                {loading && <CircularProgress />}
               </div>
             </div>
-            {/* <button className="mx-auto focus:outline-none px-2 py-2 sm:px-4 sm:py-2 md:px-4 border-gray-800 border-solid border-4 rounded-md hover:bg-gray-200">
-              Load More
-            </button> */}
+            {!notFound && (
+              <Button
+                variant="outlined"
+                color="primary"
+                size="large"
+                disabled={!hasMore}
+                onClick={loadMore}
+              >
+                Load More
+              </Button>
+            )}
           </div>
         </div>
         <div className="flex-none lg:flex-1 bg-gray-200"></div>
