@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const usePagination = (query, nextQuery, id) => {
+const useNotification= (query, nextQuery, id) => {
   const [loading, setLoading] = useState(false);
   const [lastItem, setLastItem] = useState(null);
   const [items, setItems] = useState([]);
@@ -8,19 +8,18 @@ const usePagination = (query, nextQuery, id) => {
 
   useEffect(() => {
     const getData = async () => {
-      console.log(id);
-      setLoading(true);
-      let data;
       if (id) {
+        setLoading(true);
+        let data;
         data = await query(id);
-      } else data = await query();
-      setItems(data.posters);
-      setLastItem(data.lastVisible);
-      setHasMore(true);
-      setLoading(false);
+        setItems(data.notifications);
+        setLastItem(data.lastVisible);
+        setHasMore(true);
+        setLoading(false);
+      }
     };
     getData();
-  }, [id && id]);
+  }, [id]);
 
   const loadMore = async () => {
     console.log("Load More");
@@ -29,11 +28,13 @@ const usePagination = (query, nextQuery, id) => {
     if (lastItem) {
       if (id) {
         nextItems = await nextQuery(id, lastItem);
-      } else nextItems = await nextQuery(lastItem);
-      setLoading(false);
-      setItems((prevItem) => [...prevItem, ...nextItems.posters]);
-      if (nextItems.lastVisible) setLastItem(nextItems.lastVisible);
-      else setHasMore(false);
+        //   } else nextItems = await nextQuery(lastItem);
+        setLoading(false);
+        if (nextItems.notifications)
+          setItems((prevItem) => [...prevItem, ...nextItems.notifications]);
+        if (nextItems.lastVisible) setLastItem(nextItems.lastVisible);
+        else setHasMore(false);
+      }
     } else {
       setHasMore(false);
       setLoading(false);
@@ -42,4 +43,4 @@ const usePagination = (query, nextQuery, id) => {
   return { items, loading, loadMore, hasMore };
 };
 
-export default usePagination;
+export default useNotification;

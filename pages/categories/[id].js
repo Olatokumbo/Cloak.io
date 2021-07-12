@@ -10,14 +10,14 @@ import {
   fetchNextPostersbyCategory,
 } from "../../redux/actions/posters";
 import { useRouter } from "next/router";
-import usePagination from "../../hooks/usePagination";
+import usePoster from "../../hooks/usePoster";
 import { CircularProgress, Button } from "@material-ui/core";
 
 const Category = ({ category }) => {
   const router = useRouter();
   const { id } = router.query;
 
-  const { items, loading, loadMore, hasMore } = usePagination(
+  const { items, loading, loadMore, hasMore } = usePoster(
     fetchPostersbyCategory,
     fetchNextPostersbyCategory,
     id

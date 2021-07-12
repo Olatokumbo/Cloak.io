@@ -13,6 +13,7 @@ const Auth = (props) => {
           type: actionTypes.SIGNIN_SUCCESS,
           uid: user.uid,
           photoURL: user.photoURL,
+          displayName: user.displayName,
         });
       } else dispatch({ type: actionTypes.LOGGED_OUT });
     });

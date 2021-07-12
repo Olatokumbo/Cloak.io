@@ -5,10 +5,10 @@ import Link from "next/link";
 import ProfileCard from "../components/ProfileCard";
 import { fetchPosters, fetchNextPosters } from "../redux/actions/posters";
 import PrivateRoute from "../hoc/PrivateRoute";
-import usePagination from "../hooks/usePagination";
+import usePoster from "../hooks/usePoster";
 import { Button, CircularProgress } from "@material-ui/core";
 const Explores = () => {
-  const { items, loadMore, loading, hasMore } = usePagination(
+  const { items, loadMore, loading, hasMore } = usePoster(
     fetchPosters,
     fetchNextPosters
   );

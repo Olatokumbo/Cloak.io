@@ -2,7 +2,7 @@ import Layout from "../components/Layout";
 import NotificationCard from "../components/NotificationCard";
 import CategoryList from "../sections/CategoryList";
 import { Button, CircularProgress } from "@material-ui/core";
-import usePagination2 from "../hooks/usePagination2";
+import useNotification from "../hooks/useNotification";
 import { useSelector } from "react-redux";
 import {
   fetchNextNotifications,
@@ -10,7 +10,7 @@ import {
 } from "../redux/actions/notifications";
 const Notifications = () => {
   const id = useSelector((state) => state.auth.uid);
-  const { items, loadMore, loading, hasMore } = usePagination2(
+  const { items, loadMore, loading, hasMore } = useNotification(
     fetchNotifications,
     fetchNextNotifications,
     id
