@@ -41,7 +41,7 @@ const HireRequest = () => {
     );
   return (
     <Layout>
-      <DashboardList state={3} />
+      <DashboardList state={2} />
       <div className="flex p-3 flex-col md:flex-row">
         <div className="flex-1 px-3"></div>
         <div className="flex-1 md:flex-2 lg:flex-3 min-h-screen w-full p-5 border-solid border-gray-100 border-2">
