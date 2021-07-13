@@ -24,7 +24,7 @@ const Category = ({ category }) => {
   );
   return (
     <Layout>
-      <CategoryList />
+      <CategoryList id={id} />
       <div className="w-full relative overflow-hidden mb-9">
         <div className="opacity-50 bg-gray-900 absolute left-0 right-0 top-0 bottom-0 rounded"></div>
         <div className="absolute p-10 flex h-full w-full">

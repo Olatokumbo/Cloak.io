@@ -18,6 +18,7 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import PrivateRoute from "../../../hoc/PrivateRoute";
 import { listCancelledHires } from "../../../redux/actions/hires";
+import DashboardList from "../../../components/DashboardList";
 
 const CancelledWork = () => {
   const userId = useSelector((state) => state.auth.uid);
@@ -38,6 +39,7 @@ const CancelledWork = () => {
 
   return (
     <Layout>
+      <DashboardList state={3} />
       <div className="w-full min-h-screen p-4">
         <h1 className="text-3xl font-semibold text-gray-700">
           Your Cancelled Work

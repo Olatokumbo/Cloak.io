@@ -22,6 +22,7 @@ import {
   // rejectHire,
   listPendingHires,
 } from "../../../redux/actions/hires";
+import DashboardList from "../../../components/DashboardList";
 const PendingHire = () => {
   const userId = useSelector((state) => state.auth.uid);
   const [requests, setRequests] = useState([]);
@@ -57,6 +58,7 @@ const PendingHire = () => {
 
   return (
     <Layout>
+      <DashboardList state={3} />
       <div className="w-full min-h-screen p-4">
         <h1 className="text-3xl font-semibold text-gray-700">
           Pending Work Requests
