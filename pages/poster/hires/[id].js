@@ -2,17 +2,13 @@ import { useEffect, useState } from "react";
 import Layout from "../../../components/Layout";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import {
-  viewWorkOrder,
-  finishJob,
-  cancelJob,
-} from "../../../redux/actions/hires";
+import { viewWorkOrder, cancelJob } from "../../../redux/actions/hires";
 import { Button } from "@material-ui/core";
 import PrivateRoute from "../../../hoc/PrivateRoute";
 import { useSelector } from "react-redux";
 import { format } from "date-fns";
 import DashboardList from "../../../components/DashboardList";
-const WorkOrder = () => {
+const HireRequest = () => {
   const router = useRouter();
   const { id } = router.query;
   const [workDetails, setWorkDetails] = useState({});
@@ -29,24 +25,15 @@ const WorkOrder = () => {
     getData();
   }, [id]);
 
-  const finish = async () => {
-    try {
-      await finishJob(id);
-      router.push("/poster/requests/done");
-    } catch (error) {
-      alert(error.message);
-    }
-  };
-
   const cancel = async () => {
     try {
       await cancelJob(id);
-      router.push("/poster/requests/pending");
+      router.push("/poster/hires/pending");
     } catch (error) {
       alert(error.message);
     }
   };
-  if (userId !== workDetails.userId)
+  if (userId !== workDetails.customerId)
     return (
       <Layout>
         <h1>Unauthorized</h1>
@@ -59,7 +46,7 @@ const WorkOrder = () => {
         <div className="flex-1 px-3"></div>
         <div className="flex-1 md:flex-2 lg:flex-3 min-h-screen w-full p-5 border-solid border-gray-100 border-2">
           <h1 className="text-2xl font-bold my-1 text-center text-gray-700">
-            Work Order
+            Active Hire Request
           </h1>
           <div className="flex justify-between items-center flex-col md:flex-row">
             <h1 className="text-2xl font-semibold my-1 text-center md:my-5">
@@ -115,16 +102,6 @@ const WorkOrder = () => {
               >
                 Cancel
               </Button>
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                margin="normal"
-                // className={classes.btn}
-                onClick={finish}
-              >
-                Finish
-              </Button>
             </div>
           )}
         </div>
@@ -133,4 +110,4 @@ const WorkOrder = () => {
   );
 };
 
-export default PrivateRoute(WorkOrder);
+export default PrivateRoute(HireRequest);

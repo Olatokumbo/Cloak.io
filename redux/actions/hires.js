@@ -51,11 +51,53 @@ export const listPendingHires = (id) => {
     });
 };
 
+export const listPendingHireRequests = (id) => {
+  const hireList = [];
+  return firestore
+    .collection("hires")
+    .where("customerId", "==", id)
+    .where("done", "==", false)
+    .where("cancelled", "==", false)
+    .get()
+    .then((querySnapShot) => {
+      querySnapShot.forEach((doc) => {
+        hireList.push({ ...doc.data(), id: doc.id });
+      });
+    })
+    .then(() => {
+      return hireList;
+    })
+    .catch((e) => {
+      throw new Error(e.message);
+    });
+};
+
 export const listFinishedHires = (id) => {
   const hireList = [];
   return firestore
     .collection("hires")
     .where("userId", "==", id)
+    .where("done", "==", true)
+    .where("cancelled", "==", false)
+    .get()
+    .then((querySnapShot) => {
+      querySnapShot.forEach((doc) => {
+        hireList.push({ ...doc.data(), id: doc.id });
+      });
+    })
+    .then(() => {
+      return hireList;
+    })
+    .catch((e) => {
+      throw new Error(e.message);
+    });
+};
+
+export const listFinishedHireRequest = (id) => {
+  const hireList = [];
+  return firestore
+    .collection("hires")
+    .where("customerId", "==", id)
     .where("done", "==", true)
     .where("cancelled", "==", false)
     .get()
