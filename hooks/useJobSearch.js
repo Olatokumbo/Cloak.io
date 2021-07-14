@@ -2,12 +2,7 @@ import { useEffect, useState } from "react";
 import algoliasearch from "algoliasearch";
 import { errorNotification } from "../utils/notifications";
 
-const useJobSearch = (
-  location,
-  page,
-  keyword,
-  city
-) => {
+const useJobSearch = (location, page, keyword, city) => {
   const [searchResults, setSearchResults] = useState([]);
   const [pages, setPages] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -27,10 +22,11 @@ const useJobSearch = (
         .search(
           keyword,
           location
-            ? { filters: `location:"${location}"`, page }
-            : { page }
+            ? { filters: `location:"${location}" AND done:"${false}"`, page }
+            : { filters: `done:false`, page }
         )
         .then((responses) => {
+          console.log(responses);
           setLoading(false);
           if (responses.hits.length === 0) setMessage("Job(s) Not Found");
           else setMessage("");
@@ -39,7 +35,7 @@ const useJobSearch = (
         })
         .catch((e) => {
           setLoading(false);
-            errorNotification("Failed", e.message);
+          errorNotification("Failed", e.message);
         });
     };
     jobSearch();

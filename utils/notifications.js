@@ -10,7 +10,7 @@ export const successNotification = (title, message) => {
     animationIn: ["animate__animated", "animate__fadeIn"],
     animationOut: ["animate__animated", "animate__fadeOut"],
     dismiss: {
-      duration: 5000,
+      duration: 3000,
       onScreen: true,
     },
   });
@@ -27,7 +27,7 @@ export const errorNotification = (title, message) => {
     animationIn: ["animate__animated", "animate__fadeIn"],
     animationOut: ["animate__animated", "animate__fadeOut"],
     dismiss: {
-      duration: 5000,
+      duration: 3000,
       onScreen: true,
     },
   });
@@ -44,7 +44,7 @@ export const defaultNotification = (title, message) => {
     animationIn: ["animate__animated", "animate__fadeIn"],
     animationOut: ["animate__animated", "animate__fadeOut"],
     dismiss: {
-      duration: 5000,
+      duration: 3000,
       onScreen: true,
     },
   });
@@ -61,7 +61,7 @@ export const warningNotification = (title, message) => {
     animationIn: ["animate__animated", "animate__fadeIn"],
     animationOut: ["animate__animated", "animate__fadeOut"],
     dismiss: {
-      duration: 5000,
+      duration: 3000,
       onScreen: true,
     },
   });

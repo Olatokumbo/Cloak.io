@@ -12,14 +12,16 @@ export const fetchJobById = (documentId) => {
     .doc(documentId)
     .get()
     .then((doc) => {
-      job = doc.data();
-      job.id = doc.id;
-      promises.push(
-        job.authorRef.get().then((res) => {
-          job.authorData = res.data();
-        })
-      );
-      return Promise.all(promises);
+      if (doc.exists) {
+        job = doc.data();
+        job.id = doc.id;
+        promises.push(
+          job.authorRef.get().then((res) => {
+            job.authorData = res.data();
+          })
+        );
+        return Promise.all(promises);
+      } else return {};
     })
     .then(() => {
       return JSON.stringify(job);
@@ -54,6 +56,7 @@ export const addJob = (job) => {
       authorRef: firestore.doc(`/users/${job.userId}`),
       date: firebase.firestore.FieldValue.serverTimestamp(),
       applied: [],
+      done: false,
     })
     .then(() => successNotification("Success", "Job Posted"))
     .catch((e) => {
@@ -104,6 +107,21 @@ export const updateJob = (job) => {
     })
     .catch((e) => {
       return new Error(e.message);
+    });
+};
+
+export const finishJob = (id) => {
+  return firestore
+    .collection("jobs")
+    .doc(id)
+    .update({
+      done: true,
+    })
+    .then(() => {
+      warningNotification("Success", "Job Closed");
+    })
+    .catch((e) => {
+      throw new Error(e.message);
     });
 };
 
@@ -172,6 +190,7 @@ export const getJobList = (userId) => {
   return firestore
     .collection("jobs")
     .where("userId", "==", userId)
+    .where("done", "==", true)
     .get()
     .then((querySnapshot) => {
       querySnapshot.forEach((doc) => {

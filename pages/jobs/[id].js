@@ -6,6 +6,7 @@ import {
   applyJob,
   withdrawJob,
   isJobApplied,
+  finishJob,
 } from "../../redux/actions/jobs";
 import Link from "next/link";
 import { useState, useEffect } from "react";
@@ -42,8 +43,6 @@ const JobInfo = ({ job }) => {
   const classes = useStyles();
   const { isAuth, uid } = useSelector((state) => state.auth);
   const appliedState = useSelector((state) => state.job.jobApplied);
-  // const [appliedState, setAppliedState] = useState(false);
-  // const [buffer, setBuffer] = useState(true);
   const dispatch = useDispatch();
   useEffect(() => {
     if (uid && id) {
@@ -51,14 +50,14 @@ const JobInfo = ({ job }) => {
     }
   }, [uid, id]);
   const apply = async () => {
-    if (isAuth) {
+    if (isAuth && !job.done) {
       try {
         await applyJob(job.id, uid);
-        // localStorage.setItem(job.id, uid);
-        // setBuffer((prevState) => !prevState);
       } catch (error) {
         alert(error.message);
       }
+    } else if (isAuth && job.done) {
+      errorNotification("Warning", "Job has been Closed");
     } else {
       warningNotification("Warning", "Please Sign in");
     }
@@ -67,12 +66,17 @@ const JobInfo = ({ job }) => {
   const withdraw = async () => {
     try {
       await withdrawJob(job.id, uid);
-      // setBuffer((prevState) => !prevState);
-      // console.log("remove");
-      // localStorage.removeItem(job.id);
-      // setAppliedState(false);
     } catch (error) {
       errorNotification("Error", error.message);
+    }
+  };
+
+  const closeJob = async () => {
+    try {
+      await finishJob(id);
+      router.push("/jobs");
+    } catch (error) {
+      console.log(error);
     }
   };
   return (
@@ -88,7 +92,10 @@ const JobInfo = ({ job }) => {
           </div>
           <div className="flex justify-between mb-7">
             <div className="flex items-center">
-              <Avatar src={job.authorData.photoURL} className={classes.avatar} />
+              <Avatar
+                src={job.authorData.photoURL}
+                className={classes.avatar}
+              />
               <div className="flex flex-col">
                 <Link href={`/profile/${job.userId}`}>
                   <h4 className="text-base font-bold text-gray-800 cursor-pointer hover:underline">
@@ -134,11 +141,19 @@ const JobInfo = ({ job }) => {
                 )}
               </div>
             ) : (
-              <Link href={`/job/${job.id}/edit`}>
-                <button className="ml-5 bg-black focus:outline-none text-white px-3 py-2 md:px-4 rounded-md hover:bg-gray-900">
-                  Edit
+              <div>
+                <button
+                  onClick={closeJob}
+                  className="ml-5 bg-black focus:outline-none text-white px-3 py-2 md:px-4 rounded-md hover:bg-gray-900"
+                >
+                  Close Job
                 </button>
-              </Link>
+                <Link href={`/job/${job.id}/edit`}>
+                  <button className="ml-5 bg-black focus:outline-none text-white px-3 py-2 md:px-4 rounded-md hover:bg-gray-900">
+                    Edit
+                  </button>
+                </Link>
+              </div>
             )}
           </div>
           <div className="mt-5">
@@ -203,6 +218,7 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async (context) => {
   const res = await fetchJobById(context.params.id);
+  if (!res) return { notFound: true };
   const data = JSON.parse(res);
   return {
     props: {
