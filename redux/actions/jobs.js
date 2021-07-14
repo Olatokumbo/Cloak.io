@@ -185,12 +185,12 @@ export const withdrawJob = (jobId, userId) => {
     });
 };
 
-export const getJobList = (userId) => {
+export const getJobList = (userId, state) => {
   const jobList = [];
   return firestore
     .collection("jobs")
     .where("userId", "==", userId)
-    .where("done", "==", true)
+    .where("done", "==", state)
     .get()
     .then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
@@ -202,6 +202,6 @@ export const getJobList = (userId) => {
       return JSON.stringify(jobList);
     })
     .catch((e) => {
-      throw new Error(e.message);
+     console.log(e.message);
     });
 };

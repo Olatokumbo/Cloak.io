@@ -115,44 +115,51 @@ const JobInfo = ({ job }) => {
                       clipRule="evenodd"
                     />
                   </svg>
-
                   <h5 className="text-xs self-end text-gray-500">
                     {job?.location}
                   </h5>
                 </div>
               </div>
             </div>
-            {uid !== job.userId ? (
-              <div>
-                {!appliedState ? (
-                  <button
-                    onClick={apply}
-                    className="ml-5 bg-black focus:outline-none text-white px-3 py-2 md:px-4 rounded-md hover:bg-gray-900"
-                  >
-                    Apply Now
-                  </button>
-                ) : (
-                  <button
-                    onClick={withdraw}
-                    className="ml-5 bg-black focus:outline-none text-white px-3 py-2 md:px-4 rounded-md hover:bg-gray-900"
-                  >
-                    Cancel Application
-                  </button>
-                )}
-              </div>
+            {job.done ? (
+              <h1 className="font-bold text-3xl mb-3 text-center text-red-500">
+                Job Closed
+              </h1>
             ) : (
               <div>
-                <button
-                  onClick={closeJob}
-                  className="ml-5 bg-black focus:outline-none text-white px-3 py-2 md:px-4 rounded-md hover:bg-gray-900"
-                >
-                  Close Job
-                </button>
-                <Link href={`/job/${job.id}/edit`}>
-                  <button className="ml-5 bg-black focus:outline-none text-white px-3 py-2 md:px-4 rounded-md hover:bg-gray-900">
-                    Edit
-                  </button>
-                </Link>
+                {uid !== job.userId ? (
+                  <div>
+                    {!appliedState ? (
+                      <button
+                        onClick={apply}
+                        className="ml-5 bg-black focus:outline-none text-white px-3 py-2 md:px-4 rounded-md hover:bg-gray-900"
+                      >
+                        Apply Now
+                      </button>
+                    ) : (
+                      <button
+                        onClick={withdraw}
+                        className="ml-5 bg-black focus:outline-none text-white px-3 py-2 md:px-4 rounded-md hover:bg-gray-900"
+                      >
+                        Cancel Application
+                      </button>
+                    )}
+                  </div>
+                ) : (
+                  <div>
+                    <button
+                      onClick={closeJob}
+                      className="ml-5 bg-black focus:outline-none text-white px-3 py-2 md:px-4 rounded-md hover:bg-gray-900"
+                    >
+                      Close Job
+                    </button>
+                    <Link href={`/job/${job.id}/edit`}>
+                      <button className="ml-5 bg-black focus:outline-none text-white px-3 py-2 md:px-4 rounded-md hover:bg-gray-900">
+                        Edit
+                      </button>
+                    </Link>
+                  </div>
+                )}
               </div>
             )}
           </div>
