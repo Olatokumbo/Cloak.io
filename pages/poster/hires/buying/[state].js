@@ -1,7 +1,6 @@
-import DashboardList from "../../../components/DashboardList";
-import Layout from "../../../components/Layout";
-import PrivateRoute from "../../../hoc/PrivateRoute";
-import { useState } from "react";
+import DashboardList from "../../../../components/DashboardList";
+import Layout from "../../../../components/Layout";
+import PrivateRoute from "../../../../hoc/PrivateRoute";
 import {
   Button,
   ButtonGroup,
@@ -13,15 +12,18 @@ import {
   TableBody,
   Paper,
   IconButton,
+  CircularProgress,
 } from "@material-ui/core";
 import Link from "next/link";
 import VisibilityIcon from "@material-ui/icons/Visibility";
-import useBuying from "../../../hooks/useBuying";
+import useBuying from "../../../../hooks/useBuying";
 import { useSelector } from "react-redux";
+import { useRouter } from "next/router";
 const AllHireRequests = () => {
+  const router = useRouter();
   const userId = useSelector((state) => state.auth.uid);
-  const [orderState, setOrderState] = useState("active");
-  const items = useBuying(orderState, userId);
+  const orderState = router.query.state;
+  const { items, loading } = useBuying(orderState, userId);
   return (
     <Layout>
       <DashboardList state={2} />
@@ -34,15 +36,21 @@ const AllHireRequests = () => {
             color="primary"
             aria-label="outlined primary button group"
           >
-            <Button onClick={() => setOrderState("active")}>Active</Button>
-            <Button onClick={() => setOrderState("completed")}>
+            <Button onClick={() => router.push("/poster/hires/buying/active")}>
+              Active
+            </Button>
+            <Button
+              onClick={() => router.push("/poster/hires/buying/completed")}
+            >
               Completed
             </Button>
           </ButtonGroup>
 
           <div className="my-4 border-solid border-t border-gray-300">
             <h1 className="text-2xl font-normal text-gray-700 my-4">
-              {orderState.charAt(0).toUpperCase() + orderState.slice(1)} Hire Requests
+              {orderState.length > 3 &&
+                orderState.charAt(0).toUpperCase() + orderState.slice(1)}{" "}
+              Hire Requests
             </h1>
             <TableContainer /* className={style.table}*/ component={Paper}>
               <Table aria-label="simple table">
@@ -76,6 +84,7 @@ const AllHireRequests = () => {
                 </TableBody>
               </Table>
             </TableContainer>
+            {loading && <CircularProgress />}
           </div>
         </div>
       </div>

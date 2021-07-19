@@ -41,7 +41,7 @@ const WorkOrder = () => {
   const cancel = async () => {
     try {
       await cancelJob(id);
-      router.push("/poster/requests/pending");
+      router.push("/poster/requests/all");
     } catch (error) {
       alert(error.message);
     }

@@ -130,18 +130,20 @@ const Jobs = () => {
                             </Link>
                           ))}
                         </div>
-                        {pages > 0 &&
-                          [...Array(pages)].map((_e, i) => (
-                            <Button
-                              className={classes.btn}
-                              color="primary"
-                              variant="contained"
-                              size="small"
-                              onClick={() => nPage(i)}
-                            >
-                              {i}
-                            </Button>
-                          ))}
+                        <div className="my-3">
+                          {pages > 0 &&
+                            [...Array(pages)].map((_e, i) => (
+                              <Button
+                                className={classes.btn}
+                                color="primary"
+                                variant="contained"
+                                size="small"
+                                onClick={() => nPage(i)}
+                              >
+                                {i}
+                              </Button>
+                            ))}
+                        </div>
                       </div>
                     ) : (
                       <div className="text-center">

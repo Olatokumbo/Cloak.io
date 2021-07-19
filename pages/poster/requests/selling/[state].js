@@ -1,7 +1,6 @@
-import DashboardList from "../../../components/DashboardList";
-import Layout from "../../../components/Layout";
-import PrivateRoute from "../../../hoc/PrivateRoute";
-import { useState } from "react";
+import DashboardList from "../../../../components/DashboardList";
+import Layout from "../../../../components/Layout";
+import PrivateRoute from "../../../../hoc/PrivateRoute";
 import {
   Button,
   ButtonGroup,
@@ -13,15 +12,18 @@ import {
   TableBody,
   Paper,
   IconButton,
+  CircularProgress,
 } from "@material-ui/core";
 import Link from "next/link";
 import VisibilityIcon from "@material-ui/icons/Visibility";
-import useSelling from "../../../hooks/useSelling";
+import useSelling from "../../../../hooks/useSelling";
 import { useSelector } from "react-redux";
+import { useRouter } from "next/router";
 const AllRequests = () => {
+  const router = useRouter();
   const userId = useSelector((state) => state.auth.uid);
-  const [orderState, setOrderState] = useState("active");
-  const items = useSelling(orderState, userId);
+  const orderState = router.query.state;
+  const { items, loading } = useSelling(orderState, userId);
   return (
     <Layout>
       <DashboardList state={3} />
@@ -32,18 +34,28 @@ const AllRequests = () => {
             color="primary"
             aria-label="outlined primary button group"
           >
-            <Button onClick={() => setOrderState("active")}>Active</Button>
-            <Button onClick={() => setOrderState("completed")}>
+            <Button
+              onClick={() => router.push("/poster/requests/selling/active")}
+            >
+              Active
+            </Button>
+            <Button
+              onClick={() => router.push("/poster/requests/selling/completed")}
+            >
               Completed
             </Button>
-            <Button onClick={() => setOrderState("cancelled")}>
+            <Button
+              onClick={() => router.push("/poster/requests/selling/cancelled")}
+            >
               Cancelled
             </Button>
           </ButtonGroup>
 
           <div className="my-4 border-solid border-t border-gray-300">
             <h1 className="text-2xl font-normal text-gray-700 my-4">
-              {orderState.charAt(0).toUpperCase() + orderState.slice(1)} Orders
+              {orderState.length > 3 &&
+                orderState.charAt(0).toUpperCase() + orderState.slice(1)}{" "}
+              Orders
             </h1>
             <TableContainer /* className={style.table}*/ component={Paper}>
               <Table aria-label="simple table">
@@ -77,6 +89,7 @@ const AllRequests = () => {
                 </TableBody>
               </Table>
             </TableContainer>
+            {loading && <CircularProgress />}
           </div>
         </div>
       </div>

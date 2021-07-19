@@ -5,9 +5,11 @@ import {
 } from "../redux/actions/hires";
 const useSelling = (orderState, userId) => {
   const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     const getData = async () => {
       let list;
+      setLoading(true);
       if (userId) {
         try {
           if (orderState === "active") {
@@ -15,7 +17,8 @@ const useSelling = (orderState, userId) => {
           } else if (orderState === "completed") {
             list = await listFinishedHireRequest(userId);
           }
-          setItems(list);
+          setItems(list || []);
+          setLoading(false);
         } catch (error) {
           console.log(error);
         }
@@ -23,7 +26,7 @@ const useSelling = (orderState, userId) => {
     };
     getData();
   }, [userId, orderState]);
-  return items;
+  return { items, loading };
 };
 
 export default useSelling;
