@@ -98,3 +98,17 @@ const AllRequests = () => {
 };
 
 export default PrivateRoute(AllRequests);
+
+export const getServerSideProps = async (context) => {
+  let state = context.params.state;
+  if (state !== "active" && state !== "completed") {
+    return {
+      notFound: true,
+    };
+  }
+  return {
+    props: {
+      
+    }
+  };
+};

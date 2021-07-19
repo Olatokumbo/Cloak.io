@@ -2,7 +2,7 @@ import Layout from "../../components/Layout";
 import MenuCard from "../../components/MenuCard";
 import PrivateRoute from "../../hoc/PrivateRoute";
 
-const AllRequests = () => {
+const DashBoard = () => {
   return (
     <Layout>
       <div className="w-full min-h-screen p-4">
@@ -26,4 +26,4 @@ const AllRequests = () => {
   );
 };
 
-export default PrivateRoute(AllRequests);
+export default PrivateRoute(DashBoard);

@@ -251,9 +251,9 @@ const Profile = () => {
                     Add Poster
                   </button>
                 </Link>
-                <Link href="/poster/requests/all">
+                <Link href="/poster/dashboard">
                   <button className="my-2 mx-2 focus:outline-none px-2 py-2 sm:px-4 sm:py-2 md:px-4 border-black border-solid border-2 rounded-md hover:bg-gray-200">
-                    My Work
+                    Dashboard
                   </button>
                 </Link>
               </div>

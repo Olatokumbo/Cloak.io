@@ -32,7 +32,7 @@ const WorkOrder = () => {
   const finish = async () => {
     try {
       await finishJob(id);
-      router.push("/poster/requests/done");
+      router.push("/poster/requests/selling/completed");
     } catch (error) {
       alert(error.message);
     }
@@ -41,7 +41,7 @@ const WorkOrder = () => {
   const cancel = async () => {
     try {
       await cancelJob(id);
-      router.push("/poster/requests/all");
+      router.push("/poster/requests/selling/cancelled");
     } catch (error) {
       alert(error.message);
     }
