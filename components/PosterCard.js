@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ProfileCard = ({ data, searched }) => {
+const PosterCard = ({ data, searched }) => {
   const classes = useStyles();
   return (
     <div className="h-full flex flex-col border-2 border-solid border-gray-300 shadow-xl hover:shadow-2xl cursor-pointer rounded">
@@ -78,4 +78,4 @@ const ProfileCard = ({ data, searched }) => {
   );
 };
 
-export default ProfileCard;
+export default PosterCard;

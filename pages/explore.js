@@ -2,11 +2,12 @@ import Layout from "../components/Layout";
 import CategoryList from "../sections/CategoryList";
 // import Explore from "../sections/Explore";
 import Link from "next/link";
-import ProfileCard from "../components/ProfileCard";
+import PosterCard from "../components/PosterCard";
 import { fetchPosters, fetchNextPosters } from "../redux/actions/posters";
 import PrivateRoute from "../hoc/PrivateRoute";
 import usePoster from "../hooks/usePoster";
-import { Button, CircularProgress } from "@material-ui/core";
+import { Button } from "@material-ui/core";
+import PosterCardSkeleton from "../skeletons/PosterCardSkeleton";
 const Explores = () => {
   const { items, loadMore, loading, hasMore } = usePoster(
     fetchPosters,
@@ -53,13 +54,13 @@ const Explores = () => {
           {items?.map((poster) => (
             <Link key={poster.id} href={`/search/${poster.id}`}>
               <a>
-                <ProfileCard data={poster} />
+                <PosterCard data={poster} />
               </a>
             </Link>
           ))}
+          {loading && <PosterCardSkeleton />}
         </div>
-        {loading && <CircularProgress />}
-        {items.length>0 && (
+        {items.length > 0 && (
           <div className="w-full flex justify-center py-2 my-2">
             <Button
               variant="outlined"

@@ -29,6 +29,7 @@ import {
   errorNotification,
   successNotification,
 } from "../../../utils/notifications";
+import MyPosterCardSkeleton from "../../../skeletons/MyPosterCardSkeleton";
 const useStyles = makeStyles((theme) => ({
   avatar: {
     marginLeft: theme.spacing(5),
@@ -268,6 +269,13 @@ const Profile = () => {
               />
             ))}
           </div>
+          {loading && (
+            <div className="my-5 w-full px-2 grid gap-x-2 gap-y-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
+              <MyPosterCardSkeleton />
+              <MyPosterCardSkeleton />
+              <MyPosterCardSkeleton />
+            </div>
+          )}
           {notFound && (
             <h1 className="text-2xl font-semibold text-gray-800 text-center">
               Profile not Found

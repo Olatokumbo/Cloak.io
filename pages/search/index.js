@@ -1,4 +1,4 @@
-import ProfileCard from "../../components/ProfileCard";
+import PosterCard from "../../components/PosterCard";
 import Link from "next/link";
 import Layout from "../../components/Layout";
 import CategoryList from "../../sections/CategoryList";
@@ -26,7 +26,7 @@ const Search = () => {
               searchResults.map((hit) => (
                 <Link key={hit.objectID} href={`/search/${hit.objectID}`}>
                   <a>
-                    <ProfileCard data={hit} searched={true} />
+                    <PosterCard data={hit} searched={true} />
                   </a>
                 </Link>
               ))

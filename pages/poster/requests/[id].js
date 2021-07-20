@@ -57,7 +57,7 @@ const WorkOrder = () => {
     <Layout>
       <DashboardList state={3} />
       <div className="flex p-3 flex-col md:flex-row min-h-screen">
-        <div className="flex-1 px-3"></div>
+        <div className="flex-none px-3 md:flex-1"></div>
         <div className="flex-1 md:flex-2 lg:flex-3 h-full w-full border-solid border-gray-100 border-2">
           <div className="w-full flex justify-between px-3 bg-gray-800">
             <h1 className="text-sm font-semibold my-1 text-center text-white">
@@ -155,7 +155,7 @@ const WorkOrder = () => {
             </h1>
           </div>
         </div>
-        <div className="flex-1 px-3"></div>
+        <div className="flex-none px-3 md:flex-1"></div>
       </div>
     </Layout>
   );

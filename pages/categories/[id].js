@@ -1,6 +1,6 @@
 import Image from "next/image";
 import CategoryList from "../../sections/CategoryList";
-import ProfileCard from "../../components/ProfileCard";
+import PosterCard from "../../components/PosterCard";
 import Link from "next/link";
 import Layout from "../../components/Layout";
 import fs from "fs";
@@ -50,7 +50,7 @@ const Category = ({ category }) => {
           {items?.map((poster) => (
             <Link key={poster.id} href={`/search/${poster.id}`}>
               <a>
-                <ProfileCard data={poster} />
+                <PosterCard data={poster} />
               </a>
             </Link>
           ))}
