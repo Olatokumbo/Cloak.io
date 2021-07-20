@@ -56,7 +56,6 @@ const AllHireRequests = () => {
               <Table aria-label="simple table">
                 <TableHead>
                   <TableRow>
-                    <TableCell align="left">Order ID</TableCell>
                     <TableCell align="left">Title</TableCell>
                     <TableCell align="left">Price</TableCell>
                     <TableCell align="left">View</TableCell>
@@ -65,9 +64,6 @@ const AllHireRequests = () => {
                 <TableBody>
                   {items.map((request) => (
                     <TableRow key={request.id}>
-                      <TableCell component="th" scope="row">
-                        {request.id}
-                      </TableCell>
                       <TableCell component="th" scope="row">
                         {request.title}
                       </TableCell>

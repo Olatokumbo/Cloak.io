@@ -19,6 +19,7 @@ import VisibilityIcon from "@material-ui/icons/Visibility";
 import useSelling from "../../../../hooks/useSelling";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
+import { format } from "date-fns";
 const AllRequests = () => {
   const router = useRouter();
   const userId = useSelector((state) => state.auth.uid);
@@ -61,7 +62,6 @@ const AllRequests = () => {
               <Table aria-label="simple table">
                 <TableHead>
                   <TableRow>
-                    <TableCell align="left">Order ID</TableCell>
                     <TableCell align="left">Title</TableCell>
                     <TableCell align="left">Price</TableCell>
                     <TableCell align="left">View</TableCell>
@@ -70,9 +70,6 @@ const AllRequests = () => {
                 <TableBody>
                   {items.map((request) => (
                     <TableRow key={request.id}>
-                      <TableCell component="th" scope="row">
-                        {request.id}
-                      </TableCell>
                       <TableCell component="th" scope="row">
                         {request.title}
                       </TableCell>
@@ -101,14 +98,12 @@ export default PrivateRoute(AllRequests);
 
 export const getServerSideProps = async (context) => {
   let state = context.params.state;
-  if (state !== "active" && state !== "completed") {
+  if (state !== "active" && state !== "completed" && state !== "cancelled") {
     return {
       notFound: true,
     };
   }
   return {
-    props: {
-      
-    }
+    props: {},
   };
 };
