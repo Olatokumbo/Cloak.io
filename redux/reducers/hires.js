@@ -1,6 +1,6 @@
 import * as actionTypes from "../actions/actionTypes";
 const initialState = {
-  isWorkOrderActive: false,
+  isWorkOrderActive: null,
 };
 
 const hireReducer = (state = initialState, action) => {

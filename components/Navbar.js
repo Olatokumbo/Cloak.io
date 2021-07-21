@@ -149,7 +149,7 @@ const Navbar = ({ auth }) => {
                   <MenuItem onClick={() => router.push(`/profile/${auth.uid}`)}>
                     Profile
                   </MenuItem>
-                  <MenuItem onClick={() => router.push(`/job/all`)}>
+                  <MenuItem onClick={() => router.push(`/job/status/active`)}>
                     My Jobs
                   </MenuItem>
                   <MenuItem onClick={() => router.push(`/poster/dashboard`)}>

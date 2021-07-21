@@ -1,4 +1,4 @@
-import Layout from "../../components/Layout";
+import Layout from "../../../components/Layout";
 import {
   TableContainer,
   Table,
@@ -14,24 +14,15 @@ import {
 import { format } from "date-fns";
 import Link from "next/link";
 import VisibilityIcon from "@material-ui/icons/Visibility";
-// import { getJobList } from "../../redux/actions/jobs";
 import { useSelector } from "react-redux";
-import { useState } from "react";
-import PrivateRoute from "../../hoc/PrivateRoute";
-import useJobs from "../../hooks/useJobs";
+import PrivateRoute from "../../../hoc/PrivateRoute";
+import useJobs from "../../../hooks/useJobs";
+import { useRouter } from "next/router";
 const MyJobs = () => {
-  // const [jobs, setJobs] = useState([]);
-  const [jobState, setJobState] = useState("active");
+  const router = useRouter();
+  const jobState = router.query.state;
   const userId = useSelector((state) => state.auth.uid);
   const items = useJobs(userId, jobState);
-  // useEffect(() => {
-  //   const getJob = async () => {
-  //     let jobList = await getJobList(userId);
-  //     jobList = JSON.parse(jobList);
-  //     setJobs(jobList);
-  //   };
-  //   getJob();
-  // }, [userId]);
   return (
     <Layout>
       <div className="w-full min-h-screen p-4">
@@ -48,8 +39,12 @@ const MyJobs = () => {
                 color="primary"
                 aria-label="outlined primary button group"
               >
-                <Button onClick={() => setJobState("active")}>Active</Button>
-                <Button onClick={() => setJobState("closed")}>Closed</Button>
+                <Button onClick={() => router.push("/job/status/active")}>
+                  Active
+                </Button>
+                <Button onClick={() => router.push("/job/status/closed")}>
+                  Completed
+                </Button>
               </ButtonGroup>
             </div>
           </div>
@@ -99,19 +94,14 @@ const MyJobs = () => {
 
 export default PrivateRoute(MyJobs);
 
-// export const getServerSideProps = async () => {
-//   let jobs;
-//   try {
-//     jobs = await getJobList(id);
-//     jobs = JSON.parse(jobs);
-//   } catch (error) {
-//     return {
-//       notFound: true,
-//     };
-//   }
-//   return {
-//     props: {
-//       jobs,
-//     },
-//   };
-// };
+export const getServerSideProps = async (context) => {
+  let state = context.params.state;
+  if (state !== "active" && state !== "closed") {
+    return {
+      notFound: true,
+    };
+  }
+  return {
+    props: {},
+  };
+};
