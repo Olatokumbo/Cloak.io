@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
 const PosterCardSkeleton = () => {
   const classes = useStyles();
   return (
-    <div className="min-h-80 flex flex-col border-2 border-solid border-gray-300 shadow-xl hover:shadow-2xl cursor-pointer rounded">
+    <div className="min-h-80 w-24 min-w-full flex flex-col border-2 border-solid border-gray-300 shadow-xl hover:shadow-2xl cursor-pointer rounded">
       <div className="h-40 relative -z-1">
         <Skeleton animation="wave" variant="rect" height={160} />
       </div>

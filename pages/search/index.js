@@ -4,6 +4,7 @@ import Layout from "../../components/Layout";
 import CategoryList from "../../sections/CategoryList";
 import { useRouter } from "next/router";
 import { CircularProgress } from "@material-ui/core";
+import PosterCardSkeleton from "../../skeletons/PosterCardSkeleton";
 import useAlgoliaSearch from "../../hooks/useAlgoliaSearch";
 const Search = () => {
   const {
@@ -20,21 +21,32 @@ const Search = () => {
         <div className="p-5">
           <h1 className="text-3xl font-semibold">Results for "{keyword}"</h1>
         </div>
-        <div className="mb-5 w-full px-2 grid gap-x-2 gap-y-4 grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-5">
+        <div className="px-2">
           {!loading ? (
             !notFound ? (
-              searchResults.map((hit) => (
-                <Link key={hit.objectID} href={`/search/${hit.objectID}`}>
-                  <a>
-                    <PosterCard data={hit} searched={true} />
-                  </a>
-                </Link>
-              ))
+              <div className="mb-5 w-full grid gap-x-2 gap-y-4 grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-5">
+                {searchResults.map((hit) => (
+                  <Link key={hit.objectID} href={`/search/${hit.objectID}`}>
+                    <a>
+                      <PosterCard data={hit} searched={true} />
+                    </a>
+                  </Link>
+                ))}
+              </div>
             ) : (
-              "Not Found"
+              <div className="flex flex-col items-center w-72 justify-center m-auto">
+                <h1 className="text-center my-5 text-2xl">Not Found</h1>
+                <PosterCardSkeleton />
+              </div>
             )
           ) : (
-            <CircularProgress />
+            <div className="mb-5 w-full grid gap-x-2 gap-y-4 grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-5">
+              <PosterCardSkeleton />
+              <PosterCardSkeleton />
+              <PosterCardSkeleton />
+              <PosterCardSkeleton />
+              <PosterCardSkeleton />
+            </div>
           )}
         </div>
       </div>

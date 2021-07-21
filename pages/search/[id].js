@@ -12,6 +12,7 @@ import ReviewCard from "../../components/ReviewCard";
 import useReviews from "../../hooks/useReviews";
 import { warningNotification } from "../../utils/notifications";
 import { Rating } from "@material-ui/lab";
+import { Chip } from "@material-ui/core";
 import {
   Avatar,
   makeStyles,
@@ -26,6 +27,9 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(1),
     width: 40,
     height: 40,
+  },
+  chip: {
+    margin: theme.spacing(0.5),
   },
 }));
 
@@ -60,12 +64,12 @@ const Profile = ({ poster }) => {
   };
   const hireMe = () => {
     if (uid && isActive === true) handleOpen();
-    else if (uid && isActive === false)
+    else if (uid && isActive === false) {
       warningNotification(
         "Warning",
         "You have an active work order with this Service"
       );
-    else warningNotification("Warning", "Please Sign in");
+    } else warningNotification("Warning", "Please Sign in");
   };
 
   useEffect(() => {
@@ -91,8 +95,8 @@ const Profile = ({ poster }) => {
               <h1 className="text-2xl font-semibold my-1 text-center md:my-5">
                 {poster.title}
               </h1>
-              <h5 className="text-2xl font-semibold text-gray-800">
-                ₦{poster.price}~
+              <h5 className="text-3xl font-semibold text-gray-800">
+                ₦{poster.price}
               </h5>
             </div>
             <div className="flex justify-center md:justify-start">
@@ -163,7 +167,17 @@ const Profile = ({ poster }) => {
               </div>
             )}
           </div>
-          {/* <h6 className="text-md text-gray-600">Level 2</h6> */}
+          <div>
+            {poster.keywords.map((tag, index) => (
+              <Chip
+                key={index}
+                variant="outlined"
+                color="primary"
+                className={classes.chip}
+                label={tag}
+              />
+            ))}
+          </div>
           <h1 className="text-lg font-semibold mt-2">My Works</h1>
           <ProfileCarousel images={poster?.works} />
           <h1 className="font-bold text-lg my-5 text-gray-800">Description</h1>

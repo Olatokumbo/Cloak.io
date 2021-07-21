@@ -4,7 +4,7 @@ const Slideshow = ({ images }) => {
     <Carousel
       autoPlay={true}
       //   className={style.carouselItem}
-      className="h-96 max-h-96 my-5 relative"
+      className="h-96 max-h-96 my-5 relative rounded"
       navButtonsAlwaysVisible={true}
       nav
       indicators={false}

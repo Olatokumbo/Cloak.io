@@ -165,7 +165,7 @@ export const isWorkOrderActive = (customerId, userId, posterId) => {
       .where("userId", "==", userId)
       .where("posterId", "==", posterId)
       .where("done", "==", false)
-      .where("cancelled", "==", true)
+      .where("cancelled", "==", false)
       .onSnapshot((doc) => {
         if (doc.empty) dispatch({ type: actionTypes.IS_ACTIVE });
         else dispatch({ type: actionTypes.NOT_ACTIVE });
