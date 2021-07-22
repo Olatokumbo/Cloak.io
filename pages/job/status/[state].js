@@ -43,7 +43,7 @@ const MyJobs = () => {
                   Active
                 </Button>
                 <Button onClick={() => router.push("/job/status/closed")}>
-                  Completed
+                  Closed
                 </Button>
               </ButtonGroup>
             </div>

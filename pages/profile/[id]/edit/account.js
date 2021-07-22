@@ -12,17 +12,16 @@ const useStyles = makeStyles((theme) => ({
   avatar: {
     marginLeft: "auto",
     marginRight: "auto",
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2),
-    width: 110,
-    height: 110,
+    width: 90,
+    height: 90,
   },
   avatar_sm: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
-    // marginTop: theme.spacing(),
-    width: 45,
-    height: 45,
+    marginTop: "auto",
+    marginBottom: "auto",
+    width: 40,
+    height: 40,
   },
   btn: {
     width: "fit-content",
@@ -38,7 +37,9 @@ const useStyles = makeStyles((theme) => ({
 
 const EditAccount = () => {
   const classes = useStyles();
-  const { photoURL, displayName, uid } = useSelector((state) => state.auth);
+  const { photoURL, displayName, uid, email } = useSelector(
+    (state) => state.auth
+  );
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const closeDeleteModal = () => {
     setDeleteModalOpen(false);
@@ -55,48 +56,59 @@ const EditAccount = () => {
 
   return (
     <Layout>
-      <div className="p-5">
-        <div className="flex m-4">
+      <div className="py-2">
+        <div className="flex mb-2 px-2">
           <Avatar src={photoURL} className={classes.avatar_sm} />
           <div>
             <h1 className="text-lg font-medium">{displayName}</h1>
             <h1 className="text-sm font-thin">Your Account Settings</h1>
           </div>
         </div>
-        <div className="w-full flex min-h-screen flex-col md:flex-row border-t border-solid border-gray-200">
-          <div className="flex-none sm:flex-1">
-            <div className="mx-auto p-5 border-b border-solid border-gray-200">
-              <h1 className="text-base font-medium mx-auto text-center">Profile Picture</h1>
-              <div className="relative">
-                <Avatar src={photoURL} className={classes.avatar} />
-                <div>
-                  <input
-                    // accept="image/*"
-                    accept=".jpeg, .jpg, .png"
-                    style={{ display: "none" }}
-                    id="raised-button-file"
-                    type="file"
-                    onChange={(e) => updateProfilePhoto(e.target.files)}
-                  />
-                  <label
-                    htmlFor="raised-button-file"
-                    style={{ display: "contents" }}
-                  >
-                    <IconButton
-                      className={classes.changeProfileButton}
-                      variant="raised"
-                      component="span"
+        <div className="w-full flex min-h-screen flex-row border-t border-solid border-gray-200">
+          <div className="flex-none sm:flex-1"></div>
+          <div className="flex-3 p-4 sm:p-2">
+            <div className="mx-auto my-4 p-5 border border-solid border-gray-200 rounded">
+              <h1 className="text-xl font-medium mx-auto text-gray-800 text-center xs:text-left">
+                Account
+              </h1>
+              <div className="flex my-3 flex-col xs:flex-row ">
+                <div className="relative mr-4">
+                  <Avatar src={photoURL} className={classes.avatar} />
+                  <div>
+                    <input
+                      // accept="image/*"
+                      accept=".jpeg, .jpg, .png"
+                      style={{ display: "none" }}
+                      id="raised-button-file"
+                      type="file"
+                      onChange={(e) => updateProfilePhoto(e.target.files)}
+                    />
+                    <label
+                      htmlFor="raised-button-file"
+                      style={{ display: "contents" }}
                     >
-                      <PhotoCamera />
-                    </IconButton>
-                  </label>
+                      <IconButton
+                        className={classes.changeProfileButton}
+                        variant="raised"
+                        component="span"
+                      >
+                        <PhotoCamera />
+                      </IconButton>
+                    </label>
+                  </div>
+                </div>
+                <div className="flex flex-col">
+                  <h1 className="text-base font-semibold text-gray-800 text-center xs:text-left">
+                    {displayName}
+                  </h1>
+                  <h1 className="text-sm text-gray-600 text-center xs:text-left">
+                    {email}
+                  </h1>
                 </div>
               </div>
             </div>
-          </div>
-          <div className="flex-2 bg-gray-100 p-10">
-            <div className="border-t border-b border-gray-300 py-4">
-              <h1 className="text-lg font-semibold text-gray-800">
+            <div className="border border-solid border-gray-200 rounded p-4">
+              <h1 className="text-lg font-semibold text-gray-800 mb-4">
                 Danger Zone
               </h1>
               <div className="flex justify-between flex-wrap border-red-600 border- border-solid p-6 border items-center rounded">
@@ -118,6 +130,7 @@ const EditAccount = () => {
               </div>
             </div>
           </div>
+          <div className="flex-none sm:flex-1"></div>
         </div>
       </div>
       <DeleteAccountModal

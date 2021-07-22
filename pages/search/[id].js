@@ -108,7 +108,7 @@ const Profile = ({ poster }) => {
                   ₦{poster.price}
                 </h5>
               </div>
-              <div className="flex justify-center md:justify-start">
+              <div className="flex justify-center md:justify-start mb-3">
                 <Rating
                   name="simple-controlled"
                   value={getReview(poster.ratings)}

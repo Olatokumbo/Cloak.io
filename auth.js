@@ -14,6 +14,7 @@ const Auth = (props) => {
           uid: user.uid,
           photoURL: user.photoURL,
           displayName: user.displayName,
+          email: user.email,
         });
       } else dispatch({ type: actionTypes.LOGGED_OUT });
     });

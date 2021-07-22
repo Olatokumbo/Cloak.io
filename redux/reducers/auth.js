@@ -5,6 +5,7 @@ const initialState = {
   photoURL: null,
   uid: null,
   displayName: null,
+  email: null,
 };
 
 const authReducer = (state = initialState, action) => {
@@ -16,6 +17,7 @@ const authReducer = (state = initialState, action) => {
         photoURL: action.photoURL,
         uid: action.uid,
         displayName: action.displayName,
+        email: action.email,
       };
     case actionTypes.LOGGED_OUT:
       return {
@@ -24,6 +26,7 @@ const authReducer = (state = initialState, action) => {
         uid: null,
         loading: false,
         displayName: null,
+        email: null,
       };
     case actionTypes.SIGNOUT:
       return {
@@ -32,6 +35,7 @@ const authReducer = (state = initialState, action) => {
         loading: false,
         uid: null,
         displayName: null,
+        email: null,
       };
     default:
       return state;
