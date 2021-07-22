@@ -17,9 +17,9 @@ const AppliedUser = ({ id }) => {
   return (
     <TableRow key={user.id}>
       <TableCell component="th" scope="row">
-        {user.displayName}
+        {user.displayName || "Not Found"}
       </TableCell>
-      <TableCell align="right">{user.email}</TableCell>
+      <TableCell align="right">{user.email || "Not Found"}</TableCell>
       <TableCell align="right">
         <Link href={`/profile/${user.id}`}>
           <IconButton>
