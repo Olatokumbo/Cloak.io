@@ -16,6 +16,7 @@
     "date-fns": "^2.21.3",
     "firebase": "^8.4.3",
     "firebase-admin": "^9.7.0",
+    "framer-motion": "^4.1.17",
     "lodash": "^4.17.21",
     "next": "^10.2.3",
     "nprogress": "^0.2.0",

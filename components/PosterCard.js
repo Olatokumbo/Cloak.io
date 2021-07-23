@@ -4,6 +4,7 @@ import { LocationMarkerIcon } from "@heroicons/react/solid";
 import { Avatar, makeStyles } from "@material-ui/core";
 import { StarIcon } from "@heroicons/react/solid";
 import { getReview } from "../utils/reviews";
+import { motion } from "framer-motion";
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
@@ -17,7 +18,14 @@ const useStyles = makeStyles((theme) => ({
 const PosterCard = ({ data, searched }) => {
   const classes = useStyles();
   return (
-    <div className="h-full flex flex-col border-2 border-solid border-gray-300 shadow-xl hover:shadow-2xl cursor-pointer rounded">
+    <motion.div
+      layout
+      whileHover={{ opacity: 0.9 }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay: 0.5 }}
+      className="h-full flex flex-col border-2 border-solid border-gray-300 shadow-xl hover:shadow-2xl cursor-pointer rounded"
+    >
       <div className="h-40 relative -z-1">
         <Image
           src={data.works[0] || "/wallpaper.png"}
@@ -74,7 +82,7 @@ const PosterCard = ({ data, searched }) => {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

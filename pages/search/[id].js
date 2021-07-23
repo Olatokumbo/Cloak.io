@@ -91,7 +91,7 @@ const Profile = ({ poster }) => {
       <div className="flex">
         <div className="flex-none lg:flex-1 bg-gray-200"></div>
         <div className="flex-3 bg-white px-2 xs:px-5 md:px-10">
-          {(isActive === false) && (
+          {isActive === false && (
             <div className="w-full flex justify-between py-2 px-3 bg-green-600 rounded-b-xl">
               <h1 className="text-sm font-semibold my-1 text-center text-white">
                 You already have an Active Order here
@@ -131,9 +131,11 @@ const Profile = ({ poster }) => {
                 />
                 <div className="flex flex-col">
                   <Link href={`/profile/${poster.userId}`}>
-                    <h4 className="text-base font-bold text-gray-800 cursor-pointer hover:underline">
-                      {poster.authorData.displayName}
-                    </h4>
+                    <a>
+                      <h4 className="text-base font-bold text-gray-800 cursor-pointer hover:underline">
+                        {poster.authorData.displayName}
+                      </h4>
+                    </a>
                   </Link>
                   <div className="flex">
                     <svg
@@ -178,13 +180,15 @@ const Profile = ({ poster }) => {
             </div>
             <div>
               {poster.keywords.map((tag, index) => (
-                <Chip
-                  key={index}
-                  variant="outlined"
-                  color="primary"
-                  className={classes.chip}
-                  label={tag}
-                />
+                <Link href={`/search?keyword=${tag}`}>
+                  <Chip
+                    key={index}
+                    variant="outlined"
+                    color="primary"
+                    className={classes.chip}
+                    label={tag}
+                  />
+                </Link>
               ))}
             </div>
             <h1 className="text-lg font-semibold mt-2">My Works</h1>

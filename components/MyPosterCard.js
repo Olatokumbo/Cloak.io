@@ -11,6 +11,7 @@ import {
 } from "@material-ui/core";
 import DeleteModal from "../components/DeleteModal";
 import { updatePosterVisibility } from "../redux/actions/posters";
+import { motion } from "framer-motion";
 const MyPosterCard = ({ data, editable }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [visibility, setVisibility] = useState(data.visibility);
@@ -36,10 +37,16 @@ const MyPosterCard = ({ data, editable }) => {
   };
 
   return (
-    <div className="flex flex-col border-solid border-gray-200 border-2 h-72">
+    <motion.div
+      layout
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay: 0.5 }}
+      className="flex flex-col border-solid border-gray-200 border-2 h-72"
+    >
       <div className="flex h-40 relative -z-1">
         <Image
-          src={data.works[0] || "/code.jpg"}
+          src={data.works[0] || "/wallpaper.png"}
           className="object-cover"
           layout="fill"
           loading="eager"
@@ -101,7 +108,7 @@ const MyPosterCard = ({ data, editable }) => {
         handleClose={closeDeleteModal}
         id={data.id}
       />
-    </div>
+    </motion.div>
   );
 };
 

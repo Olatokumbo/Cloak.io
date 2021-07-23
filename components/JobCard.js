@@ -1,6 +1,7 @@
 import { truncate } from "../utils/truncate";
 import { LocationMarkerIcon } from "@heroicons/react/solid";
 import { Avatar, makeStyles } from "@material-ui/core";
+import { motion } from "framer-motion";
 
 const useStyles = makeStyles((theme) => ({
   avatar: {
@@ -14,7 +15,14 @@ const useStyles = makeStyles((theme) => ({
 const JobCard = ({ data }) => {
   const classes = useStyles();
   return (
-    <div className="rounded-md my-2 p-6 shadow-lg bg-white cursor-pointer hover:shadow-xl min-h-48 flex flex-col h-full sm:h-56 ">
+    <motion.div
+      layout
+      whileHover={{ opacity: 0.9 }}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay: 0.5 }}
+      className="rounded-md my-2 p-6 shadow-lg bg-white cursor-pointer hover:shadow-xl min-h-48 flex flex-col h-full sm:h-56 "
+    >
       <div className="flex justify-between items-center flex-col xs:flex-row">
         <div className="flex items-center mr-0 flex-col xs:flex-row md:mr-4 flex-1">
           <Avatar
@@ -50,7 +58,7 @@ const JobCard = ({ data }) => {
           </div>
         </h5>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
