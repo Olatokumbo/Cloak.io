@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
+import Loading from "../sections/Loading";
 const PrivateRoute = (WrappedComponent) => {
   return (props) => {
     if (typeof window !== "undefined") {
@@ -17,11 +18,7 @@ const PrivateRoute = (WrappedComponent) => {
         return <WrappedComponent {...props} />;
       }
     }
-    return (
-      <>
-        <h1>Loading...</h1>
-      </>
-    );
+    return <Loading />;
   };
 };
 

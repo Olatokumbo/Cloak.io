@@ -14,11 +14,12 @@ const onPosterCreated = functions.firestore
   .onCreate((snap, context) => {
     // Get the note document
     const poster = snap.data();
+    functions.logger.info(poster);
     // Add an 'objectID' field which Algolia requires
     poster.objectID = context.params.posterId;
     // Write to the algolia index
     const index = client.initIndex(ALGOLIA_INDEX_NAME);
-    admin
+    return admin
       .auth()
       .getUser(poster.userId)
       .then((user) => {
@@ -34,6 +35,7 @@ const onPosterUpdate = functions.firestore
   .document("posters/{posterId}")
   .onUpdate((change, context) => {
     const poster = change.after.data();
+    functions.logger.info(poster);
     const index = client.initIndex(ALGOLIA_INDEX_NAME);
     poster.objectID = context.params.posterId;
     return admin
