@@ -42,6 +42,9 @@ const useStyles = makeStyles((theme) => ({
     margin: "auto",
     display: "block",
     background: "#00935b",
+    "&:hover": {
+      backgroundColor: "#007548",
+    },
   },
   listItem: {
     width: "fit-content",

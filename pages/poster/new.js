@@ -41,6 +41,9 @@ const useStyles = makeStyles((theme) => ({
     margin: "auto",
     display: "block",
     background: "#00935b",
+    "&:hover": {
+      backgroundColor: "#007548",
+    },
   },
   listItem: {
     width: "fit-content",
@@ -158,7 +161,7 @@ const NewPoster = ({ categories }) => {
                 value={description}
                 required
               />
-              <FormControl className={classes.list}>
+              <FormControl fullWidth={true}>
                 <InputLabel>Location</InputLabel>
                 <Select
                   value={location}
@@ -181,6 +184,7 @@ const NewPoster = ({ categories }) => {
                 label={message}
                 variant="outlined"
                 className={classes.input_sm}
+                fullWidth={true}
                 margin="normal"
                 onChange={(e) => setPhoneNumber(e.target.value)}
                 value={phoneNumber}
@@ -190,6 +194,7 @@ const NewPoster = ({ categories }) => {
                 type="number"
                 name="price"
                 size="small"
+                autoComplete="off"
                 label="Price"
                 variant="outlined"
                 className={classes.input_sm}
@@ -218,11 +223,12 @@ const NewPoster = ({ categories }) => {
                 <TextField
                   type="text"
                   name="keyword"
-                  autoComplete="off"
                   size="small"
+                  autoComplete="off"
+                  className={classes.input_sm}
                   label="Keyword"
                   variant="outlined"
-                  className={classes.input_sm}
+                  fullWidth={true}
                   margin="normal"
                   onChange={(e) => setKeyword(e.target.value)}
                   value={keyword}
@@ -277,11 +283,9 @@ const NewPoster = ({ categories }) => {
                 ))}
               </div>
             </div>
-          </div>
-          <div className="flex-1 justify-center items-center p-5">
             <Button
-              className={classes.done_btn}
               onClick={addPoster}
+              className={classes.done_btn}
               variant="contained"
               fullWidth
               size="large"
@@ -298,10 +302,11 @@ const NewPoster = ({ categories }) => {
                 ) || buttonState
               }
             >
-              Publish
+              Done
             </Button>
             {buttonState && <CircularProgress />}
           </div>
+          <div className="flex-1"></div>
         </div>
       </div>
     </Layout>
