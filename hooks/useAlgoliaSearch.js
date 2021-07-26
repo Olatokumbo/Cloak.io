@@ -11,7 +11,7 @@ const useAlgoliaSearch = (indexName, keyword, price_min, price_max) => {
     process.env.NEXT_PUBLIC__ALGOLIA_SEARCH_KEY
   );
   var index = client.initIndex(indexName);
-
+// Don't use Prettier Here. It would refactor and destroy the search logic
   useEffect(() => {
     if (keyword) {
       async function unauthenticated_search(query) {
@@ -20,13 +20,15 @@ const useAlgoliaSearch = (indexName, keyword, price_min, price_max) => {
         await index
           .search(
             query,
-            price_min && price_max
-              ? {
-                  filters: `price>=${price_min} AND price<=${price_max}`,
-                }
-              : {
-                  filters: `price>=${price_min}`,
-                }
+            (price_min ||
+              price_max) &&
+              (price_min && price_max
+                ? {
+                    filters: `price>=${price_min} AND price<=${price_max}`,
+                  }
+                : {
+                    filters: `price>=${price_min}`,
+                  })
           )
           .then((responses) => {
             console.log(responses);
@@ -41,7 +43,6 @@ const useAlgoliaSearch = (indexName, keyword, price_min, price_max) => {
       unauthenticated_search(keyword);
     }
   }, [keyword, price_min, price_max]);
-
   return { loading, searchResults, notFound };
 };
 

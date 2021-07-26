@@ -51,12 +51,8 @@ const Search = () => {
     }
   };
   useEffect(() => {
-    setPriceMin(price_min);
-    setPriceMax(price_max);
-    return () => {
-      setPriceMin(0);
-      setPriceMax(0);
-    };
+    setPriceMin(price_min || 0);
+    setPriceMax(price_max || 0);
   }, [price_min, price_max]);
 
   return (
@@ -93,6 +89,7 @@ const Search = () => {
                   // InputProps={{ inputProps: { min: 0 } }}
                 />
                 <Button
+                  disabled={!(priceMin || priceMax)}
                   color="primary"
                   variant="contained"
                   onClick={filterSearch}
