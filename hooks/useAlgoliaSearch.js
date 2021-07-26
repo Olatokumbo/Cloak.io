@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import algoliasearch from "algoliasearch";
 
-const useAlgoliaSearch = (indexName, keyword) => {
+const useAlgoliaSearch = (indexName, keyword, price_min, price_max) => {
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [notFound, setNotFound] = useState(null);
@@ -18,8 +18,18 @@ const useAlgoliaSearch = (indexName, keyword) => {
         setLoading(true);
         setNotFound(null);
         await index
-          .search(query)
+          .search(
+            query,
+            price_min && price_max
+              ? {
+                  filters: `price>=${price_min} AND price<=${price_max}`,
+                }
+              : {
+                  filters: `price>=${price_min}`,
+                }
+          )
           .then((responses) => {
+            console.log(responses);
             setSearchResults(responses.hits);
             setLoading(false);
             if (responses.hits.length === 0) setNotFound(true);
@@ -30,7 +40,7 @@ const useAlgoliaSearch = (indexName, keyword) => {
       }
       unauthenticated_search(keyword);
     }
-  }, [keyword]);
+  }, [keyword, price_min, price_max]);
 
   return { loading, searchResults, notFound };
 };
