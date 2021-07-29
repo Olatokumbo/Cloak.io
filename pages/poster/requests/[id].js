@@ -6,29 +6,42 @@ import {
   viewWorkOrder,
   finishJob,
   cancelJob,
+  nextStageWorkOrder,
 } from "../../../redux/actions/hires";
 import { Button } from "@material-ui/core";
 import PrivateRoute from "../../../hoc/PrivateRoute";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { format } from "date-fns";
 import DashboardList from "../../../components/DashboardList";
 import OrderStatusFlag from "../../../components/OrderStatusFlag";
+import OrderStages from "../../../components/OrderStages";
+
 const WorkOrder = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
   const { id } = router.query;
-  const [workDetails, setWorkDetails] = useState({});
   const userId = useSelector((state) => state.auth.uid);
+  const workDetails = useSelector((state) => state.hire.workOrder);
+  const [activeStep, setActiveStep] = useState(0);
+
   useEffect(() => {
-    const getData = async () => {
-      try {
-        if (id) {
-          const data = await viewWorkOrder(id);
-          setWorkDetails(data);
-        }
-      } catch (error) {}
-    };
-    getData();
+    if (id) {
+      dispatch(viewWorkOrder(id));
+    }
   }, [id]);
+
+  useEffect(() => {
+    if (workDetails.done) {
+      setActiveStep(4);
+    } else setActiveStep(workDetails.stage);
+  }, [workDetails]);
+  const handleNext = async () => {
+    try {
+      await nextStageWorkOrder(id);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const finish = async () => {
     try {
@@ -98,9 +111,7 @@ const WorkOrder = () => {
               />
             </div>
             <div className="flex items-center my-3">
-              <h5 className="text-sm font-semibold text-gray-800">
-                Buyer:
-              </h5>
+              <h5 className="text-sm font-semibold text-gray-800">Client: </h5>
               <Link href={`/profile/${workDetails.customerId}`}>
                 <h5 className="text-sm font-bold text-gray-800 cursor-pointer hover:underline">
                   {workDetails.customerId}
@@ -124,6 +135,10 @@ const WorkOrder = () => {
                 </p>
               ))}
             </div>
+            <div>
+              {/* Job stages */}
+              <OrderStages activeStep={activeStep} />
+            </div>
             {!workDetails.done && !workDetails.cancelled && (
               <div className="w-full flex justify-between">
                 <Button
@@ -137,14 +152,13 @@ const WorkOrder = () => {
                   Cancel
                 </Button>
                 <Button
-                  type="submit"
                   variant="contained"
                   color="primary"
                   margin="normal"
                   // className={classes.btn}
-                  onClick={finish}
+                  onClick={activeStep === 3 ? finish : handleNext}
                 >
-                  Finish
+                  {activeStep === 3 ? "Finish" : "Next"}
                 </Button>
               </div>
             )}

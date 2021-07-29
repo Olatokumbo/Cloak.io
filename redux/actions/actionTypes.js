@@ -9,6 +9,7 @@ export const LOGGED_OUT = "LOGGED_OUT";
 // Hire
 export const IS_ACTIVE = "IS_ACTIVE";
 export const NOT_ACTIVE = "NOT_ACTIVE";
+export const FETCH_WORK_ORDER = "FETCH_WORK_ORDER";
 
 // Job
 export const APPLIED = "APPLIED";

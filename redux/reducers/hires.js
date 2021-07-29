@@ -1,6 +1,7 @@
 import * as actionTypes from "../actions/actionTypes";
 const initialState = {
   isWorkOrderActive: null,
+  workOrder: {}
 };
 
 const hireReducer = (state = initialState, action) => {
@@ -13,6 +14,11 @@ const hireReducer = (state = initialState, action) => {
       return {
         isWorkOrderActive: false,
       };
+    case actionTypes.FETCH_WORK_ORDER:
+      return{
+        ...state,
+        workOrder: action.workOrder
+      }
     default:
       return state;
   }

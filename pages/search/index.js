@@ -23,7 +23,6 @@ const Search = () => {
   // const router = useRouter();
   const [priceMin, setPriceMin] = useState("");
   const [priceMax, setPriceMax] = useState("");
-  console.log(priceMin, priceMax);
   const { loading, searchResults, notFound } = useAlgoliaSearch(
     "posters",
     keyword,
@@ -63,7 +62,7 @@ const Search = () => {
           <h1 className="text-3xl font-semibold">Results for "{keyword}"</h1>
         </div>
         <div className="flex flex-col md:flex-row">
-          <div className="flex-1 px-1 pb-1">
+          <div className="flex-1 px-1 pb-1 border-r border-gray-300">
             <div className="bg-gray-100 rounded p-2">
               <h1 className="text-base font-semibold">Price</h1>
               <div className="flex items-center">

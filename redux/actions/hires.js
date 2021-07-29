@@ -21,6 +21,7 @@ export const hireMe = (data) => {
       date: firebase.firestore.FieldValue.serverTimestamp(),
       cancelledDate: null,
       completedDate: null,
+      stage: 0,
     })
     .then(() => {
       defaultNotification("Hire Request Sent", "Waiting for Hire Approval");
@@ -145,12 +146,28 @@ export const listFinishedHireRequest = (id) => {
 // };
 
 export const viewWorkOrder = (id) => {
+  console.log("FETCHING>>>>");
+  return (dispatch) => {
+    const unsubscribe = firestore
+      .collection("hires")
+      .doc(id)
+      .onSnapshot((doc) => {
+        dispatch({
+          type: actionTypes.FETCH_WORK_ORDER,
+          workOrder: { id: doc.id, ...doc.data() },
+        });
+      });
+    return unsubscribe;
+  };
+};
+
+export const nextStageWorkOrder = (id) => {
+  //Convert to Firesore Function
   return firestore
     .collection("hires")
     .doc(id)
-    .get()
-    .then((doc) => {
-      return { ...doc.data(), id: doc.id };
+    .update({
+      stage: firebase.firestore.FieldValue.increment(1),
     })
     .catch((e) => {
       throw new Error(e.message);
@@ -175,6 +192,7 @@ export const isWorkOrderActive = (customerId, userId, posterId) => {
 };
 
 export const finishJob = (id) => {
+  //Convert to Firesore Function
   return firestore
     .collection("hires")
     .doc(id)
@@ -192,6 +210,7 @@ export const finishJob = (id) => {
 };
 
 export const cancelJob = (id) => {
+  //Convert to Firesore Function
   return firestore
     .collection("hires")
     .doc(id)

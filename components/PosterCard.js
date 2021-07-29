@@ -36,7 +36,7 @@ const PosterCard = ({ data, searched }) => {
       </div>
       <div className="flex flex-col p-2 flex-auto">
         <h1 className="text-md font-medium text-gray-800">{data.title}</h1>
-        <h1 className="text-xs text-gray-600 flex-1">
+        <h1 className="text-xs text-gray-600 flex-1 w-100 overflow-hidden overflow-ellipsis">
           {truncate(data.description[0])}
         </h1>
         <div className="flex my-1">
