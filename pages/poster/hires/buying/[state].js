@@ -44,6 +44,11 @@ const AllHireRequests = () => {
             >
               Completed
             </Button>
+            <Button
+              onClick={() => router.push("/poster/hires/buying/cancelled")}
+            >
+              Cancelled
+            </Button>
           </ButtonGroup>
 
           <div className="my-4 border-solid border-t border-gray-300">
@@ -92,7 +97,7 @@ export default PrivateRoute(AllHireRequests);
 
 export const getServerSideProps = async (context) => {
   let state = context.params.state;
-  if (state !== "active" && state !== "completed") {
+  if (state !== "active" && state !== "completed" && state !== "cancelled") {
     return {
       notFound: true,
     };

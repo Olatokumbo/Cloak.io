@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import {
   listPendingHireRequests,
   listFinishedHireRequest,
+  listCancelledHireRequest,
 } from "../redux/actions/hires";
 const useSelling = (orderState, userId) => {
   const [items, setItems] = useState([]);
@@ -16,6 +17,8 @@ const useSelling = (orderState, userId) => {
             list = await listPendingHireRequests(userId);
           } else if (orderState === "completed") {
             list = await listFinishedHireRequest(userId);
+          } else if (orderState === "cancelled") {
+            list = await listCancelledHireRequest(userId);
           }
           setItems(list || []);
           setLoading(false);

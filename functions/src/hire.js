@@ -21,6 +21,26 @@ const onFinishHire = functions.firestore
     }
   });
 
+const onCancelHire = functions.firestore
+  .document("hires/{hireId}")
+  .onUpdate((change, context) => {
+    const before = change.before.data();
+    const after = change.after.data();
+    const cancelledBefore = before.cancelled;
+    const cancelledAfter = after.cancelled;
+    const { hireId } = context.params;
+    const url = `/poster/hires/${hireId}`;
+    const userId = after.customerId;
+    if (cancelledBefore === false && cancelledAfter === true) {
+      return addNotification({
+        userId,
+        message: "Your Hire Request was cancelled",
+        url,
+      });
+    }
+  });
+
 module.exports = {
   onFinishHire,
+  onCancelHire,
 };

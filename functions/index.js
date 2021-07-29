@@ -17,5 +17,6 @@ exports.onJobUpdated = jobs.onJobUpdated;
 exports.onJobDeleted = jobs.onJobDeleted;
 
 exports.onFinishHire = hires.onFinishHire;
+exports.onCancelHire = hires.onCancelHire;
 
 exports.onAddReview = reviews.onAddReview;

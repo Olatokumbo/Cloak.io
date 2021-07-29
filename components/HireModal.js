@@ -38,8 +38,10 @@ const DeleteModal = ({ open, handleClose, id, data }) => {
   const [title, setTitle] = useState(data.title);
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState(data.price);
+  const [buttonState, setButtonState] = useState(false);
 
   const handleHire = async () => {
+    setButtonState(true);
     try {
       await hireMe({
         title,
@@ -136,7 +138,7 @@ const DeleteModal = ({ open, handleClose, id, data }) => {
                 Cancel
               </Button>
               <Button
-                disabled={!(title && price && description)}
+                disabled={!(title && price && description) || buttonState}
                 type="submit"
                 variant="contained"
                 color="primary"
@@ -144,7 +146,7 @@ const DeleteModal = ({ open, handleClose, id, data }) => {
                 className={classes.btn}
                 onClick={handleHire}
               >
-                Done
+                Submit
               </Button>
             </div>
           </div>

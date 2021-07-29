@@ -244,6 +244,23 @@ export const listCancelledHires = (userId) => {
     });
 };
 
+export const listCancelledHireRequest = (userId) => {
+  let cancelledHires = [];
+  return firestore
+    .collection("hires")
+    .where("customerId", "==", userId)
+    .where("cancelled", "==", true)
+    .get()
+    .then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        cancelledHires.push({ id: doc.id, ...doc.data() });
+      });
+    })
+    .then(() => {
+      return cancelledHires;
+    });
+};
+
 export const addReview = (data) => {
   return firestore.collection("reviews").add({
     hireId: data.id,
