@@ -180,9 +180,8 @@ const Profile = ({ poster }) => {
             </div>
             <div>
               {poster.keywords.map((tag, index) => (
-                <Link href={`/search?keyword=${tag}`}>
+                <Link key={index} href={`/search?keyword=${tag}`}>
                   <Chip
-                    key={index}
                     variant="outlined"
                     color="primary"
                     className={classes.chip}

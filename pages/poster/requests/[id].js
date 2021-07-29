@@ -119,9 +119,11 @@ const WorkOrder = () => {
               </Link>
             </div>
             <Link href={`/search/${workDetails.posterId}`}>
-              <h1 className="font-bold text-gray-800 cursor-pointer hover:underline my-2">
-                View Poster
-              </h1>
+              <a target="_blank">
+                <h1 className="font-bold text-gray-800 cursor-pointer hover:underline my-2">
+                  View Poster
+                </h1>
+              </a>
             </Link>
             <hr />
             <div className="mb-2">

@@ -3,14 +3,10 @@
 // https://nextjs.org/docs/api-reference/next.config.js/introduction
 // https://docs.sentry.io/platforms/javascript/guides/nextjs/
 
-const { withSentryConfig } = require("@sentry/nextjs");
-const { Integrations } = require("@sentry/tracing");
+const { withSentryConfig } = require('@sentry/nextjs');
 
 const moduleExports = {
   // Your existing module.exports
-  images: {
-    domains: ["lh3.googleusercontent.com", "firebasestorage.googleapis.com"],
-  },
 };
 
 const SentryWebpackPluginOptions = {
@@ -21,14 +17,6 @@ const SentryWebpackPluginOptions = {
   //   urlPrefix, include, ignore
 
   silent: true, // Suppresses all logs
-
-  // This enables automatic instrumentation (highly recommended), but is not
-  // necessary for purely manual usage
-  integrations: [new Integrations.BrowserTracing()],
-
-  // To set a uniform sample rate
-  tracesSampleRate: 0.2,
-
   // For all available options, see:
   // https://github.com/getsentry/sentry-webpack-plugin#options.
 };

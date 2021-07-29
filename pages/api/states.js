@@ -1,6 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+import { withSentry } from "@sentry/nextjs";
 
-export default (req, res) => {
+const handler = (req, res) => {
   res.status(200).json({
     info: "All states found",
     data: [
@@ -619,3 +620,5 @@ export default (req, res) => {
     ],
   });
 };
+
+export default withSentry(handler);
