@@ -17,7 +17,7 @@ import useLocation from "../../hooks/useLocation";
 import { errorNotification } from "../../utils/notifications";
 const NewJob = () => {
   const router = useRouter();
-  const userId = useSelector((state) => state.auth.uid);
+  const { uid, emailVerified } = useSelector((state) => state.auth);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [location, setLocation] = useState("");
@@ -34,7 +34,7 @@ const NewJob = () => {
         description: description.split("\n"),
         location,
         price,
-        userId,
+        userId: uid,
       });
       router.replace("/job/all");
     } catch (error) {
@@ -101,7 +101,13 @@ const NewJob = () => {
             size="large"
             color="primary"
             disabled={
-              !(title && description && location && price > 0) || buttonState
+              !(
+                title &&
+                description &&
+                location &&
+                price > 0 &&
+                emailVerified
+              ) || buttonState
             }
           >
             Done

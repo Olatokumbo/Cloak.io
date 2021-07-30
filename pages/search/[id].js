@@ -37,7 +37,7 @@ const Profile = ({ poster }) => {
   const router = useRouter();
   const { id } = router.query;
   const classes = useStyles();
-  const uid = useSelector((state) => state.auth.uid);
+  const { uid, emailVerified } = useSelector((state) => state.auth);
   const isActive = useSelector((state) => state.hire.isWorkOrderActive);
   const pageLoading = useSelector((state) => state.auth.loading);
   const dispatch = useDispatch();
@@ -64,8 +64,10 @@ const Profile = ({ poster }) => {
     else warningNotification("Warning", "Please Sign in");
   };
   const hireMe = () => {
-    if (uid && isActive === true) handleOpen();
-    else if (uid && isActive === false) {
+    if (uid && isActive === true) {
+      if (emailVerified) handleOpen();
+      else warningNotification("Warning", "Please Verify your Email");
+    } else if (uid && isActive === false) {
       warningNotification(
         "Warning",
         "You have an active work order with this Service"

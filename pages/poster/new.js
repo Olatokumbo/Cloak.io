@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
 const NewPoster = ({ categories }) => {
   const router = useRouter();
   const classes = useStyles();
-  const userId = useSelector((state) => state.auth.uid);
+  const { uid, emailVerified } = useSelector((state) => state.auth);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -93,11 +93,11 @@ const NewPoster = ({ categories }) => {
         phoneNumber,
         price,
         photos,
-        userId,
+        userId: uid,
         keywords,
         category: selectedCategory,
       });
-      router.replace(`/profile/${userId}`);
+      router.replace(`/profile/${uid}`);
     } catch (error) {
       setButtonState(false);
       errorNotification("Error", error.message);
@@ -124,6 +124,7 @@ const NewPoster = ({ categories }) => {
   const removeKeywords = (removeWord) => {
     setKeywords(keywords.filter((keyword) => keyword !== removeWord));
   };
+
   return (
     <Layout>
       <div className="w-full">
@@ -298,7 +299,8 @@ const NewPoster = ({ categories }) => {
                   location &&
                   price > 0 &&
                   photos.length > 0 &&
-                  keywords.length > 0
+                  keywords.length > 0 &&
+                  emailVerified
                 ) || buttonState
               }
             >

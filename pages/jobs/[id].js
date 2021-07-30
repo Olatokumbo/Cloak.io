@@ -41,7 +41,7 @@ const JobInfo = ({ job }) => {
   const router = useRouter();
   const { id } = router.query;
   const classes = useStyles();
-  const { isAuth, uid } = useSelector((state) => state.auth);
+  const { isAuth, uid, emailVerified } = useSelector((state) => state.auth);
   const appliedState = useSelector((state) => state.job.jobApplied);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -51,11 +51,13 @@ const JobInfo = ({ job }) => {
   }, [uid, id]);
   const apply = async () => {
     if (isAuth && !job.done) {
-      try {
-        await applyJob(job.id, uid);
-      } catch (error) {
-        alert(error.message);
-      }
+      if (emailVerified) {
+        try {
+          await applyJob(job.id, uid);
+        } catch (error) {
+          alert(error.message);
+        }
+      } else warningNotification("Warning", "Please Verify your Email");
     } else if (isAuth && job.done) {
       errorNotification("Warning", "Job has been Closed");
     } else {

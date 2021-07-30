@@ -18,22 +18,29 @@ import { useSelector } from "react-redux";
 import PrivateRoute from "../../../hoc/PrivateRoute";
 import useJobs from "../../../hooks/useJobs";
 import { useRouter } from "next/router";
+import { warningNotification } from "../../../utils/notifications";
 const MyJobs = () => {
   const router = useRouter();
   const jobState = router.query.state;
-  const userId = useSelector((state) => state.auth.uid);
-  const items = useJobs(userId, jobState);
+  const { uid, emailVerified } = useSelector((state) => state.auth);
+  const items = useJobs(uid, jobState);
+
+  const addJob = () => {
+    if (emailVerified) router.push("/job/new");
+    else warningNotification("Warning", "Please Verify your Email");
+  };
   return (
     <Layout>
       <div className="w-full min-h-screen p-4">
         <h1 className="text-3xl font-semibold text-gray-700">My Jobs</h1>
         <div className="my-4 mx-auto max-w-2xl">
           <div className="flex flex-col">
-            <Link href="/job/new">
-              <button className=" mb-5 bg-black focus:outline-none text-white px-3 py-2 md:px-4 rounded-md hover:bg-gray-900 w-min whitespace-nowrap">
-                Add new Job
-              </button>
-            </Link>
+            <button
+              onClick={addJob}
+              className=" mb-5 bg-black focus:outline-none text-white px-3 py-2 md:px-4 rounded-md hover:bg-gray-900 w-min whitespace-nowrap"
+            >
+              Add new Job
+            </button>
             <div className="py-3 px-1">
               <ButtonGroup
                 color="primary"

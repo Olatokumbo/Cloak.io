@@ -28,6 +28,7 @@ import { imageResizer } from "../../../utils/imageResizer";
 import {
   errorNotification,
   successNotification,
+  warningNotification,
 } from "../../../utils/notifications";
 import MyPosterCardSkeleton from "../../../skeletons/MyPosterCardSkeleton";
 const useStyles = makeStyles((theme) => ({
@@ -78,7 +79,7 @@ const Profile = () => {
   const { id } = router.query;
   const [open, setOpen] = useState(false);
   const classes = useStyles();
-  const { uid, loading } = useSelector((state) => state.auth);
+  const { uid, loading, emailVerified } = useSelector((state) => state.auth);
   const [description, setDescription] = useState("");
   const { user, posters, notFound } = useProfile(id, uid, loading);
 
@@ -91,6 +92,10 @@ const Profile = () => {
     setOpen(false);
   };
 
+  const addPoster = () => {
+    if (emailVerified) router.push("/poster/new");
+    else warningNotification("Warning", "Please Verify your Email");
+  };
   const updateDescriptionHandler = async (e) => {
     e.preventDefault();
     try {
@@ -247,11 +252,13 @@ const Profile = () => {
             )}
             {uid === user.id && (
               <div className="flex flex-wrap  justify-center sm:justify-end">
-                <Link href="/poster/new">
-                  <button className="my-2 mx-2 bg-black focus:outline-none text-white px-3 py-2 md:px-4 rounded-md hover:bg-gray-900">
-                    Add Poster
-                  </button>
-                </Link>
+                <button
+                  onClick={addPoster}
+                  className="my-2 mx-2 bg-black focus:outline-none text-white px-3 py-2 md:px-4 rounded-md hover:bg-gray-900"
+                >
+                  Add Poster
+                </button>
+
                 <Link href="/poster/dashboard">
                   <button className="my-2 mx-2 focus:outline-none px-2 py-2 sm:px-4 sm:py-2 md:px-4 border-black border-solid border-2 rounded-md hover:bg-gray-200">
                     Dashboard

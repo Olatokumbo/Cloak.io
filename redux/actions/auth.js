@@ -5,6 +5,7 @@ import {
   facebookProvider,
 } from "../../firebase/firebase";
 import * as actionTypes from "../actions/actionTypes";
+import { successNotification } from "../../utils/notifications";
 
 export const signinEaP = (email, password) => {
   // return (dispatch) => {
@@ -22,6 +23,9 @@ export const signupEaP = (email, password) => {
       auth.currentUser.updateProfile({
         displayName: userCredential.user.email.split("@")[0],
       });
+    })
+    .then(() => {
+      return sendVerificationEmailLink();
     })
     .catch((error) => {
       throw new Error(error.message);
@@ -84,6 +88,19 @@ export const setupAccount = (displayName, phoneNumber, uid) => {
     })
     .then(() => {
       alert("Changes Saved");
+    })
+    .catch((e) => {
+      console.log(e.message);
+    });
+};
+const sendVerificationEmailLink = () => {
+  return auth.currentUser
+    .sendEmailVerification()
+    .then(() => {
+      successNotification(
+        "Success",
+        "Verification Link has been sent to your email"
+      );
     })
     .catch((e) => {
       console.log(e.message);

@@ -6,6 +6,7 @@ const initialState = {
   uid: null,
   displayName: null,
   email: null,
+  emailVerified: null
 };
 
 const authReducer = (state = initialState, action) => {
@@ -18,6 +19,7 @@ const authReducer = (state = initialState, action) => {
         uid: action.uid,
         displayName: action.displayName,
         email: action.email,
+        emailVerified: action.emailVerified
       };
     case actionTypes.LOGGED_OUT:
       return {
