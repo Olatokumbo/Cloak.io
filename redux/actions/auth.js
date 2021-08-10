@@ -93,7 +93,7 @@ export const setupAccount = (displayName, phoneNumber, uid) => {
       console.log(e.message);
     });
 };
-const sendVerificationEmailLink = () => {
+export const sendVerificationEmailLink = () => {
   return auth.currentUser
     .sendEmailVerification()
     .then(() => {

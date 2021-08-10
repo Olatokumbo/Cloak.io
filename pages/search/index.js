@@ -50,9 +50,11 @@ const Search = () => {
     }
   };
   useEffect(() => {
-    setPriceMin(price_min || 0);
-    setPriceMax(price_max || 0);
-  }, [price_min, price_max]);
+    // setPriceMin(price_min); // previously setPriceMin(price_min || 0);
+    if (!price_min) setPriceMin("");
+    if (!price_max) setPriceMax("");
+    // setPriceMax(price_max); // previously setPriceMax(price_max || 0);
+  }, [price_min, price_max, keyword]);
 
   return (
     <Layout>
@@ -62,30 +64,30 @@ const Search = () => {
           <h1 className="text-3xl font-semibold">Results for "{keyword}"</h1>
         </div>
         <div className="flex flex-col md:flex-row">
-          <div className="flex-1 px-1 pb-1 border-r border-gray-300">
+          <div className="flex-1 px-1 pb-1 border-none xs:border-r xs:border-gray-300">
             <div className="bg-gray-100 rounded p-2">
               <h1 className="text-base font-semibold">Price</h1>
-              <div className="flex items-center">
+              <div className="flex items-center justify-center">
                 <TextField
                   size="small"
-                  // type="number"
+                  type="number"
                   variant="outlined"
                   className={classes.price_input}
                   placeholder="min"
                   value={priceMin}
                   onChange={(e) => setPriceMin(e.target.value)}
-                  // InputProps={{ inputProps: { min: 0 } }}
+                  InputProps={{ inputProps: { min: 0 } }}
                 />
                 -
                 <TextField
                   size="small"
-                  // type="number"
+                  type="number"
                   variant="outlined"
                   className={classes.price_input}
                   placeholder="max"
                   value={priceMax}
                   onChange={(e) => setPriceMax(e.target.value)}
-                  // InputProps={{ inputProps: { min: 0 } }}
+                  InputProps={{ inputProps: { min: 1 } }}
                 />
                 <Button
                   disabled={!(priceMin || priceMax)}

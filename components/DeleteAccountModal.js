@@ -68,7 +68,7 @@ const DeleteAccountModal = ({ open, handleClose, id }) => {
           </h5>
           <h5>
             Please type{" "}
-            <span className="font-bold text-gray-700">{displayName}</span>
+            <span className="font-bold text-gray-700">{displayName}</span>{" "}
             to confirm
           </h5>
           <TextField
