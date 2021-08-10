@@ -107,6 +107,7 @@ const MyPosterCard = ({ data, editable }) => {
         open={deleteModalOpen}
         handleClose={closeDeleteModal}
         id={data.id}
+        title={data.title}
       />
     </motion.div>
   );

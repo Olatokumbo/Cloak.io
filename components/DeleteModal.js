@@ -1,4 +1,12 @@
-import { Modal, Fade, Backdrop, Button, makeStyles } from "@material-ui/core";
+import { useState } from "react";
+import {
+  Modal,
+  Fade,
+  Backdrop,
+  Button,
+  makeStyles,
+  TextField,
+} from "@material-ui/core";
 import { deletePoster } from "../redux/actions/posters";
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -21,7 +29,8 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
-const DeleteModal = ({ open, handleClose, id }) => {
+const DeleteModal = ({ open, handleClose, id, title }) => {
+  const [phrase, setPhrase] = useState("");
   const classes = useStyles();
 
   const handleDeletePoster = () => {
@@ -43,9 +52,23 @@ const DeleteModal = ({ open, handleClose, id }) => {
       <Fade in={open}>
         <div className={classes.paper}>
           <h1 className="text-gray-700 font-semibold">Delete Poster</h1>
-          <h5 className="text-gray-700 font-light my-8">
+          <h5 className="text-gray-700 font-light my-2">
             Are you sure that you want to delete this Poster?
           </h5>
+          <h5>
+            Please type{" "}
+            <span className="font-bold text-sm text-gray-700">{title}</span>{" "}
+            to confirm
+          </h5>
+          <TextField
+            type="text"
+            variant="outlined"
+            margin="normal"
+            size="small"
+            value={phrase}
+            onChange={(e) => setPhrase(e.target.value)}
+            fullWidth
+          />
           <div
             // onSubmit={updateDescriptionHandler}
             className="flex flex-col w-full"
@@ -66,6 +89,7 @@ const DeleteModal = ({ open, handleClose, id }) => {
                 variant="contained"
                 color="primary"
                 margin="normal"
+                disabled={!(phrase === title)}
                 className={classes.btn}
                 onClick={handleDeletePoster}
               >

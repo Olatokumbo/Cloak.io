@@ -1,7 +1,17 @@
-import { Modal, Fade, Backdrop, Button, makeStyles } from "@material-ui/core";
+import { useState } from "react";
+import {
+  Modal,
+  Fade,
+  Backdrop,
+  Button,
+  makeStyles,
+  TextField,
+} from "@material-ui/core";
 import { deleteAccount } from "../redux/actions/auth";
 import { useDispatch } from "react-redux";
 import { defaultNotification } from "../utils/notifications";
+import { useSelector } from "react-redux";
+
 const useStyles = makeStyles((theme) => ({
   paper: {
     // position: "absolute",
@@ -24,13 +34,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 const DeleteAccountModal = ({ open, handleClose, id }) => {
+  const [phrase, setPhrase] = useState("");
+  const { displayName } = useSelector((state) => state.auth);
   const classes = useStyles();
   const dispatch = useDispatch();
 
   const handleDeletePoster = async () => {
     try {
       await dispatch(deleteAccount());
-      defaultNotification("Done", "Deleted your Account")
+      defaultNotification("Done", "Deleted your Account");
     } catch (error) {
       alert(error.message);
     }
@@ -51,9 +63,23 @@ const DeleteAccountModal = ({ open, handleClose, id }) => {
       <Fade in={open}>
         <div className={classes.paper}>
           <h1 className="text-gray-700 font-semibold">Delete Account?</h1>
-          <h5 className="text-gray-700 font-light my-8">
+          <h5 className="text-gray-700 font-light my-2">
             Are you sure that you want to delete Your Account?
           </h5>
+          <h5>
+            Please type{" "}
+            <span className="font-bold text-gray-700">{displayName}</span>
+            to confirm
+          </h5>
+          <TextField
+            type="text"
+            variant="outlined"
+            margin="normal"
+            size="small"
+            value={phrase}
+            onChange={(e)=>setPhrase(e.target.value)}
+            fullWidth
+          />
           <div
             // onSubmit={updateDescriptionHandler}
             className="flex flex-col w-full"
@@ -74,6 +100,7 @@ const DeleteAccountModal = ({ open, handleClose, id }) => {
                 variant="contained"
                 color="primary"
                 margin="normal"
+                disabled={!(phrase===displayName)}
                 className={classes.btn}
                 onClick={handleDeletePoster}
               >
