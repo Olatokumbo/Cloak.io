@@ -59,13 +59,21 @@ const AllHireRequests = () => {
             </h1>
             <TableContainer /* className={style.table}*/ component={Paper}>
               <Table aria-label="simple table">
-                <TableHead>
-                  <TableRow>
-                    <TableCell align="left">Title</TableCell>
-                    <TableCell align="left">Price</TableCell>
-                    <TableCell align="left">View</TableCell>
-                  </TableRow>
-                </TableHead>
+                {loading === false && (
+                  <TableHead>
+                    {items.length === 0 ? (
+                      <TableRow>
+                        <TableCell align="left">No Records</TableCell>
+                      </TableRow>
+                    ) : (
+                      <TableRow>
+                        <TableCell align="left">Title</TableCell>
+                        <TableCell align="left">Price</TableCell>
+                        <TableCell align="left">View</TableCell>
+                      </TableRow>
+                    )}
+                  </TableHead>
+                )}
                 <TableBody>
                   {items.map((request) => (
                     <TableRow key={request.id}>
