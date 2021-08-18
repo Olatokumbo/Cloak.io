@@ -1,3 +1,4 @@
+import Head from "next/head"; 
 import { useEffect, useState } from "react";
 import PosterCard from "../../components/PosterCard";
 import Link from "next/link";
@@ -57,6 +58,10 @@ const Search = () => {
   }, [price_min, price_max, keyword]);
 
   return (
+    <>
+      <Head>
+        <title>Search {keyword} | Cloak.io</title>
+      </Head>
     <Layout>
       <CategoryList />
       <div className="p-3">
@@ -131,6 +136,7 @@ const Search = () => {
         </div>
       </div>
     </Layout>
+    </>
   );
 };
 

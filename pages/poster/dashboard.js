@@ -1,9 +1,14 @@
+import Head from "next/head";
 import Layout from "../../components/Layout";
 import MenuCard from "../../components/MenuCard";
 import PrivateRoute from "../../hoc/PrivateRoute";
 
 const DashBoard = () => {
   return (
+    <>
+      <Head>
+        <title>My Dashboard | Cloak.io</title>
+      </Head>
     <Layout>
       <div className="w-full min-h-screen p-4">
         <h1 className="text-3xl font-semibold text-gray-700">Dashboard</h1>
@@ -23,6 +28,7 @@ const DashBoard = () => {
         </div>
       </div>
     </Layout>
+    </>
   );
 };
 

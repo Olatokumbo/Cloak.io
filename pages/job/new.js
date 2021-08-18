@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { useState } from "react";
 import {
   TextField,
@@ -43,79 +44,84 @@ const NewJob = () => {
     }
   };
   return (
-    <Layout>
-      <div className="w-full min-h-screen p-4">
-        <form onSubmit={addJobHandler} className="m-auto max-w-96 sm:w-96">
-          <h1 className="text-lg font-semibold">New Job</h1>
-          <TextField
-            name="Title"
-            size="small"
-            label="Title"
-            variant="outlined"
-            fullWidth={true}
-            margin="normal"
-            onChange={(e) => setTitle(e.target.value)}
-            value={title}
-          />
-          <TextField
-            name="description"
-            size="small"
-            label="Description"
-            variant="outlined"
-            fullWidth={true}
-            margin="normal"
-            multiline={true}
-            rows={5}
-            onChange={(e) => setDescription(e.target.value)}
-            value={description}
-          />
-          <FormControl fullWidth={true}>
-            <InputLabel>Location</InputLabel>
-            <Select
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-              InputLabelProps={{ shrink: true }}
+    <>
+      <Head>
+        <title>New Job | Cloak.io</title>
+      </Head>
+      <Layout>
+        <div className="w-full min-h-screen p-4">
+          <form onSubmit={addJobHandler} className="m-auto max-w-96 sm:w-96">
+            <h1 className="text-lg font-semibold">New Job</h1>
+            <TextField
+              name="Title"
+              size="small"
+              label="Title"
+              variant="outlined"
+              fullWidth={true}
+              margin="normal"
+              onChange={(e) => setTitle(e.target.value)}
+              value={title}
+            />
+            <TextField
+              name="description"
+              size="small"
+              label="Description"
+              variant="outlined"
+              fullWidth={true}
+              margin="normal"
+              multiline={true}
+              rows={5}
+              onChange={(e) => setDescription(e.target.value)}
+              value={description}
+            />
+            <FormControl fullWidth={true}>
+              <InputLabel>Location</InputLabel>
+              <Select
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+                InputLabelProps={{ shrink: true }}
+              >
+                {cities.map((name, i) => (
+                  <MenuItem key={i} value={name}>
+                    {name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <TextField
+              type="number"
+              name="price"
+              size="small"
+              label="Price"
+              variant="outlined"
+              fullWidth={true}
+              margin="normal"
+              onChange={(e) => setPrice(e.target.value)}
+              value={price}
+            />
+            <Button
+              type="submit"
+              variant="contained"
+              fullWidth
+              size="large"
+              color="primary"
+              disabled={
+                !(
+                  title &&
+                  description &&
+                  location &&
+                  price > 0 &&
+                  emailVerified
+                ) || buttonState
+              }
             >
-              {cities.map((name, i) => (
-                <MenuItem key={i} value={name}>
-                  {name}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <TextField
-            type="number"
-            name="price"
-            size="small"
-            label="Price"
-            variant="outlined"
-            fullWidth={true}
-            margin="normal"
-            onChange={(e) => setPrice(e.target.value)}
-            value={price}
-          />
-          <Button
-            type="submit"
-            variant="contained"
-            fullWidth
-            size="large"
-            color="primary"
-            disabled={
-              !(
-                title &&
-                description &&
-                location &&
-                price > 0 &&
-                emailVerified
-              ) || buttonState
-            }
-          >
-            Done
-          </Button>
-          {buttonState && <CircularProgress />}
-        </form>
-      </div>
-    </Layout>
+              Done
+            </Button>
+            {buttonState && <CircularProgress />}
+          </form>
+        </div>
+      </Layout>
+    </>
   );
 };
 

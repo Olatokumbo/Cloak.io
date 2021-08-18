@@ -1,3 +1,4 @@
+import Head from "next/head";
 import Layout from "../components/Layout";
 import NotificationCard from "../components/NotificationCard";
 import CategoryList from "../sections/CategoryList";
@@ -16,6 +17,10 @@ const Notifications = () => {
     id
   );
   return (
+    <>
+      <Head>
+        <title>Notifications | Cloak.io</title>
+      </Head>
     <Layout>
       <CategoryList />
       <div className="p-4">
@@ -39,6 +44,7 @@ const Notifications = () => {
         </div>
       </div>
     </Layout>
+    </>
   );
 };
 

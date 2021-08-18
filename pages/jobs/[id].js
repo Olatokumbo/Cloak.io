@@ -1,3 +1,4 @@
+import Head from "next/head";
 import Layout from "../../components/Layout";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -82,134 +83,139 @@ const JobInfo = ({ job }) => {
     }
   };
   return (
-    <Layout>
-      <div className="flex min-h-screen">
-        <div className="flex-none lg:flex-1 bg-gray-200"></div>
-        <div className="flex-3 bg-white py-5 px-5 md:px-10">
-          <div className="flex justify-between items-center">
-            <h1 className="text-2xl font-semibold my-5">{job?.title}</h1>
-            <h5 className="text-2xl font-semibold text-gray-800">
-              {`₦${job.price}` || ""}
-            </h5>
-          </div>
-          <div className="flex justify-between mb-7">
-            <div className="flex items-center">
-              <Avatar
-                src={job.authorData.photoURL}
-                className={classes.avatar}
-              />
-              <div className="flex flex-col">
-                <Link href={`/profile/${job.userId}`}>
-                  <h4 className="text-base font-bold text-gray-800 cursor-pointer hover:underline">
-                    {job.authorData.displayName}
-                  </h4>
-                </Link>
-                <div className="flex">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5 text-gray-500"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                  <h5 className="text-xs self-end text-gray-500">
-                    {job?.location}
-                  </h5>
+    <>
+      <Head>
+        <title>{job.title} | Cloak.io</title>
+      </Head>
+      <Layout>
+        <div className="flex min-h-screen">
+          <div className="flex-none lg:flex-1 bg-gray-200"></div>
+          <div className="flex-3 bg-white py-5 px-5 md:px-10">
+            <div className="flex justify-between items-center">
+              <h1 className="text-2xl font-semibold my-5">{job?.title}</h1>
+              <h5 className="text-2xl font-semibold text-gray-800">
+                {`₦${job.price}` || ""}
+              </h5>
+            </div>
+            <div className="flex justify-between mb-7">
+              <div className="flex items-center">
+                <Avatar
+                  src={job.authorData.photoURL}
+                  className={classes.avatar}
+                />
+                <div className="flex flex-col">
+                  <Link href={`/profile/${job.userId}`}>
+                    <h4 className="text-base font-bold text-gray-800 cursor-pointer hover:underline">
+                      {job.authorData.displayName}
+                    </h4>
+                  </Link>
+                  <div className="flex">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5 text-gray-500"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                    <h5 className="text-xs self-end text-gray-500">
+                      {job?.location}
+                    </h5>
+                  </div>
                 </div>
               </div>
+              {job.done ? (
+                <h1 className="font-bold text-3xl mb-3 text-center text-red-500">
+                  Job Closed
+                </h1>
+              ) : (
+                <div>
+                  {uid !== job.userId ? (
+                    <div>
+                      {!appliedState ? (
+                        <button
+                          onClick={apply}
+                          className="ml-5 bg-black focus:outline-none text-white px-3 py-2 md:px-4 rounded-md hover:bg-gray-900"
+                        >
+                          Apply Now
+                        </button>
+                      ) : (
+                        <button
+                          onClick={withdraw}
+                          className="ml-5 bg-black focus:outline-none text-white px-3 py-2 md:px-4 rounded-md hover:bg-gray-900"
+                        >
+                          Cancel Application
+                        </button>
+                      )}
+                    </div>
+                  ) : (
+                    <div>
+                      <button
+                        onClick={closeJob}
+                        className="ml-5 bg-black focus:outline-none text-white px-3 py-2 md:px-4 rounded-md hover:bg-gray-900"
+                      >
+                        Close Job
+                      </button>
+                      <Link href={`/job/${job.id}/edit`}>
+                        <button className="ml-5 bg-black focus:outline-none text-white px-3 py-2 md:px-4 rounded-md hover:bg-gray-900">
+                          Edit
+                        </button>
+                      </Link>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
-            {job.done ? (
-              <h1 className="font-bold text-3xl mb-3 text-center text-red-500">
-                Job Closed
+            <div className="mt-5">
+              <h1 className="font-bold text-lg mb-3 text-gray-800">
+                Description
               </h1>
-            ) : (
-              <div>
-                {uid !== job.userId ? (
-                  <div>
-                    {!appliedState ? (
-                      <button
-                        onClick={apply}
-                        className="ml-5 bg-black focus:outline-none text-white px-3 py-2 md:px-4 rounded-md hover:bg-gray-900"
-                      >
-                        Apply Now
-                      </button>
-                    ) : (
-                      <button
-                        onClick={withdraw}
-                        className="ml-5 bg-black focus:outline-none text-white px-3 py-2 md:px-4 rounded-md hover:bg-gray-900"
-                      >
-                        Cancel Application
-                      </button>
-                    )}
-                  </div>
-                ) : (
-                  <div>
-                    <button
-                      onClick={closeJob}
-                      className="ml-5 bg-black focus:outline-none text-white px-3 py-2 md:px-4 rounded-md hover:bg-gray-900"
+              {job?.description.map((text, index) => (
+                <p key={index} className="my-3 text-sm">
+                  {text}
+                </p>
+              ))}
+            </div>
+            {uid === job.userId && (
+              <div className="my-5">
+                <h1 className="text-xl font-semibold text-gray-700 mb-4">
+                  Applications
+                </h1>
+                <div>
+                  {job.applied.length > 0 ? (
+                    <TableContainer
+                      /* className={style.table}*/ component={Paper}
                     >
-                      Close Job
-                    </button>
-                    <Link href={`/job/${job.id}/edit`}>
-                      <button className="ml-5 bg-black focus:outline-none text-white px-3 py-2 md:px-4 rounded-md hover:bg-gray-900">
-                        Edit
-                      </button>
-                    </Link>
-                  </div>
-                )}
+                      <Table aria-label="simple table">
+                        <TableHead>
+                          <TableRow>
+                            <TableCell align="left">Username</TableCell>
+                            <TableCell align="right">Email</TableCell>
+                            <TableCell align="right">View Profile</TableCell>
+                          </TableRow>
+                        </TableHead>
+                        <TableBody>
+                          {job.applied.map((id) => (
+                            <AppliedUser key={id} id={id} />
+                          ))}
+                        </TableBody>
+                      </Table>
+                    </TableContainer>
+                  ) : (
+                    <h1 className="text-center">None Applied Yet</h1>
+                  )}
+                </div>
               </div>
             )}
           </div>
-          <div className="mt-5">
-            <h1 className="font-bold text-lg mb-3 text-gray-800">
-              Description
-            </h1>
-            {job?.description.map((text, index) => (
-              <p key={index} className="my-3 text-sm">
-                {text}
-              </p>
-            ))}
-          </div>
-          {uid === job.userId && (
-            <div className="my-5">
-              <h1 className="text-xl font-semibold text-gray-700 mb-4">
-                Applications
-              </h1>
-              <div>
-                {job.applied.length > 0 ? (
-                  <TableContainer
-                    /* className={style.table}*/ component={Paper}
-                  >
-                    <Table aria-label="simple table">
-                      <TableHead>
-                        <TableRow>
-                          <TableCell align="left">Username</TableCell>
-                          <TableCell align="right">Email</TableCell>
-                          <TableCell align="right">View Profile</TableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        {job.applied.map((id) => (
-                          <AppliedUser key={id} id={id} />
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </TableContainer>
-                ) : (
-                  <h1 className="text-center">None Applied Yet</h1>
-                )}
-              </div>
-            </div>
-          )}
+          <div className="flex-none lg:flex-1 bg-gray-200"></div>
         </div>
-        <div className="flex-none lg:flex-1 bg-gray-200"></div>
-      </div>
-    </Layout>
+      </Layout>
+    </>
   );
 };
 

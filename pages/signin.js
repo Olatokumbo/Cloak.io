@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -20,6 +21,10 @@ const Signin = () => {
     }
   };
   return (
+    <>
+      <Head>
+        <title>Sign in | Cloak.io</title>
+      </Head>
     <div className="w-full flex min-h-screen">
       <div className="flex-1 relative hidden sm:block">
         <Image
@@ -103,6 +108,7 @@ const Signin = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

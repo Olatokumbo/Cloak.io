@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { useState } from "react";
 import Link from "next/link";
 import JobCard from "../../components/JobCard";
@@ -58,6 +59,10 @@ const Jobs = () => {
     });
   };
   return (
+    <>
+      <Head>
+        <title>All jobs | Cloak.io</title>
+      </Head>
     <Layout>
       <div className="min-h-screen bg-gray-100">
         <div className="bg-gray-800 py-12 px-4">
@@ -163,6 +168,7 @@ const Jobs = () => {
         </div>
       </div>
     </Layout>
+    </>
   );
 };
 

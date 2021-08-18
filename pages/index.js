@@ -14,7 +14,7 @@ const Home = () => {
   return (
     <div className="min-h-screen">
       <Head>
-        <title>Create Next App</title>
+        <title>Cloak.io</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>

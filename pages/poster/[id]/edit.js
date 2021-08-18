@@ -1,3 +1,4 @@
+import Head from "next/head"; 
 import { useState, useEffect } from "react";
 import Layout from "../../../components/Layout";
 import {
@@ -126,6 +127,10 @@ const EditPoster = ({ categories, poster }) => {
 
   if (userId !== poster.userId) return <Layout>Unauthorized</Layout>;
   return (
+    <>
+      <Head>
+        <title>Edit Poster | Cloak.io</title>
+      </Head>
     <Layout>
       <div className="w-full">
         <div className="flex mb-2 px-6 py-2 border-solid border-b border-gray-200">
@@ -286,6 +291,7 @@ const EditPoster = ({ categories, poster }) => {
         </div>
       </div>
     </Layout>
+    </>
   );
 };
 
